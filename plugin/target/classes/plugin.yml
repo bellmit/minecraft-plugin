@@ -1,0 +1,11 @@
+name: tutorialName
+main: cc.zzs.Tutorial
+version: 1.0
+
+commands:
+  diamondSword:
+    description: "测试指令" #指令的注解
+    usage: "指令有误"  #指令的用法 当onCommand()方法返回false时提示这里的内容
+  createCow:
+    description: "测试指令" #指令的注解
+    usage: "生成牛失败"
