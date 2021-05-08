@@ -1,10 +1,11 @@
 package cc.zzs.listener;
 
+import lombok.SneakyThrows;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.inventory.Inventory;
 
 /**
@@ -13,9 +14,18 @@ import org.bukkit.inventory.Inventory;
  */
 public class TutorialListener implements Listener {
 
+
+    @SneakyThrows
     @EventHandler
-    public void onJoin(PlayerJoinEvent event) {
-        event.getPlayer().sendMessage("欢迎"+event.getPlayer().getName()+"加入---------------");
+    public void onLogin(PlayerLoginEvent event) {
+        event.getPlayer().sendMessage("欢迎" + event.getPlayer().getName() + "加入---------------");
+
+//        String sql="INSERT INTO user (user_name,password) VALUES (?,?)";
+//        Connection connection = JdbcUtil.getConnection();
+//        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+//        preparedStatement.setString(1,event.getPlayer().getName());
+//        preparedStatement.execute();
+//        JdbcUtil.closeResource(preparedStatement,connection);
     }
 
     public void onClick(InventoryClickEvent event) {

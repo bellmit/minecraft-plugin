@@ -5,13 +5,8 @@ version: 1.0
 commands:
   diamondSword:
     description: "测试指令" #指令的注解
-    usage: "指令有误"  #指令的用法 当onCommand()方法返回false时提示这里的内容
+    usage: "您没有权限使用该指令"  #指令的用法 当onCommand()方法返回false时提示这里的内容
   createCow:
     description: "测试指令" #指令的注解
     usage: "生成牛失败"
 
-datasource:
-  type: com.alibaba.druid.pool.DruidDataSource
-  url: jdbc:mysql://localhost:3306/minecraft?useUnicode=true&characterEncoding=utf-8&useSSL=false
-  username: root
-  password: root

@@ -24,7 +24,7 @@ public class MyPluginCommandExecutor implements CommandExecutor {
     private final Tutorial plugin;
 
     public MyPluginCommandExecutor(Tutorial plugin) {
-        this.plugin = plugin; // Store the plugin in situations where you need it.
+        this.plugin = plugin;
     }
 
     @Override
@@ -44,11 +44,11 @@ public class MyPluginCommandExecutor implements CommandExecutor {
             entity.setCustomName("§6一头测试奶牛");
             return true;
         }
+
+
         if (command.getName().equalsIgnoreCase("diamondSword")) {
             // 钻石剑
-            ItemStack itemStack = new ItemStack(Material.DIAMOND_SWORD, 1, (short) 777);
-            itemStack.addUnsafeEnchantment(null, 100);
-
+            ItemStack itemStack = new ItemStack(Material.DIAMOND_SWORD, 1, (short) 0);
             ItemMeta itemMeta = itemStack.getItemMeta();
             itemMeta.setDisplayName("§7测试钻石剑");
             itemMeta.setLore(Arrays.asList("§f这是一把不稳定的钻石剑", "使用后果自行承担"));
@@ -69,7 +69,6 @@ public class MyPluginCommandExecutor implements CommandExecutor {
             player.sendMessage("生成测试钻石剑成功");
             return true;
         }
-
         return false;
     }
 }
