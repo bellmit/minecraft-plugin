@@ -18,7 +18,7 @@ public class Tutorial extends JavaPlugin {
     @SneakyThrows
     @Override
     public void onEnable() {
-        getLogger().info("命令测试插件开始调用");
+        getLogger().info("====================test-plugin插件开始启用====================");
         saveDefaultConfig();
         FileConfiguration config = getConfig();
         config.set("health ", 30);

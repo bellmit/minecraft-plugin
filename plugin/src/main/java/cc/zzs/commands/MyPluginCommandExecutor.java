@@ -2,6 +2,8 @@ package cc.zzs.commands;
 
 import cc.zzs.Tutorial;
 import org.bukkit.Material;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -48,21 +50,23 @@ public class MyPluginCommandExecutor implements CommandExecutor {
 
         if (command.getName().equalsIgnoreCase("diamondSword")) {
             // 钻石剑
-            ItemStack itemStack = new ItemStack(Material.DIAMOND_SWORD, 1, (short) 0);
+            ItemStack itemStack = new ItemStack(Material.DIAMOND_SWORD, 1);
             ItemMeta itemMeta = itemStack.getItemMeta();
-            itemMeta.setDisplayName("§7测试钻石剑");
+            itemMeta.setDisplayName("§g金色传说");
             itemMeta.setLore(Arrays.asList("§f这是一把不稳定的钻石剑", "使用后果自行承担"));
-            //锋利
-            itemMeta.addEnchant(Enchantment.DAMAGE_ALL, 4, true);
-            //火焰效果
-            itemMeta.addEnchant(Enchantment.FIRE_ASPECT, 4, true);
-            //不死
-            itemMeta.addEnchant(Enchantment.DAMAGE_UNDEAD, 4, true);
-            //节肢动物
-            itemMeta.addEnchant(Enchantment.DAMAGE_ARTHROPODS, 4, true);
-            //横扫之刃
-            itemMeta.addEnchant(Enchantment.SWEEPING_EDGE, 4, true);
 
+            AttributeModifier attributeModifier = new AttributeModifier("神奇的", 5000L, AttributeModifier.Operation.ADD_NUMBER);
+            itemMeta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, attributeModifier);
+            //锋利
+            itemMeta.addEnchant(Enchantment.DAMAGE_ALL, 6, true);
+            //火焰效果
+            itemMeta.addEnchant(Enchantment.FIRE_ASPECT, 6, true);
+            //不死
+            itemMeta.addEnchant(Enchantment.DAMAGE_UNDEAD, 6, true);
+            //节肢动物
+            itemMeta.addEnchant(Enchantment.DAMAGE_ARTHROPODS, 6, true);
+            //横扫之刃
+            itemMeta.addEnchant(Enchantment.SWEEPING_EDGE, 6, true);
             itemStack.setItemMeta(itemMeta);
             PlayerInventory inventory = player.getInventory();
             inventory.addItem(itemStack);

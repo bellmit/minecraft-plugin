@@ -1,4 +1,4 @@
-name: tutorialName
+name: test-plugin
 main: cc.zzs.Tutorial
 version: 1.0
 
