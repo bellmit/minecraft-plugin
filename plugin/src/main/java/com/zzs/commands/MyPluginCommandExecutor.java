@@ -1,6 +1,6 @@
-package cc.zzs.commands;
+package com.zzs.commands;
 
-import cc.zzs.Tutorial;
+import com.zzs.Tutorial;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;

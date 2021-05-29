@@ -1,31 +1,34 @@
-package cc.zzs.listener;
+package com.zzs.listener;
 
-import lombok.SneakyThrows;
+import com.zzs.dao.UserDao;
+import com.zzs.entity.User;
+import com.zzs.util.SqlSessionUtil;
+import org.apache.ibatis.session.SqlSession;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.player.PlayerLoginEvent;
+import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.inventory.Inventory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * @author mountain
  * @since 2021/5/3 21:40
  */
 public class TutorialListener implements Listener {
+    @Autowired
 
-
-    @SneakyThrows
     @EventHandler
-    public void onLogin(PlayerLoginEvent event) {
-        event.getPlayer().sendMessage("欢迎" + event.getPlayer().getName() + "加入---------------");
-
-//        String sql="INSERT INTO user (user_name,password) VALUES (?,?)";
-//        Connection connection = JdbcUtil.getConnection();
-//        PreparedStatement preparedStatement = connection.prepareStatement(sql);
-//        preparedStatement.setString(1,event.getPlayer().getName());
-//        preparedStatement.execute();
-//        JdbcUtil.closeResource(preparedStatement,connection);
+    public void onLogin(AsyncPlayerPreLoginEvent event) {
+        SqlSession sqlSession = SqlSessionUtil.getSqlSession();
+        UserDao userDao = sqlSession.getMapper(UserDao.class);
+        User user = userDao.findByNameAndUuid(event.getName(), event.getUniqueId().toString());
+        if (user == null) {
+            userDao.registerAccount(event.getName(), event.getAddress().toString(), event.getUniqueId().toString());
+        }
+        sqlSession.commit();
+        event.allow();
     }
 
     public void onClick(InventoryClickEvent event) {

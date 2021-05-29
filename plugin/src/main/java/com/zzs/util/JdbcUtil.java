@@ -1,4 +1,4 @@
-package cc.zzs.util;
+package com.zzs.util;
 
 import java.io.InputStream;
 import java.sql.*;

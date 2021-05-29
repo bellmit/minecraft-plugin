@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zzs.dao.UserDao">
+    <resultMap id="UserMap" type="com.zzs.entity.User">
+        <id column="id" property="id" jdbcType="BIGINT"></id>
+        <id column="user_name" property="userName" jdbcType="VARCHAR"></id>
+        <id column="ip_address" property="ipAddress" jdbcType="VARCHAR"></id>
+        <id column="uuid" property="uuid" jdbcType="VARCHAR"></id>
+    </resultMap>
+
+    <select id="findByNameAndUuid" resultMap="UserMap">
+        SELECT * FROM t_user WHERE user_name=#{userName} AND uuid=#{uuid}
+    </select>
+
+    <insert id="registerAccount">
+       INSERT INTO t_user
+       (user_name,ip_address,uuid)
+       VALUES
+       (#{userName},#{ipAddress},#{uuid})
+   </insert>
+</mapper>
