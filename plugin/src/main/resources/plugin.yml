@@ -3,9 +3,14 @@ main: com.zzs.Tutorial
 version: 1.0
 
 commands:
+  login:
+    usage: /pw [用户名] [密码]
   diamondSword:
     description: "测试指令" #指令的注解
     usage: "您没有权限使用该指令"  #指令的用法 当onCommand()方法返回false时提示这里的内容
+  register:
+    description: Register an account
+    usage: /register [用户名] [密码] [再次确认密码]
   createCow:
     description: "测试指令" #指令的注解
     usage: "生成牛失败"

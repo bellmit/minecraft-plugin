@@ -12,7 +12,9 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface UserDao {
 
-    int registerAccount(@Param("userName") String userName, @Param("ipAddress") String ipAddress, @Param("uuid") String uuid);
+    int registerAccount(@Param("userName") String userName, @Param("password") String password, @Param("ipAddress") String ipAddress, @Param("uuid") String uuid);
 
-    User findByNameAndUuid(@Param("userName") String userName, @Param("uuid") String uuid);
+    User findByNameAndPassword(@Param("userName") String userName, @Param("password") String password);
+
+    String findByUserName(@Param("userName") String userName);
 }

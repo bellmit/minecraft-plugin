@@ -1,35 +1,39 @@
 package com.zzs.listener;
 
-import com.zzs.dao.UserDao;
-import com.zzs.entity.User;
-import com.zzs.util.SqlSessionUtil;
-import org.apache.ibatis.session.SqlSession;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.Inventory;
-import org.springframework.beans.factory.annotation.Autowired;
+
 
 /**
  * @author mountain
  * @since 2021/5/3 21:40
  */
-public class TutorialListener implements Listener {
-    @Autowired
+public class LoginListener implements Listener {
 
     @EventHandler
-    public void onLogin(AsyncPlayerPreLoginEvent event) {
-        SqlSession sqlSession = SqlSessionUtil.getSqlSession();
-        UserDao userDao = sqlSession.getMapper(UserDao.class);
-        User user = userDao.findByNameAndUuid(event.getName(), event.getUniqueId().toString());
-        if (user == null) {
-            userDao.registerAccount(event.getName(), event.getAddress().toString(), event.getUniqueId().toString());
+    public void onLogin(PlayerMoveEvent event) {
+        Location from1 = event.getFrom();
+        if (!from1.equals(event.getTo())) {
+            event.setTo(from1);
         }
-        sqlSession.commit();
-        event.allow();
+
     }
+
+    @EventHandler
+    public void onJoin(PlayerJoinEvent event) {
+        Player player = event.getPlayer();
+        player.sendMessage("§9〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓欢迎加入〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓");
+        String[] s1 = {"登录命令 §a/login [用户名] [密码]", "如 /login abc 123456",
+                "注册命令 §a/register [用户名] [密码] [再次确认密码]", "如 /register abc 123456 123456"};
+        player.sendMessage(s1);
+    }
+
 
     public void onClick(InventoryClickEvent event) {
         // 获取被点击的容器的对象

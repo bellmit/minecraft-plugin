@@ -8,16 +8,21 @@
         <id column="user_name" property="userName" jdbcType="VARCHAR"></id>
         <id column="ip_address" property="ipAddress" jdbcType="VARCHAR"></id>
         <id column="uuid" property="uuid" jdbcType="VARCHAR"></id>
+        <id column="password" property="password" jdbcType="VARCHAR"></id>
     </resultMap>
 
-    <select id="findByNameAndUuid" resultMap="UserMap">
-        SELECT * FROM t_user WHERE user_name=#{userName} AND uuid=#{uuid}
+    <select id="findByNameAndPassword" resultMap="UserMap">
+        SELECT * FROM t_user WHERE user_name=#{userName} AND password=#{password}
+    </select>
+
+    <select id="findByUserName" resultMap="UserMap">
+        SELECT user_name FROM t_user WHERE user_name=#{userName}
     </select>
 
     <insert id="registerAccount">
        INSERT INTO t_user
-       (user_name,ip_address,uuid)
+       (user_name,password,ip_address,uuid)
        VALUES
-       (#{userName},#{ipAddress},#{uuid})
+       (#{userName},#{password},#{ipAddress},#{uuid})
    </insert>
 </mapper>

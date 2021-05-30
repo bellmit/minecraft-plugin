@@ -16,4 +16,8 @@ public class User {
     private String ipAddress;
 
     private String uuid;
+
+    private String password;
+
+    private Boolean isBan;
 }
