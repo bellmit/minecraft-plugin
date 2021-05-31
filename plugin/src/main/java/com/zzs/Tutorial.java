@@ -1,6 +1,7 @@
 package com.zzs;
 
 import com.zzs.commands.LoginPluginCommand;
+import com.zzs.listener.InventoryClickListener;
 import com.zzs.listener.PlayerJoinListener;
 import com.zzs.listener.PlayerQuitListener;
 import lombok.SneakyThrows;
@@ -20,6 +21,7 @@ public class Tutorial extends JavaPlugin {
         //获取监听器
         Bukkit.getPluginManager().registerEvents(new PlayerJoinListener(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerQuitListener(), this);
+        Bukkit.getPluginManager().registerEvents(new InventoryClickListener(), this);
 
         //调用注册命令方法
         this.getCommand("diamondSword").setExecutor(new LoginPluginCommand(this));
