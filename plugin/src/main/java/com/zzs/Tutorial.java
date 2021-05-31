@@ -1,7 +1,7 @@
 package com.zzs;
 
 import com.zzs.commands.LoginPluginCommand;
-import com.zzs.listener.LoginListener;
+import com.zzs.listener.PlayerLoginListener;
 import lombok.SneakyThrows;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -17,7 +17,7 @@ public class Tutorial extends JavaPlugin {
     public void onEnable() {
         getLogger().info("====================login-plugin插件开始启用====================");
         //获取监听器
-        Bukkit.getPluginManager().registerEvents(new LoginListener(), this);
+        Bukkit.getPluginManager().registerEvents(new PlayerLoginListener(), this);
 
         //调用注册命令方法
         this.getCommand("diamondSword").setExecutor(new LoginPluginCommand(this));

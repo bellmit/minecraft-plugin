@@ -1,12 +1,10 @@
 package com.zzs.listener;
 
-import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.Inventory;
 
 
@@ -14,32 +12,30 @@ import org.bukkit.inventory.Inventory;
  * @author mountain
  * @since 2021/5/3 21:40
  */
-public class LoginListener implements Listener {
+public class PlayerLoginListener implements Listener {
 
-    @EventHandler
-    public void onLogin(PlayerMoveEvent event) {
-        Location from1 = event.getFrom();
-        if (!from1.equals(event.getTo())) {
-            event.setTo(from1);
-        }
-
-    }
+//    private final Tutorial plugin;
+//
+//
+//    public PlayerLoginListener(Tutorial plugin) {
+//        this.plugin = plugin;
+//    }
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
+        player.setFlySpeed(0);
+        player.setWalkSpeed(0);
         player.sendMessage("§9〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓欢迎加入〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓");
         String[] s1 = {"登录命令 §a/login [用户名] [密码]", "如 /login abc 123456",
                 "注册命令 §a/register [用户名] [密码] [再次确认密码]", "如 /register abc 123456 123456"};
         player.sendMessage(s1);
     }
 
-
     public void onClick(InventoryClickEvent event) {
         // 获取被点击的容器的对象
         Inventory inv = event.getInventory();
         // 因为Inventory底层的实现是由一个数组来进行管理的, 所以我们的首项就是0
-
         if (event.getRawSlot() == 0) {
             // 获取点击容器的玩家的对象
             Player player = (Player) event.getWhoClicked();

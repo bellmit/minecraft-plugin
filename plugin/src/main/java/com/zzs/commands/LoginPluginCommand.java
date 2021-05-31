@@ -13,7 +13,6 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
-import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -43,29 +42,49 @@ public class LoginPluginCommand implements CommandExecutor {
         SqlSession sqlSession = SqlSessionUtil.getSqlSession();
         UserDao userDao = sqlSession.getMapper(UserDao.class);
         if (command.getName().equalsIgnoreCase("login")) {
-            User user = userDao.findByNameAndPassword(strings[0], strings[1]);
-            if (user == null) {
-                player.sendMessage("§c您输入的用户名或密码有误，请重新输入");
+            if (!(strings.length == 2)) {
+                player.sendMessage("§c请输入正确的参数个数！参数之间使用空格隔开！");
                 return true;
             }
-            PlayerMoveEvent.getHandlerList().unregister(plugin);
+            User user = userDao.findByNameAndPassword(strings[0], strings[1]);
+            if (user == null) {
+                player.sendMessage("§c您输入的用户名或密码有误，请重新输入！");
+                return true;
+            }
+            player.setWalkSpeed(0.2F);
+            player.setFlySpeed(0.1F);
             player.sendMessage("§9〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓欢迎回来〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓");
             return true;
         }
+
         if (command.getName().equalsIgnoreCase("register")) {
-            String userName = userDao.findByUserName(strings[0]);
-            if (strings[0].equals(userName)) {
-                player.sendMessage("§c该用户名已被占用");
+            if (!(strings.length == 3)) {
+                player.sendMessage("§c请输入正确的参数个数！参数之间使用空格隔开！");
+                return true;
+            }
+            if (!strings[0].equals(player.getName())) {
+                player.sendMessage("§c用户名与实际使用名称不相符！");
                 return true;
             }
             if (!strings[1].equals(strings[2])) {
-                player.sendMessage("§c两次密码输入不一致");
+                player.sendMessage("§c两次密码输入不一致！");
                 return true;
             }
+            if (strings[1].length() < 6) {
+                player.sendMessage("§c密码长度不能小于6位！");
+                return true;
+            }
+            String userName = userDao.findByUserName(strings[0]);
+            if (strings[0].equals(userName)) {
+                player.sendMessage("§c该用户名已被占用！");
+                return true;
+            }
+
             userDao.registerAccount(strings[0], strings[1], player.getAddress().toString().replaceAll("/", ""), player.getUniqueId().toString());
             sqlSession.commit();
+            player.setWalkSpeed(0.2F);
+            player.setFlySpeed(0.1F);
             player.sendMessage("§9〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓注册成功〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓");
-            PlayerMoveEvent.getHandlerList().unregister(plugin);
             return true;
         }
         if (command.getName().equalsIgnoreCase("diamondSword")) {
