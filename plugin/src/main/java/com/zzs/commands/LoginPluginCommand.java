@@ -53,6 +53,7 @@ public class LoginPluginCommand implements CommandExecutor {
             }
             player.setWalkSpeed(0.2F);
             player.setFlySpeed(0.1F);
+            player.loadData();
             player.sendMessage("§9〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓欢迎回来〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓");
             return true;
         }
@@ -79,11 +80,13 @@ public class LoginPluginCommand implements CommandExecutor {
                 player.sendMessage("§c该用户名已被占用！");
                 return true;
             }
-
             userDao.registerAccount(strings[0], strings[1], player.getAddress().toString().replaceAll("/", ""), player.getUniqueId().toString());
             sqlSession.commit();
             player.setWalkSpeed(0.2F);
             player.setFlySpeed(0.1F);
+            PlayerInventory inventory = player.getInventory();
+            ItemStack itemStack = new ItemStack(Material.CLOCK);
+            inventory.setItem(8, itemStack);
             player.sendMessage("§9〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓注册成功〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓");
             return true;
         }
@@ -92,6 +95,7 @@ public class LoginPluginCommand implements CommandExecutor {
             ItemStack itemStack = new ItemStack(Material.DIAMOND_SWORD, 1);
             ItemMeta itemMeta = itemStack.getItemMeta();
             itemMeta.setDisplayName("§g金色传说");
+            itemStack.setItemMeta(itemMeta);
             itemMeta.setLore(Arrays.asList("§f这是一把不稳定的钻石剑", "使用后果自行承担"));
 
             AttributeModifier attributeModifier = new AttributeModifier("神奇的", 5000L, AttributeModifier.Operation.ADD_NUMBER);
