@@ -11,7 +11,3 @@ commands:
   register:
     description: Register an account
     usage: /register [用户名] [密码] [再次确认密码]
-  createCow:
-    description: "测试指令" #指令的注解
-    usage: "生成牛失败"
-
