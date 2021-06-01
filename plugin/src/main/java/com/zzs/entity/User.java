@@ -20,4 +20,6 @@ public class User {
     private String password;
 
     private Boolean isBan;
+
+    private Boolean isLogin;
 }

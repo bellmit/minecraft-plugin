@@ -1,10 +1,9 @@
 package com.zzs;
 
-import com.zzs.commands.LoginPluginCommand;
-import com.zzs.listener.InventoryClickListener;
-import com.zzs.listener.PlayerDropItemListener;
-import com.zzs.listener.PlayerJoinListener;
-import com.zzs.listener.PlayerQuitListener;
+import com.zzs.commands.LoginCommand;
+import com.zzs.commands.MenuCommand;
+import com.zzs.commands.RegisterCommand;
+import com.zzs.listener.*;
 import lombok.SneakyThrows;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -24,10 +23,12 @@ public class Tutorial extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new PlayerQuitListener(), this);
         Bukkit.getPluginManager().registerEvents(new InventoryClickListener(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerDropItemListener(), this);
+        Bukkit.getPluginManager().registerEvents(new PlayerCommandPreprocessListener(), this);
 
         //调用注册命令方法
-        this.getCommand("diamondSword").setExecutor(new LoginPluginCommand(this));
-        this.getCommand("register").setExecutor(new LoginPluginCommand(this));
-        this.getCommand("login").setExecutor(new LoginPluginCommand(this));
+        this.getCommand("diamondSword").setExecutor(new LoginCommand());
+        this.getCommand("register").setExecutor(new RegisterCommand());
+        this.getCommand("login").setExecutor(new LoginCommand());
+        this.getCommand("menu").setExecutor(new MenuCommand());
     }
 }
