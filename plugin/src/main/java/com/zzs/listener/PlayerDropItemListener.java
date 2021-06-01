@@ -11,6 +11,11 @@ import org.bukkit.event.player.PlayerDropItemEvent;
  */
 public class PlayerDropItemListener implements Listener {
 
+    /**
+     * 玩家丢弃物品事件
+     *
+     * @param event
+     */
     @EventHandler
     public void onDropItem(PlayerDropItemEvent event) {
         if (event.getItemDrop().getItemStack().getType().equals(Material.CLOCK)) {
