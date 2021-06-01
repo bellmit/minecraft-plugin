@@ -4,11 +4,14 @@ version: 1.0
 api-version: 1.13
 
 commands:
+  menu:
+    description: "打开菜单"
   login:
+    description: "登录账号"
     usage: /pw [用户名] [密码]
   diamondSword:
-    description: "测试指令" #指令的注解
+    description: "生成测试钻石剑"
     usage: "您没有权限使用该指令"  #指令的用法 当onCommand()方法返回false时提示这里的内容
   register:
-    description: Register an account
+    description: "注册账号"
     usage: /register [用户名] [密码] [再次确认密码]
