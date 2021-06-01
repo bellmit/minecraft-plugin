@@ -51,9 +51,9 @@ public class LoginPluginCommand implements CommandExecutor {
                 player.sendMessage("§c您输入的用户名或密码有误，请重新输入！");
                 return true;
             }
+            player.loadData();
             player.setWalkSpeed(0.2F);
             player.setFlySpeed(0.1F);
-            player.loadData();
             player.sendMessage("§9〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓欢迎回来〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓");
             return true;
         }
