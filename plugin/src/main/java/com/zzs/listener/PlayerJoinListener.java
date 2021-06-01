@@ -12,6 +12,11 @@ import org.bukkit.event.player.PlayerJoinEvent;
  */
 public class PlayerJoinListener implements Listener {
 
+    /**
+     * 玩家加入事件
+     *
+     * @param event
+     */
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
