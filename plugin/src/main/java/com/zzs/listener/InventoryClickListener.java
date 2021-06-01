@@ -21,10 +21,8 @@ public class InventoryClickListener implements Listener {
 
     @EventHandler
     public void onClick(InventoryClickEvent event) {
-
         if (event.getCurrentItem().getType().equals(Material.CLOCK) && event.getClick().isRightClick()) {
             Player player = (Player) event.getWhoClicked();
-            player.sendMessage("右键了时钟");
             Inventory inventory = Bukkit.createInventory(null, 9, "菜单栏");
             ItemStack itemStack = new ItemStack(Material.PLAYER_HEAD);
             ItemMeta itemMeta = itemStack.getItemMeta();
