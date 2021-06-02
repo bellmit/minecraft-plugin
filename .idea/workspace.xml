@@ -1,181 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="ArtifactsWorkspaceSettings">
-    <artifacts-to-build>
-      <artifact name="tutorialName" />
-    </artifacts-to-build>
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c140a4d8-0174-4034-8d9e-96228c1b3774" name="Default Changelist" comment="" />
+    <list default="true" id="19377216-4dc4-475b-b5a1-c63bafde6737" name="Default Changelist" comment="菜单功能">
+      <change afterPath="$PROJECT_DIR$/plugin/src/main/java/com/zzs/listener/PlayerDeathListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/craftbukkit_1_12_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/com/zzs/Tutorial.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/com/zzs/Tutorial.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/com/zzs/commands/LoginCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/com/zzs/commands/LoginCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/com/zzs/commands/RegisterCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/com/zzs/commands/RegisterCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/com/zzs/dao/UserDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/com/zzs/dao/UserDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/com/zzs/listener/InventoryClickListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/com/zzs/listener/InventoryClickListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plugin/src/main/java/com/zzs/listener/PlayerQuitListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/java/com/zzs/listener/PlayerQuitListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plugin/src/main/resources/mapper/UserMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/resources/mapper/UserMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plugin/src/main/resources/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/plugin/src/main/resources/plugin.yml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="Class" />
-      </list>
-    </option>
-  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="MavenImportPreferences">
-    <option name="generalSettings">
-      <MavenGeneralSettings>
-        <option name="localRepository" value="D:\java\maven\maven-jar" />
-        <option name="mavenHome" value="D:/java/maven/apache-maven-3.6.3" />
-        <option name="userSettingsFile" value="D:\java\maven\apache-maven-3.6.3\conf\settings.xml" />
-      </MavenGeneralSettings>
-    </option>
-  </component>
-  <component name="ProjectId" id="1rtctDX3wQzLFLPRfweqzhdNCwx" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
-  <component name="ProjectViewState">
-    <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showLibraryContents" value="true" />
-  </component>
   <component name="PropertiesComponent">
-    <property name="Downloaded.Files.Path.Enabled" value="false" />
-    <property name="Repository.Attach.Annotations" value="false" />
-    <property name="Repository.Attach.JavaDocs" value="false" />
-    <property name="Repository.Attach.Sources" value="false" />
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="aspect.path.notification.shown" value="true" />
-    <property name="jdk.selected.JAVA_MODULE" value="1.8" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Project" />
-    <property name="project.structure.proportion" value="0.15" />
-    <property name="project.structure.side.proportion" value="0.51609194" />
-    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
-  </component>
-  <component name="RecentsManager">
-    <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="org.bukkit.zzs" />
-      <recent name="zzs" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="F:\test-plugin\FreeSwitchTitle\src\main\java" />
-      <recent name="F:\test-plugin\plugin-1\src\main\resources" />
-    </key>
-  </component>
-  <component name="RunManager">
-    <configuration name="Tutorial" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="cc.zzs.Tutorial" />
-      <module name="plugin" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="cc.zzs.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Application.Tutorial" />
-      </list>
-    </recent_temporary>
-  </component>
-  <component name="SvnConfiguration">
-    <configuration />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
   </component>
   <component name="TaskManager">
-    <task active="true" id="Default" summary="Default task">
-      <changelist id="c140a4d8-0174-4034-8d9e-96228c1b3774" name="Default Changelist" comment="" />
-      <created>1619799038727</created>
-      <option name="number" value="Default" />
-      <option name="presentableId" value="Default" />
-      <updated>1619799038727</updated>
-      <workItem from="1619799040011" duration="5905000" />
-      <workItem from="1619871650958" duration="1886000" />
-      <workItem from="1619892878244" duration="1355000" />
-      <workItem from="1619929506391" duration="711000" />
-      <workItem from="1619941867805" duration="4094000" />
-      <workItem from="1620042083133" duration="16159000" />
-      <workItem from="1620111207314" duration="11152000" />
-      <workItem from="1620304643218" duration="1092000" />
-      <workItem from="1620308259926" duration="745000" />
-    </task>
     <servers />
-  </component>
-  <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="2" />
-  </component>
-  <component name="WindowStateProjectService">
-    <state x="249" y="6" key="#Project_Structure" timestamp="1620308007527">
-      <screen x="0" y="0" width="1536" height="864" />
-    </state>
-    <state x="249" y="6" key="#Project_Structure/0.0.1536.864@0.0.1536.864" timestamp="1620308007527" />
-    <state x="574" y="135" key="#com.intellij.ide.util.MemberChooser" timestamp="1620058198922">
-      <screen x="0" y="0" width="1536" height="864" />
-    </state>
-    <state x="574" y="135" key="#com.intellij.ide.util.MemberChooser/0.0.1536.864@0.0.1536.864" timestamp="1620058198922" />
-    <state x="499" y="221" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1620042989907">
-      <screen x="0" y="0" width="1536" height="864" />
-    </state>
-    <state x="499" y="221" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.1536.864@0.0.1536.864" timestamp="1620042989907" />
-    <state x="599" y="41" key="#com.intellij.openapi.roots.ui.configuration.libraryEditor.LibraryEditorDialog" timestamp="1619801567408">
-      <screen x="0" y="0" width="1536" height="864" />
-    </state>
-    <state x="599" y="41" key="#com.intellij.openapi.roots.ui.configuration.libraryEditor.LibraryEditorDialog/0.0.1536.864@0.0.1536.864" timestamp="1619801567408" />
-    <state x="499" y="186" key="#com.intellij.util.ui.classpath.ChooseLibrariesDialog" timestamp="1619942977604">
-      <screen x="0" y="0" width="1536" height="864" />
-    </state>
-    <state x="499" y="186" key="#com.intellij.util.ui.classpath.ChooseLibrariesDialog/0.0.1536.864@0.0.1536.864" timestamp="1619942977604" />
-    <state x="445" y="172" width="646" height="518" key="FileChooserDialogImpl" timestamp="1620308132081">
-      <screen x="0" y="0" width="1536" height="864" />
-    </state>
-    <state x="445" y="172" width="646" height="518" key="FileChooserDialogImpl/0.0.1536.864@0.0.1536.864" timestamp="1620308132081" />
-    <state width="1493" height="208" key="GridCell.Tab.0.bottom" timestamp="1620073256722">
-      <screen x="0" y="0" width="1536" height="864" />
-    </state>
-    <state width="1493" height="208" key="GridCell.Tab.0.bottom/0.0.1536.864@0.0.1536.864" timestamp="1620073256722" />
-    <state width="1493" height="208" key="GridCell.Tab.0.center" timestamp="1620073256722">
-      <screen x="0" y="0" width="1536" height="864" />
-    </state>
-    <state width="1493" height="208" key="GridCell.Tab.0.center/0.0.1536.864@0.0.1536.864" timestamp="1620073256722" />
-    <state width="1493" height="208" key="GridCell.Tab.0.left" timestamp="1620073256721">
-      <screen x="0" y="0" width="1536" height="864" />
-    </state>
-    <state width="1493" height="208" key="GridCell.Tab.0.left/0.0.1536.864@0.0.1536.864" timestamp="1620073256721" />
-    <state width="1493" height="208" key="GridCell.Tab.0.right" timestamp="1620073256722">
-      <screen x="0" y="0" width="1536" height="864" />
-    </state>
-    <state width="1493" height="208" key="GridCell.Tab.0.right/0.0.1536.864@0.0.1536.864" timestamp="1620073256722" />
-    <state x="299" y="87" key="Maven.ArtifactSearchDialog" timestamp="1620058186187">
-      <screen x="0" y="0" width="1536" height="864" />
-    </state>
-    <state x="299" y="87" key="Maven.ArtifactSearchDialog/0.0.1536.864@0.0.1536.864" timestamp="1620058186187" />
-    <state x="249" y="6" key="SettingsEditor" timestamp="1620308136387">
-      <screen x="0" y="0" width="1536" height="864" />
-    </state>
-    <state x="249" y="6" key="SettingsEditor/0.0.1536.864@0.0.1536.864" timestamp="1620308136387" />
-    <state x="490" y="173" width="576" height="540" key="StructurePopup" timestamp="1620139756531">
-      <screen x="0" y="0" width="1536" height="864" />
-    </state>
-    <state x="490" y="173" width="576" height="540" key="StructurePopup/0.0.1536.864@0.0.1536.864" timestamp="1620139756531" />
-    <state x="485" y="319" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD" timestamp="1619801535643">
-      <screen x="0" y="0" width="1536" height="864" />
-    </state>
-    <state x="485" y="319" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD/0.0.1536.864@0.0.1536.864" timestamp="1619801535643" />
-    <state x="469" y="150" width="598" height="564" key="find.popup" timestamp="1619804808950">
-      <screen x="0" y="0" width="1536" height="864" />
-    </state>
-    <state x="469" y="150" width="598" height="564" key="find.popup/0.0.1536.864@0.0.1536.864" timestamp="1619804808950" />
-    <state x="281" y="13" key="new project wizard" timestamp="1619942108152">
-      <screen x="0" y="0" width="1536" height="864" />
-    </state>
-    <state x="281" y="13" key="new project wizard/0.0.1536.864@0.0.1536.864" timestamp="1619942108152" />
-    <state x="431" y="181" width="672" height="678" key="search.everywhere.popup" timestamp="1620069319306">
-      <screen x="0" y="0" width="1536" height="864" />
-    </state>
-    <state x="431" y="181" width="672" height="678" key="search.everywhere.popup/0.0.1536.864@0.0.1536.864" timestamp="1620069319306" />
   </component>
 </project>
