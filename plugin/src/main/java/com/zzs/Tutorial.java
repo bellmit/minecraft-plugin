@@ -24,6 +24,7 @@ public class Tutorial extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new InventoryClickListener(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerDropItemListener(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerCommandPreprocessListener(), this);
+        Bukkit.getPluginManager().registerEvents(new PlayerDeathListener(), this);
 
         //调用注册命令方法
         this.getCommand("diamondSword").setExecutor(new LoginCommand());

@@ -35,13 +35,17 @@ public class LoginCommand implements CommandExecutor {
         SqlSession sqlSession = SqlSessionUtil.getSqlSession();
         UserDao userDao = sqlSession.getMapper(UserDao.class);
         if (command.getName().equalsIgnoreCase("login")) {
-            if (!(strings.length == 2)) {
+            if (!(strings.length == 1)) {
                 player.sendMessage("§c请输入正确的参数个数！参数之间使用空格隔开！");
                 return true;
             }
-            User user = userDao.findByUuidAndPassword(player.getUniqueId().toString(), strings[1]);
+            User user = userDao.findByUuidAndPassword(player.getUniqueId().toString(), strings[0]);
             if (user == null) {
-                player.sendMessage("§c您输入的用户名或密码有误，请重新输入！");
+                player.sendMessage("§c您输入的密码有误，请重新输入！");
+                return true;
+            }
+            if (user.getIsLogin()) {
+                player.sendMessage("§c请勿重复登录！");
                 return true;
             }
             player.loadData();
@@ -52,7 +56,6 @@ public class LoginCommand implements CommandExecutor {
             player.sendMessage("§9〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓欢迎回来〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓");
             return true;
         }
-
         if (command.getName().equalsIgnoreCase("diamondSword")) {
             // 钻石剑
             ItemStack itemStack = new ItemStack(Material.DIAMOND_SWORD, 1);

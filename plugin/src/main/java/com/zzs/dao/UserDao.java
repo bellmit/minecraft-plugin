@@ -18,4 +18,6 @@ public interface UserDao extends BaseDao {
     void updateIsLoginByUuid(@Param("uuid") String uuid, @Param("isLogin") Boolean isLogin);
 
     Boolean findIsLoginByUuid(@Param("uuid") String uuid);
+
+    User findUserByUuid(@Param("uuid") String uuid);
 }

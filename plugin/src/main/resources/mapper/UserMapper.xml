@@ -9,6 +9,7 @@
         <id column="ip_address" property="ipAddress" jdbcType="VARCHAR"></id>
         <id column="uuid" property="uuid" jdbcType="VARCHAR"></id>
         <id column="password" property="password" jdbcType="VARCHAR"></id>
+        <id column="is_ban" property="isBan" jdbcType="INTEGER"></id>
         <id column="is_login" property="isLogin" jdbcType="INTEGER"/>
     </resultMap>
     <update id="updateIsLoginByUuid">
@@ -17,21 +18,33 @@
     </update>
 
     <select id="findByUuidAndPassword" resultMap="UserMap">
-        SELECT * FROM t_user WHERE uuid=#{uuid} AND password=#{password}
+        SELECT *
+        FROM t_user
+        WHERE uuid = #{uuid}
+          AND password = #{password}
     </select>
 
     <select id="findUserNameByUserName" resultMap="UserMap">
-        SELECT user_name FROM t_user WHERE user_name=#{userName}
+        SELECT user_name
+        FROM t_user
+        WHERE user_name = #{userName}
     </select>
 
     <select id="findIsLoginByUuid" resultType="java.lang.Boolean">
-        SELECT is_login FROM t_user WHERE uuid=#{uuid}
+        SELECT is_login
+        FROM t_user
+        WHERE uuid = #{uuid}
+    </select>
+
+    <select id="findUserByUuid" resultMap="UserMap">
+        SELECT *
+        FROM t_user
+        WHERE uuid = #{uuid}
     </select>
 
     <insert id="registerAccount">
-       INSERT INTO t_user
-       (user_name,password,ip_address,uuid)
-       VALUES
-       (#{userName},#{password},#{ipAddress},#{uuid})
-   </insert>
+        INSERT INTO t_user
+            (user_name, password, ip_address, uuid)
+        VALUES (#{userName}, #{password}, #{ipAddress}, #{uuid})
+    </insert>
 </mapper>

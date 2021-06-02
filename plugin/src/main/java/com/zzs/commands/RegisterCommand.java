@@ -1,6 +1,7 @@
 package com.zzs.commands;
 
 import com.zzs.dao.UserDao;
+import com.zzs.entity.User;
 import com.zzs.util.CommonMethodUtil;
 import com.zzs.util.SqlSessionUtil;
 import org.apache.ibatis.session.SqlSession;
@@ -26,30 +27,32 @@ public class RegisterCommand implements CommandExecutor {
             return false;
         }
         if (command.getName().equalsIgnoreCase("register")) {
-            if (!(strings.length == 3)) {
+            if (!(strings.length == 2)) {
                 player.sendMessage("§c请输入正确的参数个数！参数之间使用空格隔开！");
                 return true;
             }
-            if (!strings[0].equals(player.getName())) {
-                player.sendMessage("§c用户名与实际使用名称不相符！");
-                return true;
-            }
-            if (!strings[1].equals(strings[2])) {
+            if (!strings[0].equals(strings[1])) {
                 player.sendMessage("§c两次密码输入不一致！");
                 return true;
             }
-            if (strings[1].length() < 6) {
+            if (strings[0].length() < 6) {
                 player.sendMessage("§c密码长度不能小于6位！");
                 return true;
             }
             SqlSession sqlSession = SqlSessionUtil.getSqlSession();
             UserDao userDao = sqlSession.getMapper(UserDao.class);
-            String userName = userDao.findUserNameByUserName(strings[0]);
-            if (strings[0].equals(userName)) {
-                player.sendMessage("§c该用户名已被占用！");
-                return true;
+            User user = userDao.findUserByUuid(player.getUniqueId().toString());
+            if (user != null) {
+                if (user.getIsLogin()) {
+                    player.sendMessage("§c禁止重复注册！");
+                    return true;
+                }
+                if (user.getUserName().equals(player.getName())) {
+                    player.sendMessage("§c该用户名已被占用！");
+                    return true;
+                }
             }
-            userDao.registerAccount(strings[0], strings[1], player.getAddress().toString().replaceAll("/", ""), player.getUniqueId().toString());
+            userDao.registerAccount(player.getName(), strings[0], player.getAddress().toString().replaceAll("/", ""), player.getUniqueId().toString());
             sqlSession.commit();
             player.setWalkSpeed(0.2F);
             player.setFlySpeed(0.1F);
