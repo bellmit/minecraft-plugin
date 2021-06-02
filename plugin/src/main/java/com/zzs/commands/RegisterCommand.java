@@ -56,6 +56,7 @@ public class RegisterCommand implements CommandExecutor {
             sqlSession.commit();
             player.setWalkSpeed(0.2F);
             player.setFlySpeed(0.1F);
+            player.setInvulnerable(Boolean.FALSE);
             PlayerInventory inventory = player.getInventory();
             ItemStack itemStack = new ItemStack(Material.CLOCK);
             inventory.setItem(8, itemStack);

@@ -51,6 +51,7 @@ public class LoginCommand implements CommandExecutor {
             player.loadData();
             player.setWalkSpeed(0.2F);
             player.setFlySpeed(0.1F);
+            player.setInvulnerable(Boolean.FALSE);
             userDao.updateIsLoginByUuid(player.getUniqueId().toString(), Boolean.TRUE);
             sqlSession.commit();
             player.sendMessage("§9〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓欢迎回来〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓");
