@@ -4,6 +4,9 @@ version: 1.0
 api-version: 1.13
 
 commands:
+  createWorld:
+    description: "创建新世界"
+    usage: /createWorld [世界名称]
   menu:
     description: "打开菜单"
   login:
@@ -15,3 +18,6 @@ commands:
   register:
     description: "注册账号"
     usage: /register [密码] [再次确认密码]
+  warp:
+    description: "传送世界"
+    usage: /warp [需传送的世界名称]
