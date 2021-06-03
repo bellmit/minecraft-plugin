@@ -5,6 +5,7 @@ import com.zzs.entity.User;
 import com.zzs.util.CommonMethodUtil;
 import com.zzs.util.SqlSessionUtil;
 import org.apache.ibatis.session.SqlSession;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -28,8 +29,8 @@ public class RegisterCommand implements CommandExecutor {
         }
         if (command.getName().equalsIgnoreCase("register")) {
             if (!(strings.length == 2)) {
-                player.sendMessage("§c请输入正确的参数个数！参数之间使用空格隔开！");
-                return true;
+                player.sendMessage("§c请查看正确的命令使用规则！参数之间使用空格隔开！");
+                return false;
             }
             if (!strings[0].equals(strings[1])) {
                 player.sendMessage("§c两次密码输入不一致！");
@@ -57,6 +58,8 @@ public class RegisterCommand implements CommandExecutor {
             player.setWalkSpeed(0.2F);
             player.setFlySpeed(0.1F);
             player.setInvulnerable(Boolean.FALSE);
+            player.setGameMode(GameMode.CREATIVE);
+            player.setGameMode(GameMode.SURVIVAL);
             PlayerInventory inventory = player.getInventory();
             ItemStack itemStack = new ItemStack(Material.CLOCK);
             inventory.setItem(8, itemStack);

@@ -3,6 +3,7 @@ package com.zzs;
 import com.zzs.commands.LoginCommand;
 import com.zzs.commands.MenuCommand;
 import com.zzs.commands.RegisterCommand;
+import com.zzs.commands.WorldCommand;
 import com.zzs.listener.*;
 import lombok.SneakyThrows;
 import org.bukkit.Bukkit;
@@ -31,5 +32,7 @@ public class Tutorial extends JavaPlugin {
         this.getCommand("register").setExecutor(new RegisterCommand());
         this.getCommand("login").setExecutor(new LoginCommand());
         this.getCommand("menu").setExecutor(new MenuCommand());
+        this.getCommand("createWorld").setExecutor(new WorldCommand(this));
+        this.getCommand("warp").setExecutor(new WorldCommand(this));
     }
 }

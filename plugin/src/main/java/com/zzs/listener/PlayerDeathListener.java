@@ -12,8 +12,7 @@ public class PlayerDeathListener implements Listener {
 
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent event) {
-        event.setKeepInventory(Boolean.TRUE);
-        event.getDrops().clear();
+
     }
 
 }

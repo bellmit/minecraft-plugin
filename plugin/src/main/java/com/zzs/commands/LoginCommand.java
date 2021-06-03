@@ -5,6 +5,7 @@ import com.zzs.entity.User;
 import com.zzs.util.CommonMethodUtil;
 import com.zzs.util.SqlSessionUtil;
 import org.apache.ibatis.session.SqlSession;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
@@ -35,10 +36,6 @@ public class LoginCommand implements CommandExecutor {
         SqlSession sqlSession = SqlSessionUtil.getSqlSession();
         UserDao userDao = sqlSession.getMapper(UserDao.class);
         if (command.getName().equalsIgnoreCase("login")) {
-            if (!(strings.length == 1)) {
-                player.sendMessage("§c请输入正确的参数个数！参数之间使用空格隔开！");
-                return true;
-            }
             User user = userDao.findByUuidAndPassword(player.getUniqueId().toString(), strings[0]);
             if (user == null) {
                 player.sendMessage("§c您输入的密码有误，请重新输入！");
@@ -48,9 +45,15 @@ public class LoginCommand implements CommandExecutor {
                 player.sendMessage("§c请勿重复登录！");
                 return true;
             }
+            if (!(strings.length == 1)) {
+                player.sendMessage("§c请查看正确的命令使用规则！参数之间使用空格隔开！");
+                return false;
+            }
             player.loadData();
             player.setWalkSpeed(0.2F);
             player.setFlySpeed(0.1F);
+            player.setGameMode(GameMode.CREATIVE);
+            player.setGameMode(GameMode.SURVIVAL);
             player.setInvulnerable(Boolean.FALSE);
             userDao.updateIsLoginByUuid(player.getUniqueId().toString(), Boolean.TRUE);
             sqlSession.commit();
