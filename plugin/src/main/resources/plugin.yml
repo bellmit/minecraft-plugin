@@ -21,3 +21,5 @@ commands:
   warp:
     description: "传送世界"
     usage: /warp [需传送的世界名称]
+  nowTime:
+    description: "获取游戏时间"
