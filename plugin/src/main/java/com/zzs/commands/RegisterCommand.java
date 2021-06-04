@@ -1,6 +1,6 @@
 package com.zzs.commands;
 
-import com.zzs.dao.UserDao;
+import com.zzs.dao.UserMapper;
 import com.zzs.entity.User;
 import com.zzs.util.CommonMethodUtil;
 import com.zzs.util.SqlSessionUtil;
@@ -41,7 +41,7 @@ public class RegisterCommand implements CommandExecutor {
                 return true;
             }
             SqlSession sqlSession = SqlSessionUtil.getSqlSession();
-            UserDao userDao = sqlSession.getMapper(UserDao.class);
+            UserMapper userDao = sqlSession.getMapper(UserMapper.class);
             User user = userDao.findUserByUuid(player.getUniqueId().toString());
             if (user != null) {
                 if (user.getIsLogin()) {

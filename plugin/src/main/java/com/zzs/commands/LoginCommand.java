@@ -1,6 +1,6 @@
 package com.zzs.commands;
 
-import com.zzs.dao.UserDao;
+import com.zzs.dao.UserMapper;
 import com.zzs.entity.User;
 import com.zzs.util.CommonMethodUtil;
 import com.zzs.util.SqlSessionUtil;
@@ -34,7 +34,7 @@ public class LoginCommand implements CommandExecutor {
             return false;
         }
         SqlSession sqlSession = SqlSessionUtil.getSqlSession();
-        UserDao userDao = sqlSession.getMapper(UserDao.class);
+        UserMapper userDao = sqlSession.getMapper(UserMapper.class);
         if (command.getName().equalsIgnoreCase("login")) {
             User user = userDao.findByUuidAndPassword(player.getUniqueId().toString(), strings[0]);
             if (user == null) {

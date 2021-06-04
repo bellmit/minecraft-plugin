@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.zzs.dao.UserDao">
+<mapper namespace="com.zzs.dao.UserMapper">
     <resultMap id="UserMap" type="com.zzs.entity.User">
         <id column="id" property="id" jdbcType="BIGINT"></id>
         <id column="user_name" property="userName" jdbcType="VARCHAR"></id>
@@ -14,7 +14,6 @@
     </resultMap>
     <update id="updateIsLoginByUuid">
         UPDATE t_user SET is_login=#{isLogin} WHERE uuid=#{uuid}
-
     </update>
 
     <select id="findByUuidAndPassword" resultMap="UserMap">

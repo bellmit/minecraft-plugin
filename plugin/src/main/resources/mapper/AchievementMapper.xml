@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zzs.dao.AchievementMapper">
+    <update id="updateIsStatus">
+        UPDATE t_achievement
+        <set>
+            <if test="isBeginner !=null">is_beginner=#{isBeginner},</if>
+            <if test="isFisher !=null">is_fisher=#{isFisher},</if>
+            <if test="isMiner !=null">is_miner=#{isMiner},</if>
+            <if test="isFarmer !=null">is_farmer=#{isFarmer},</if>
+            <if test="isKnowledgePeople !=null">is_knowledge_people=#{isKnowledgePeople},</if>
+            <if test="isDiamondBigShort !=null">is_diamond_big_short=#{isDiamondBigShort},</if>
+            <if test="isHuntingCorpse !=null">is_hunting_corpse=#{isHuntingCorpse},</if>
+            <if test="isExplorer !=null">is_explorer=#{isExplorer},</if>
+            <if test="isTimberjack !=null">is_timberjack=#{isTimberjack},</if>
+            <if test="isEnchanter !=null">is_enchanter=#{isEnchanter},</if>
+            <if test="isSorcerer !=null">is_sorcerer=#{isSorcerer},</if>
+            <if test="isButcher !=null">is_butcher=#{isButcher},</if>
+            <if test="isTheEmpressDowager !=null">is_the_empress_dowager=#{isTheEmpressDowager},</if>
+            <if test="isBiliAnchor !=null">is_bili_anchor=#{isBiliAnchor},</if>
+            <if test="isHuYaAnchor !=null">is_hu_ya_anchor=#{isHuYaAnchor},</if>
+            <if test="isOldHead !=null">is_old_head=#{isOldHead},</if>
+            <if test="isSmallRichMan !=null">is_small_rich_man=#{isSmallRichMan},</if>
+            <if test="isPlayerKiller !=null">is_player_killer=#{isPlayerKiller},</if>
+            <if test="isPatrolGroup !=null">is_patrol_group=#{isPatrolGroup},</if>
+            <if test="isACompleteOneOff !=null">is_a_complete_one_off=#{isACompleteOneOff},</if>
+            <if test="isOstentatious !=null">is_ostentatious=#{isOstentatious},</if>
+            <if test="isHeadCollector !=null">is_head_collector=#{isHeadCollector},</if>
+            <if test="isMascot !=null">is_mascot=#{isMascot},</if>
+            <if test="isTimelessIcon !=null">is_timeless_icon=#{isTimelessIcon},</if>
+            <if test="isHengGuZunYao !=null">is_heng_gu_zun_yao=#{isHengGuZunYao},</if>
+        </set>
+        WHERE uuid=#{uuid};
+    </update>
+</mapper>

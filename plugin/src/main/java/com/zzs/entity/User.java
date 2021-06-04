@@ -1,5 +1,6 @@
 package com.zzs.entity;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 /**
@@ -8,6 +9,7 @@ import lombok.Data;
  */
 
 @Data
+@TableName(value = "t_user")
 public class User {
     private Long id;
 

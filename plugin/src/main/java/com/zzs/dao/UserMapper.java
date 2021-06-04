@@ -1,5 +1,6 @@
 package com.zzs.dao;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.zzs.entity.User;
 import org.apache.ibatis.annotations.Param;
 
@@ -7,7 +8,7 @@ import org.apache.ibatis.annotations.Param;
  * @author mountain
  * @since 2021/5/29 23:53
  */
-public interface UserDao extends BaseDao {
+public interface UserMapper extends BaseMapper<User> {
 
     int registerAccount(@Param("userName") String userName, @Param("password") String password, @Param("ipAddress") String ipAddress, @Param("uuid") String uuid);
 
