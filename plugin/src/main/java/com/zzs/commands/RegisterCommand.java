@@ -13,6 +13,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.Arrays;
 
 /**
  * @author mountain
@@ -62,7 +65,11 @@ public class RegisterCommand implements CommandExecutor {
             player.setGameMode(GameMode.SURVIVAL);
             PlayerInventory inventory = player.getInventory();
             ItemStack itemStack = new ItemStack(Material.CLOCK);
-            inventory.setItem(8, itemStack);
+            ItemMeta itemMeta = itemStack.getItemMeta();
+            itemMeta.setDisplayName("菜单");
+            itemMeta.setLore(Arrays.asList("右键打开菜单栏"));
+            itemStack.setItemMeta(itemMeta);
+            inventory.addItem(itemStack);
             player.sendMessage("§9〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓注册成功〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓");
             return true;
         }

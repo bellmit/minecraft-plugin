@@ -9,6 +9,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -25,7 +26,7 @@ public class CommonMethodUtil {
      * @return
      */
     public static Inventory createMenu() {
-        Inventory inventory = Bukkit.createInventory(null, 9, "菜单栏");
+        Inventory inventory = Bukkit.createInventory(null, 54, "菜单栏");
         ItemStack itemStack = new ItemStack(Material.PLAYER_HEAD);
         ItemMeta itemMeta = itemStack.getItemMeta();
         itemMeta.setDisplayName("个人信息");
@@ -35,6 +36,12 @@ public class CommonMethodUtil {
         itemMeta.setLore(infoLore);
         itemStack.setItemMeta(itemMeta);
         inventory.addItem(itemStack);
+        ItemStack beaconStack = new ItemStack(Material.NETHER_STAR);
+        ItemMeta beaconMeta = beaconStack.getItemMeta();
+        beaconMeta.setDisplayName("世界传送");
+        beaconMeta.setLore(Arrays.asList("右键显示所有世界"));
+        beaconStack.setItemMeta(beaconMeta);
+        inventory.setItem(2, beaconStack);
         return inventory;
     }
 

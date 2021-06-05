@@ -20,7 +20,7 @@ public class PlayerCommandPreprocessListener implements Listener {
         SqlSession sqlSession = SqlSessionUtil.getSqlSession();
         UserMapper userDao = sqlSession.getMapper(UserMapper.class);
         Boolean isLogin = userDao.findIsLoginByUuid(player.getUniqueId().toString());
-        if (!isLogin && !event.getMessage().contains("/login") && !event.getMessage().contains("/register")) {
+        if (!isLogin && !player.isOp() && !event.getMessage().contains("/login") && !event.getMessage().contains("/register")) {
             player.sendMessage("§c您还未登录！无权使用该命令！");
             event.setMessage("/o");
         }

@@ -24,6 +24,7 @@ public class Tutorial extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new PlayerCommandPreprocessListener(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerDeathListener(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerStatisticIncrementListener(), this);
+        Bukkit.getPluginManager().registerEvents(new ServerLoadListener(this), this);
 
         //调用注册命令方法
         this.getCommand("diamondSword").setExecutor(new LoginCommand());
@@ -31,7 +32,8 @@ public class Tutorial extends JavaPlugin {
         this.getCommand("login").setExecutor(new LoginCommand());
         this.getCommand("menu").setExecutor(new MenuCommand());
         this.getCommand("createWorld").setExecutor(new WorldCommand(this));
-        this.getCommand("warp").setExecutor(new WorldCommand(this));
+        this.getCommand("teleportWorld").setExecutor(new WorldCommand(this));
+        this.getCommand("worlds").setExecutor(new WorldCommand(this));
         this.getCommand("nowTime").setExecutor(new PlayTimeCommand());
     }
 }
