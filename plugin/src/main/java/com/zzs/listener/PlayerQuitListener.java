@@ -1,6 +1,7 @@
 package com.zzs.listener;
 
 import com.zzs.dao.UserMapper;
+import com.zzs.entity.User;
 import com.zzs.util.SqlSessionUtil;
 import org.apache.ibatis.session.SqlSession;
 import org.bukkit.entity.Player;
@@ -22,13 +23,16 @@ public class PlayerQuitListener implements Listener {
     public void onQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
         SqlSession sqlSession = SqlSessionUtil.getSqlSession();
-        UserMapper userDao = sqlSession.getMapper(UserMapper.class);
-        Boolean isLogin = userDao.findIsLoginByUuid(player.getUniqueId().toString());
-        if (!isLogin) {
+        UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+        User user = userMapper.selectById(player.getUniqueId().toString());
+        if (!user.getIsLogin()) {
             //如果玩家未登录情况下退出则不保存数据（加入的时候清空了背包防止保存覆盖）
             player.loadData();
+            return;
         }
-        userDao.updateIsLoginByUuid(player.getUniqueId().toString(), Boolean.FALSE);
-        sqlSession.commit();
+        user.setIsLogin(Boolean.FALSE);
+        userMapper.updateById(user);
+        player.saveData();
+        SqlSessionUtil.closerSqlSession(sqlSession);
     }
 }

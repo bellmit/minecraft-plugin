@@ -1,7 +1,11 @@
 package com.zzs.entity;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
+import lombok.experimental.Accessors;
+
+import java.io.Serializable;
 
 /**
  * @author mountain
@@ -10,14 +14,14 @@ import lombok.Data;
 
 @Data
 @TableName(value = "t_user")
-public class User {
-    private Long id;
+@Accessors(chain = true)
+public class User implements Serializable {
+    @TableId(value = "uuid")
+    private String uuid;
 
     private String userName;
 
     private String ipAddress;
-
-    private String uuid;
 
     private String password;
 

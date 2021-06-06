@@ -9,5 +9,4 @@ import com.zzs.entity.Achievement;
  */
 public interface AchievementMapper extends BaseMapper<Achievement> {
 
-    void updateIsStatus(Achievement achievement);
 }

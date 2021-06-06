@@ -1,10 +1,6 @@
 package com.zzs.commands;
 
-import com.zzs.dao.AchievementMapper;
-import com.zzs.entity.Achievement;
 import com.zzs.util.CommonMethodUtil;
-import com.zzs.util.SqlSessionUtil;
-import org.apache.ibatis.session.SqlSession;
 import org.bukkit.Statistic;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -24,15 +20,17 @@ public class PlayTimeCommand implements CommandExecutor {
             return false;
         }
         if (command.getName().equalsIgnoreCase("nowTime")) {
-            int statistic = player.getStatistic(Statistic.PLAY_ONE_MINUTE);
-            SqlSession sqlSession = SqlSessionUtil.getSqlSession();
-            AchievementMapper achievementMapper = sqlSession.getMapper(AchievementMapper.class);
-            Achievement achievement = new Achievement();
-            achievement.setUuid(player.getUniqueId().toString());
-            achievementMapper.insert(achievement);
-            sqlSession.commit();
+            int statistic = player.getStatistic(Statistic.FISH_CAUGHT);
+            player.sendMessage("鱼捕捉数：" + statistic);
+//            SqlSession sqlSession = SqlSessionUtil.getSqlSession();
+//            AchievementMapper achievementMapper = sqlSession.getMapper(AchievementMapper.class);
+//            Achievement achievement = new Achievement();
+//            achievement.setUuid(player.getUniqueId().toString());
+//            achievementMapper.insert(achievement);
+//            sqlSession.commit();
             return true;
         }
+
         return false;
     }
 }

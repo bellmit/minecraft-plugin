@@ -1,6 +1,8 @@
 package com.zzs.commands;
 
+import com.zzs.dao.AchievementMapper;
 import com.zzs.dao.UserMapper;
+import com.zzs.entity.Achievement;
 import com.zzs.entity.User;
 import com.zzs.util.CommonMethodUtil;
 import com.zzs.util.SqlSessionUtil;
@@ -44,8 +46,8 @@ public class RegisterCommand implements CommandExecutor {
                 return true;
             }
             SqlSession sqlSession = SqlSessionUtil.getSqlSession();
-            UserMapper userDao = sqlSession.getMapper(UserMapper.class);
-            User user = userDao.findUserByUuid(player.getUniqueId().toString());
+            UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+            User user = userMapper.selectById(player.getUniqueId().toString());
             if (user != null) {
                 if (user.getIsLogin()) {
                     player.sendMessage("§c禁止重复注册！");
@@ -56,8 +58,20 @@ public class RegisterCommand implements CommandExecutor {
                     return true;
                 }
             }
-            userDao.registerAccount(player.getName(), strings[0], player.getAddress().toString().replaceAll("/", ""), player.getUniqueId().toString());
-            sqlSession.commit();
+            User user1 = new User();
+            user1.setUuid(player.getUniqueId().toString())
+                    .setIpAddress(player.getAddress().toString())
+                    .setUserName(player.getName())
+                    .setPassword(strings[0]);
+            userMapper.insert(user1);
+
+            AchievementMapper achievementMapper = sqlSession.getMapper(AchievementMapper.class);
+            Achievement achievement = new Achievement();
+            achievement.setUuid(player.getUniqueId().toString());
+            achievementMapper.insert(achievement);
+
+            SqlSessionUtil.closerSqlSession(sqlSession);
+
             player.setWalkSpeed(0.2F);
             player.setFlySpeed(0.1F);
             player.setInvulnerable(Boolean.FALSE);

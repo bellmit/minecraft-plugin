@@ -1,6 +1,7 @@
 package com.zzs.listener;
 
 import com.zzs.dao.UserMapper;
+import com.zzs.entity.User;
 import com.zzs.util.SqlSessionUtil;
 import org.apache.ibatis.session.SqlSession;
 import org.bukkit.entity.Player;
@@ -18,11 +19,19 @@ public class PlayerCommandPreprocessListener implements Listener {
     public void onCommandPreprocess(PlayerCommandPreprocessEvent event) {
         Player player = event.getPlayer();
         SqlSession sqlSession = SqlSessionUtil.getSqlSession();
-        UserMapper userDao = sqlSession.getMapper(UserMapper.class);
-        Boolean isLogin = userDao.findIsLoginByUuid(player.getUniqueId().toString());
-        if (!isLogin && !player.isOp() && !event.getMessage().contains("/login") && !event.getMessage().contains("/register")) {
-            player.sendMessage("§c您还未登录！无权使用该命令！");
-            event.setMessage("/o");
+        UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+        User user = userMapper.selectById(player.getUniqueId().toString());
+        if (!event.getMessage().contains("/login") && !event.getMessage().contains("/register") && !player.isOp()) {
+            if (user == null) {
+                player.sendMessage("§c您还未注册！无权使用该命令！");
+                event.setMessage("/o");
+            }
+            if (!user.getIsLogin()) {
+                player.sendMessage("§c您还未登录！无权使用该命令！");
+                event.setMessage("/o");
+            }
         }
+        SqlSessionUtil.closerSqlSession(sqlSession);
     }
 }
+

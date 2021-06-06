@@ -1,9 +1,10 @@
 package com.zzs.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
+
+import java.io.Serializable;
 
 /**
  * 称号
@@ -13,10 +14,8 @@ import lombok.Data;
  */
 @TableName(value = "t_achievement")
 @Data
-public class Achievement {
-    @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
-
+public class Achievement implements Serializable {
+    @TableId(value = "uuid")
     private String uuid;
     /**
      * 【萌新】

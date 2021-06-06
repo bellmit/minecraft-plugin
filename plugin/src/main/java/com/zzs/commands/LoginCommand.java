@@ -34,20 +34,23 @@ public class LoginCommand implements CommandExecutor {
             return false;
         }
         SqlSession sqlSession = SqlSessionUtil.getSqlSession();
-        UserMapper userDao = sqlSession.getMapper(UserMapper.class);
+        UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
         if (command.getName().equalsIgnoreCase("login")) {
-            User user = userDao.findByUuidAndPassword(player.getUniqueId().toString(), strings[0]);
+            User user = userMapper.selectById(player.getUniqueId().toString());
+            if (!(strings.length == 1)) {
+                player.sendMessage("§c请查看正确的命令使用规则！参数之间使用空格隔开！");
+                return false;
+            }
             if (user == null) {
-                player.sendMessage("§c您输入的密码有误，请重新输入！");
+                player.sendMessage("§c请注册后再使用登录命令！");
                 return true;
+            }
+            if (!user.getPassword().equals(strings[0])) {
+                player.sendMessage("§c您输入的密码有误，请重新输入！");
             }
             if (user.getIsLogin()) {
                 player.sendMessage("§c请勿重复登录！");
                 return true;
-            }
-            if (!(strings.length == 1)) {
-                player.sendMessage("§c请查看正确的命令使用规则！参数之间使用空格隔开！");
-                return false;
             }
             player.loadData();
             player.setWalkSpeed(0.2F);
@@ -55,8 +58,10 @@ public class LoginCommand implements CommandExecutor {
             player.setGameMode(GameMode.CREATIVE);
             player.setGameMode(GameMode.SURVIVAL);
             player.setInvulnerable(Boolean.FALSE);
-            userDao.updateIsLoginByUuid(player.getUniqueId().toString(), Boolean.TRUE);
-            sqlSession.commit();
+
+            user.setIsLogin(Boolean.TRUE);
+            userMapper.updateById(user);
+            SqlSessionUtil.closerSqlSession(sqlSession);
             player.sendMessage("§9〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓欢迎回来〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓");
             return true;
         }

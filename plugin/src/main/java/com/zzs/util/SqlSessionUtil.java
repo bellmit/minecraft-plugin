@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.MybatisSqlSessionFactoryBuilder;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.mybatis.spring.SqlSessionUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -24,7 +25,18 @@ public class SqlSessionUtil {
             e.printStackTrace();
         }
         SqlSessionFactory sqlSessionFactory = new MybatisSqlSessionFactoryBuilder().build(inputStream);
-        SqlSession sqlSession = sqlSessionFactory.openSession();
+        SqlSession sqlSession = SqlSessionUtils.getSqlSession(sqlSessionFactory);
         return sqlSession;
+    }
+
+    public static void closerSqlSession(SqlSession sqlSession) {
+        try {
+            sqlSession.commit();
+        } catch (Exception e) {
+            sqlSession.rollback();
+            e.printStackTrace();
+        } finally {
+            sqlSession.close();
+        }
     }
 }

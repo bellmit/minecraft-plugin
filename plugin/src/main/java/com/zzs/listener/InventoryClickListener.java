@@ -38,9 +38,22 @@ public class InventoryClickListener implements Listener {
     public void onClick(InventoryClickEvent event) {
         Player player = (Player) event.getWhoClicked();
         ItemStack currentItem = event.getCurrentItem();
+        if (!event.getClick().equals(ClickType.RIGHT) && currentItem != null) {
+            ItemMeta itemMeta = currentItem.getItemMeta();
+            List<String> stringList = Arrays.asList("个人信息", "传送菜单", "主城", "生存世界", "资源世界", "地狱", "末地");
+            stringList.forEach(s -> {
+                //非右键则撤销玩家操作
+                if (itemMeta.getDisplayName().contains(s)) {
+                    event.setCancelled(true);
+                }
+            });
+        }
         if (event.getClick().equals(ClickType.RIGHT) && currentItem != null) {
             String displayName = currentItem.getItemMeta().getDisplayName();
             switch (displayName) {
+                case "个人信息":
+                    event.setCancelled(true);
+                    break;
                 case "菜单":
                     Inventory menu = CommonMethodUtil.createMenu();
                     player.openInventory(menu);
@@ -71,45 +84,39 @@ public class InventoryClickListener implements Listener {
                     break;
             }
         }
-
-        if (!event.getClick().equals(ClickType.RIGHT) && currentItem != null) {
-            ItemMeta itemMeta = currentItem.getItemMeta();
-            List<String> stringList = Arrays.asList("传送菜单", "主城", "生存世界", "资源世界", "地狱", "末地");
-            stringList.forEach(s -> {
-                //非右键则撤销玩家操作
-                if (itemMeta.getDisplayName().contains(s)) {
-                    event.setCancelled(true);
-                }
-            });
-        }
-
     }
 
     private Inventory createTransferList() {
         Inventory inventory = Bukkit.createInventory(null, 9, "所有世界");
+        ItemStack beacon = new ItemStack(Material.BEACON);
+        ItemMeta beaconItemMeta = beacon.getItemMeta();
+        beaconItemMeta.setDisplayName("主城");
+        beacon.setItemMeta(beaconItemMeta);
+        inventory.setItem(0, beacon);
+
         ItemStack grassBlock = new ItemStack(Material.GRASS_BLOCK);
         ItemMeta grassBlockItemMeta = grassBlock.getItemMeta();
         grassBlockItemMeta.setDisplayName("生存世界");
         grassBlock.setItemMeta(grassBlockItemMeta);
-        inventory.addItem(grassBlock);
+        inventory.setItem(2, grassBlock);
 
         ItemStack diamondOre = new ItemStack(Material.DIAMOND_ORE);
         ItemMeta diamondOreItemMeta = diamondOre.getItemMeta();
         diamondOreItemMeta.setDisplayName("资源世界");
         diamondOre.setItemMeta(diamondOreItemMeta);
-        inventory.setItem(2, diamondOre);
+        inventory.setItem(4, diamondOre);
 
         ItemStack netherrack = new ItemStack(Material.NETHERRACK);
         ItemMeta netherrackItemMeta = netherrack.getItemMeta();
         netherrackItemMeta.setDisplayName("地狱");
         netherrack.setItemMeta(netherrackItemMeta);
-        inventory.setItem(4, netherrack);
+        inventory.setItem(6, netherrack);
 
         ItemStack endStone = new ItemStack(Material.END_STONE);
         ItemMeta endStoneItemMeta = endStone.getItemMeta();
         endStoneItemMeta.setDisplayName("末地");
         endStone.setItemMeta(endStoneItemMeta);
-        inventory.setItem(6, endStone);
+        inventory.setItem(8, endStone);
         return inventory;
     }
 }
