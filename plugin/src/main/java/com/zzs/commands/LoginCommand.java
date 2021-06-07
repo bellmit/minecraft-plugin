@@ -47,6 +47,7 @@ public class LoginCommand implements CommandExecutor {
             }
             if (!user.getPassword().equals(strings[0])) {
                 player.sendMessage("§c您输入的密码有误，请重新输入！");
+                return true;
             }
             if (user.getIsLogin()) {
                 player.sendMessage("§c请勿重复登录！");

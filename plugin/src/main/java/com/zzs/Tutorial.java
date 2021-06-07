@@ -25,10 +25,6 @@ public class Tutorial extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new PlayerDeathListener(), this);
         Bukkit.getPluginManager().registerEvents(new ServerLoadListener(this), this);
 
-        new Thread(() -> {
-            getLogger().info(Thread.currentThread().getName() + "：线程开始执行异步监听");
-            Bukkit.getPluginManager().registerEvents(new PlayerStatisticIncrementListener(), this);
-        }).start();
         Bukkit.getPluginManager().registerEvents(new PlayerStatisticIncrementListener(), this);
 
         //调用注册命令方法
