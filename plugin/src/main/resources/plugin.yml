@@ -25,3 +25,5 @@ commands:
     description: "获取游戏时间"
   worlds:
     description: "获取世界列表"
+  test:
+    description: "各种测试命令"

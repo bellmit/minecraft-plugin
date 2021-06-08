@@ -39,14 +39,15 @@ public class InventoryClickListener implements Listener {
         Player player = (Player) event.getWhoClicked();
         ItemStack currentItem = event.getCurrentItem();
         if (!event.getClick().equals(ClickType.RIGHT) && currentItem != null) {
-            ItemMeta itemMeta = currentItem.getItemMeta();
-            List<String> stringList = Arrays.asList("个人信息", "传送菜单", "主城", "生存世界", "资源世界", "地狱", "末地");
-            stringList.forEach(s -> {
-                //非右键则撤销玩家操作
-                if (itemMeta.getDisplayName().contains(s)) {
-                    event.setCancelled(true);
-                }
-            });
+            if (currentItem.hasItemMeta()) {
+                ItemMeta itemMeta = currentItem.getItemMeta();
+                List<String> stringList = Arrays.asList("个人信息", "传送菜单", "主城", "生存世界", "资源世界", "地狱", "末地");
+                stringList.forEach(s -> {
+                    if (itemMeta.getDisplayName().contains(s)) {
+                        event.setCancelled(true);
+                    }
+                });
+            }
         }
         if (event.getClick().equals(ClickType.RIGHT) && currentItem != null) {
             String displayName = currentItem.getItemMeta().getDisplayName();

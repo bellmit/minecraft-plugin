@@ -36,6 +36,7 @@ public class Tutorial extends JavaPlugin {
         this.getCommand("teleportWorld").setExecutor(new WorldCommand(this));
         this.getCommand("worlds").setExecutor(new WorldCommand(this));
         this.getCommand("nowTime").setExecutor(new PlayTimeCommand());
+        this.getCommand("test").setExecutor(new TestCommand());
 
     }
 }

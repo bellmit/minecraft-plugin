@@ -78,10 +78,6 @@ public class Achievement implements Serializable {
      */
     private Boolean isBiliAnchor;
     /**
-     * 【虎牙主播】
-     */
-    private Boolean isHuYaAnchor;
-    /**
      * 【元老】
      */
     private Boolean isOldHead;
@@ -97,6 +93,10 @@ public class Achievement implements Serializable {
      * 【巡查组】
      */
     private Boolean isPatrolGroup;
+    /**
+     * 【虎牙主播】
+     */
+    private Boolean isHuYaAnchor;
     /**
      * 【空前绝后】
      */
