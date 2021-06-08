@@ -77,20 +77,6 @@ public class PlayerStatisticIncrementListener implements Listener {
         }
     }
 
-    private void isAccomplishBeginner(Player player, int timeCount) {
-        //累计在线24h。游戏中每20/s
-        if (timeCount == 1728000) {
-            this.updateAchievementStatus(player, "【初学者】");
-        }
-    }
-
-    private void isAccomplishKnowledgePeople(Player player, int timeCount) {
-        //累计在线7天
-        if (timeCount == 12096000) {
-            this.updateAchievementStatus(player, "【学识者】");
-        }
-    }
-
     /**
      * 是否达成伐木工称号
      * 橡树木*640  白桦木*640  从林木*640
@@ -190,19 +176,15 @@ public class PlayerStatisticIncrementListener implements Listener {
     }
 
     /**
-     * 是否达成渔夫称号
-     * 钓到的鱼数 * 1000
+     * 是否达成学识者称号
+     * 累计在线7天,游戏中每20/s
      *
      * @param player
+     * @param timeCount 累计在线时间
      */
-    private void isAccomplishFisher(Player player) {
-        //钓鱼获得次数
-        int fishCount = player.getStatistic(Statistic.FISH_CAUGHT);
-        if (fishCount == 1000) {
-            fishCount++;
-            //更改变量防止重复运行该代码造成数据库连接过多
-            player.setStatistic(Statistic.FISH_CAUGHT, fishCount);
-            this.updateAchievementStatus(player, "【渔夫】");
+    private void isAccomplishKnowledgePeople(Player player, int timeCount) {
+        if (timeCount == 12096000) {
+            this.updateAchievementStatus(player, "【学识者】");
         }
     }
 
@@ -269,6 +251,42 @@ public class PlayerStatisticIncrementListener implements Listener {
         }
     }
 
+    /**
+     * 是否达成渔夫称号
+     * 钓到的鱼数 * 1000
+     *
+     * @param player
+     */
+    private void isAccomplishFisher(Player player) {
+        //钓鱼获得次数
+        int fishCount = player.getStatistic(Statistic.FISH_CAUGHT);
+        if (fishCount == 1000) {
+            fishCount++;
+            //更改变量防止重复运行该代码造成数据库连接过多
+            player.setStatistic(Statistic.FISH_CAUGHT, fishCount);
+            this.updateAchievementStatus(player, "【渔夫】");
+        }
+    }
+
+    /**
+     * 是否达成初学者称号
+     * 累计在线24h,游戏中每20/s
+     *
+     * @param player
+     * @param timeCount
+     */
+    private void isAccomplishBeginner(Player player, int timeCount) {
+        if (timeCount == 1728000) {
+            this.updateAchievementStatus(player, "【初学者】");
+        }
+    }
+
+    /**
+     * 修改称号获得状态
+     *
+     * @param player
+     * @param message
+     */
     private void updateAchievementStatus(Player player, String message) {
         SqlSession sqlSession = SqlSessionUtil.getSqlSession();
         AchievementMapper achievementMapper = sqlSession.getMapper(AchievementMapper.class);
