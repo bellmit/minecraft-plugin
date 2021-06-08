@@ -10,6 +10,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
 /**
+ * 玩家命令监听器
+ *
  * @author mountain
  * @since 2021/6/2 0:46
  */
