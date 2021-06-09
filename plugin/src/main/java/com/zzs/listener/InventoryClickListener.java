@@ -11,6 +11,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -60,55 +61,58 @@ public class InventoryClickListener implements Listener {
             }
         }
         if (event.getClick().equals(ClickType.RIGHT) && currentItem != null) {
-            String displayName = currentItem.getItemMeta().getDisplayName();
-            switch (displayName) {
-                case "个人信息":
-                    event.setCancelled(true);
-                    break;
-                case "菜单":
-                    Inventory menu = CommonMethodUtil.createMenu();
-                    player.openInventory(menu);
-                    break;
-                case "传送菜单":
-                    Inventory teleportMenu = this.createTransferList(WorldList);
-                    player.openInventory(teleportMenu);
-                    break;
-                case "主城":
-                    World world_main_city = plugin.getServer().getWorld("main_city");
-                    player.teleport(world_main_city.getSpawnLocation());
-                    break;
-                case "生存世界":
-                    World world = plugin.getServer().getWorld("world");
-                    player.teleport(world.getSpawnLocation());
-                    break;
-                case "资源世界":
-                    World world_resource = plugin.getServer().getWorld("world_resource");
-                    player.teleport(world_resource.getSpawnLocation());
-                    break;
-                case "地狱":
-                    World world_nether = plugin.getServer().getWorld("world_nether");
-                    player.teleport(world_nether.getSpawnLocation());
-                    break;
-                case "末地":
-                    World world_the_end = plugin.getServer().getWorld("world_the_end");
-                    player.teleport(world_the_end.getSpawnLocation());
-                    break;
-                case "world_1":
-                    World world_1 = plugin.getServer().getWorld("world_1");
-                    player.teleport(world_1.getSpawnLocation());
-                    break;
-                case "world_2":
-                    World world_2 = plugin.getServer().getWorld("world_2");
-                    player.teleport(world_2.getSpawnLocation());
-                    break;
-                case "akira_rakani":
-                    World akira_rakani = plugin.getServer().getWorld("akira_rakani");
-                    player.teleport(akira_rakani.getSpawnLocation());
-                    break;
-                case "jin_gan_dian":
-                    World jin_gan_dian = plugin.getServer().getWorld("jin_gan_dian");
-                    player.teleport(jin_gan_dian.getSpawnLocation());
-                    break;
+            ItemMeta itemMeta = currentItem.getItemMeta();
+            if (itemMeta != null) {
+                String displayName = itemMeta.getDisplayName();
+                switch (displayName) {
+                    case "个人信息":
+                        event.setCancelled(true);
+                        break;
+                    case "菜单":
+                        Inventory menu = CommonMethodUtil.createMenu();
+                        InventoryView inventoryView = player.openInventory(menu);
+                        break;
+                    case "传送菜单":
+                        Inventory teleportMenu = this.createTransferList(WorldList);
+                        player.openInventory(teleportMenu);
+                        break;
+                    case "主城":
+                        World world_main_city = plugin.getServer().getWorld("main_city");
+                        player.teleport(world_main_city.getSpawnLocation());
+                        break;
+                    case "生存世界":
+                        World world = plugin.getServer().getWorld("world");
+                        player.teleport(world.getSpawnLocation());
+                        break;
+                    case "资源世界":
+                        World world_resource = plugin.getServer().getWorld("world_resource");
+                        player.teleport(world_resource.getSpawnLocation());
+                        break;
+                    case "地狱":
+                        World world_nether = plugin.getServer().getWorld("world_nether");
+                        player.teleport(world_nether.getSpawnLocation());
+                        break;
+                    case "末地":
+                        World world_the_end = plugin.getServer().getWorld("world_the_end");
+                        player.teleport(world_the_end.getSpawnLocation());
+                        break;
+                    case "world_1":
+                        World world_1 = plugin.getServer().getWorld("world_1");
+                        player.teleport(world_1.getSpawnLocation());
+                        break;
+                    case "world_2":
+                        World world_2 = plugin.getServer().getWorld("world_2");
+                        player.teleport(world_2.getSpawnLocation());
+                        break;
+                    case "akira_rakani":
+                        World akira_rakani = plugin.getServer().getWorld("akira_rakani");
+                        player.teleport(akira_rakani.getSpawnLocation());
+                        break;
+                    case "jin_gan_dian":
+                        World jin_gan_dian = plugin.getServer().getWorld("jin_gan_dian");
+                        player.teleport(jin_gan_dian.getSpawnLocation());
+                        break;
+                }
             }
         }
     }
