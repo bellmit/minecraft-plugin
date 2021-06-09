@@ -43,43 +43,48 @@ public class PlayerStatisticIncrementListener implements Listener {
             this.isAccomplishExplorer(player);
             //伐木工
             this.isAccomplishTimberjack(player);
-           /* //附魔师
+            //附魔师
             this.isAccomplishEnchanter(player);
             //巫师
-            this.isAccomplishSorcerer(player);
-            //屠夫
-            this.isAccomplishButcher(player);
-            //倾国倾城
-            this.isAccomplishTheEmpressDowager(player);
-            //B站主播
-            this.isAccomplishBiliAnchor(player);
-            //元老
-            this.isAccomplishOldHead(player);
-            //小财主
-            this.isAccomplishSmallRichMan(player);
-            //杀戮者
-            this.isAccomplishPlayerKiller(player);
-            //巡查组
-            this.isAccomplishPatrolGroup(player);
-            //虎牙主播
-            this.isAccomplishHuYaAnchor(player);
-            //空前绝后
-            this.isAccomplishACompleteOneOff(player);
-            //财大气粗
-            this.isAccomplishOstentatious(player);
-            //头颅收集者
-            this.isAccomplishHeadCollector(player);
-            //吉祥物
-            this.isAccomplishMascot(player);
-            //绝代风华
-            this.isAccomplishTimelessIcon(player);
-            //恒古尊耀
-            this.isAccomplishHengGuZunYao(player);*/
+//            this.isAccomplishSorcerer(player);
+//            //屠夫
+//            this.isAccomplishButcher(player);
+//            //倾国倾城
+//            this.isAccomplishTheEmpressDowager(player);
+//            //B站主播
+//            this.isAccomplishBiliAnchor(player);
+//            //元老
+//            this.isAccomplishOldHead(player);
+//            //小财主
+//            this.isAccomplishSmallRichMan(player);
+//            //杀戮者
+//            this.isAccomplishPlayerKiller(player);
+//            //巡查组
+//            this.isAccomplishPatrolGroup(player);
+//            //虎牙主播
+//            this.isAccomplishHuYaAnchor(player);
+//            //空前绝后
+//            this.isAccomplishACompleteOneOff(player);
+//            //财大气粗
+//            this.isAccomplishOstentatious(player);
+//            //头颅收集者
+//            this.isAccomplishHeadCollector(player);
+//            //吉祥物
+//            this.isAccomplishMascot(player);
+//            //绝代风华
+//            this.isAccomplishTimelessIcon(player);
+//            //恒古尊耀
+//            this.isAccomplishHengGuZunYao(player);
 
         }
     }
 
+    private void isAccomplishEnchanter(Player player) {
+        player.getStatistic(Statistic.ITEM_ENCHANTED);
+    }
+
     /**
+     * t
      * 是否达成伐木工称号
      * 橡树木*640  白桦木*640  从林木*640
      *
