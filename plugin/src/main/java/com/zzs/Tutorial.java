@@ -20,7 +20,6 @@ public class Tutorial extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new PlayerJoinListener(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerQuitListener(), this);
         Bukkit.getPluginManager().registerEvents(new InventoryClickListener(this), this);
-        Bukkit.getPluginManager().registerEvents(new PlayerDropItemListener(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerCommandPreprocessListener(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerDeathListener(), this);
         Bukkit.getPluginManager().registerEvents(new ServerLoadListener(this), this);
@@ -33,10 +32,8 @@ public class Tutorial extends JavaPlugin {
         this.getCommand("login").setExecutor(new LoginCommand());
         this.getCommand("menu").setExecutor(new MenuCommand());
         this.getCommand("createWorld").setExecutor(new WorldCommand(this));
-        this.getCommand("teleportWorld").setExecutor(new WorldCommand(this));
         this.getCommand("worlds").setExecutor(new WorldCommand(this));
         this.getCommand("nowTime").setExecutor(new PlayTimeCommand());
         this.getCommand("test").setExecutor(new TestCommand());
-
     }
 }

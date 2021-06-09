@@ -18,12 +18,13 @@ commands:
   register:
     description: "注册账号"
     usage: /register [密码] [再次确认密码]
-  teleportWorld:
+  warp:
     description: "传送世界"
-    usage: /teleportWorld [需传送的世界名称]
+    usage: /warp [需传送的世界名称]
   nowTime:
     description: "获取游戏时间"
   worlds:
     description: "获取世界列表"
   test:
     description: "各种测试命令"
+
