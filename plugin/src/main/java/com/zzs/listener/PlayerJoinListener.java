@@ -26,9 +26,12 @@ public class PlayerJoinListener implements Listener {
         player.getInventory().clear();
         player.setInvulnerable(Boolean.TRUE);
         player.setGameMode(GameMode.ADVENTURE);
-        player.sendMessage("§9〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓欢迎加入〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓");
-        String[] s1 = {"按T输入登录命令 §a/login [密码]", "如 /login abc 123456",
-                "按T输入注册命令 §a/register  [密码] [再次确认密码]", "如 /register abc 123456 123456"};
+        player.sendMessage("§6〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓");
+        player.sendMessage("§6〓                          " + "§l§e欢迎加入" + "                            §6〓");
+        player.sendMessage("§6〓                          " + "§l§a四季甜橙" + "                            §6〓");
+        player.sendMessage("§6〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓");
+        String[] s1 = {"请输入 §2/register  " + "§f<" + "§2密码" + "§f>" + " " + "§f<" + "§2再次确认密码" + "§f>" + " 注册", "如 /register 123456 123456",
+                "请输入 §2/login " + "§f<" + "§2密码" + "§f>" + " 登录", "如 /login 123456"};
         player.sendMessage(s1);
     }
 }

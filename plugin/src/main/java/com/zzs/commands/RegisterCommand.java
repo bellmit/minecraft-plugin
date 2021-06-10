@@ -70,7 +70,7 @@ public class RegisterCommand implements CommandExecutor {
             achievement.setUuid(player.getUniqueId().toString());
             achievementMapper.insert(achievement);
 
-            SqlSessionUtil.closerSqlSession(sqlSession);
+            SqlSessionUtil.closeSqlSession(sqlSession);
 
             player.setWalkSpeed(0.2F);
             player.setFlySpeed(0.1F);
@@ -84,7 +84,7 @@ public class RegisterCommand implements CommandExecutor {
             itemMeta.setLore(Arrays.asList("右键打开菜单栏"));
             itemStack.setItemMeta(itemMeta);
             inventory.addItem(itemStack);
-            player.sendMessage("§9〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓注册成功〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓");
+            player.sendMessage("§a注册成功");
             return true;
         }
         return false;

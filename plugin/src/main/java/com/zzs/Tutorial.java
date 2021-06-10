@@ -24,7 +24,8 @@ public class Tutorial extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new PlayerDeathListener(), this);
         Bukkit.getPluginManager().registerEvents(new ServerLoadListener(this), this);
         Bukkit.getPluginManager().registerEvents(new PlayerStatisticIncrementListener(), this);
-        Bukkit.getPluginManager().registerEvents(new InventoryMoveItemListener(), this);
+//        Bukkit.getPluginManager().registerEvents(new InventoryDragListener(), this);
+        Bukkit.getPluginManager().registerEvents(new PlayerInteractListener(), this);
 
 
         //调用注册命令方法

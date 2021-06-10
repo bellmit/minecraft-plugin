@@ -33,6 +33,6 @@ public class PlayerQuitListener implements Listener {
         user.setIsLogin(Boolean.FALSE);
         userMapper.updateById(user);
         player.saveData();
-        SqlSessionUtil.closerSqlSession(sqlSession);
+        SqlSessionUtil.closeSqlSession(sqlSession);
     }
 }

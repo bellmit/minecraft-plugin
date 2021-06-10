@@ -41,9 +41,16 @@ public class CommonMethodUtil {
         ItemStack beaconStack = new ItemStack(Material.END_CRYSTAL);
         ItemMeta beaconMeta = beaconStack.getItemMeta();
         beaconMeta.setDisplayName("传送菜单");
-        beaconMeta.setLore(Arrays.asList("右键显示所有世界"));
+        beaconMeta.setLore(Arrays.asList("点击显示所有世界"));
         beaconStack.setItemMeta(beaconMeta);
         inventory.setItem(2, beaconStack);
+
+        //称号簿
+        ItemStack bookStack = new ItemStack(Material.BOOK);
+        ItemMeta bookMeta = bookStack.getItemMeta();
+        bookMeta.setDisplayName("§5称号簿");
+        bookStack.setItemMeta(bookMeta);
+        inventory.setItem(4, bookStack);
         return inventory;
     }
 

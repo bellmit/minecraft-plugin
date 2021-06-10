@@ -62,8 +62,8 @@ public class LoginCommand implements CommandExecutor {
 
             user.setIsLogin(Boolean.TRUE);
             userMapper.updateById(user);
-            SqlSessionUtil.closerSqlSession(sqlSession);
-            player.sendMessage("§9〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓欢迎回来〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓");
+            SqlSessionUtil.closeSqlSession(sqlSession);
+            player.sendMessage("§a登录成功");
             return true;
         }
         if (command.getName().equalsIgnoreCase("diamondSword")) {

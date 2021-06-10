@@ -26,7 +26,7 @@ public class PlayerStatisticIncrementListener implements Listener {
         if (event.getStatistic() != null) {
             int timeCount = player.getStatistic(Statistic.PLAY_ONE_MINUTE);
             //初学者
-            isAccomplishBeginner(player, timeCount);
+            this.isAccomplishBeginner(player, timeCount);
             //渔夫
             this.isAccomplishFisher(player);
             //矿工
@@ -79,12 +79,22 @@ public class PlayerStatisticIncrementListener implements Listener {
         }
     }
 
+    /**
+     * 是否达成附魔师称号
+     * 附魔物品*1000
+     *
+     * @param player
+     */
     private void isAccomplishEnchanter(Player player) {
-        player.getStatistic(Statistic.ITEM_ENCHANTED);
+        int itemEnchantedCount = player.getStatistic(Statistic.ITEM_ENCHANTED);
+        if (itemEnchantedCount == 1000) {
+            itemEnchantedCount++;
+            player.setStatistic(Statistic.ITEM_ENCHANTED, itemEnchantedCount);
+            this.updateAchievementStatus(player, "【附魔师】");
+        }
     }
 
     /**
-     * t
      * 是否达成伐木工称号
      * 橡树木*640  白桦木*640  从林木*640
      *
@@ -383,7 +393,7 @@ public class PlayerStatisticIncrementListener implements Listener {
                 break;
         }
         achievementMapper.updateById(achievement);
-        SqlSessionUtil.closerSqlSession(sqlSession);
+        SqlSessionUtil.closeSqlSession(sqlSession);
         player.sendMessage("§f已获得称号  " + "§a" + message);
     }
 }

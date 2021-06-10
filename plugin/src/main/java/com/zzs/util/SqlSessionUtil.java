@@ -29,7 +29,7 @@ public class SqlSessionUtil {
         return sqlSession;
     }
 
-    public static void closerSqlSession(SqlSession sqlSession) {
+    public static void closeSqlSession(SqlSession sqlSession) {
         try {
             sqlSession.commit();
         } catch (Exception e) {

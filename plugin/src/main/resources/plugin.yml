@@ -13,7 +13,7 @@ commands:
     description: "登录账号"
     usage: /pw [密码]
   diamondSword:
-    description: "生成测试钻石剑"
+    description: "石中剑"
     usage: "您没有权限使用该指令"  #指令的用法 当onCommand()方法返回false时提示这里的内容
   register:
     description: "注册账号"
