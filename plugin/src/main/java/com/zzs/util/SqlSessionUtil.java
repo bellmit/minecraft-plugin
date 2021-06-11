@@ -29,14 +29,12 @@ public class SqlSessionUtil {
         return sqlSession;
     }
 
-    public static void closeSqlSession(SqlSession sqlSession) {
+    public static void commitSql(SqlSession sqlSession) {
         try {
             sqlSession.commit();
         } catch (Exception e) {
             sqlSession.rollback();
             e.printStackTrace();
-        } finally {
-            sqlSession.close();
         }
     }
 }
