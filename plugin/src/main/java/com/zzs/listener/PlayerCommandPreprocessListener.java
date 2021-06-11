@@ -33,7 +33,7 @@ public class PlayerCommandPreprocessListener implements Listener {
                 event.setMessage("/o");
             }
         }
-        SqlSessionUtil.closeSqlSession(sqlSession);
+        SqlSessionUtil.commitSql(sqlSession);
     }
 }
 

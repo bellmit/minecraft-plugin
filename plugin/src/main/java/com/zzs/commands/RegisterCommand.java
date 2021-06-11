@@ -70,7 +70,7 @@ public class RegisterCommand implements CommandExecutor {
             achievement.setUuid(player.getUniqueId().toString());
             achievementMapper.insert(achievement);
 
-            SqlSessionUtil.closeSqlSession(sqlSession);
+            SqlSessionUtil.commitSql(sqlSession);
 
             player.setWalkSpeed(0.2F);
             player.setFlySpeed(0.1F);

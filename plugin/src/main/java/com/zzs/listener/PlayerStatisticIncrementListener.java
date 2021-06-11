@@ -393,7 +393,7 @@ public class PlayerStatisticIncrementListener implements Listener {
                 break;
         }
         achievementMapper.updateById(achievement);
-        SqlSessionUtil.closeSqlSession(sqlSession);
+        SqlSessionUtil.commitSql(sqlSession);
         player.sendMessage("§f已获得称号  " + "§a" + message);
     }
 }

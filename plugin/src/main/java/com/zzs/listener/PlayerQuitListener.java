@@ -25,6 +25,9 @@ public class PlayerQuitListener implements Listener {
         SqlSession sqlSession = SqlSessionUtil.getSqlSession();
         UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
         User user = userMapper.selectById(player.getUniqueId().toString());
+        if (user == null) {
+            return;
+        }
         if (!user.getIsLogin()) {
             //如果玩家未登录情况下退出则不保存数据（加入的时候清空了背包防止保存覆盖）
             player.loadData();
@@ -33,6 +36,6 @@ public class PlayerQuitListener implements Listener {
         user.setIsLogin(Boolean.FALSE);
         userMapper.updateById(user);
         player.saveData();
-        SqlSessionUtil.closeSqlSession(sqlSession);
+        SqlSessionUtil.commitSql(sqlSession);
     }
 }
