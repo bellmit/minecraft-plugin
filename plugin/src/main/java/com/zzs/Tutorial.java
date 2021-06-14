@@ -24,7 +24,6 @@ public class Tutorial extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new PlayerDeathListener(), this);
         Bukkit.getPluginManager().registerEvents(new ServerLoadListener(this), this);
         Bukkit.getPluginManager().registerEvents(new PlayerStatisticIncrementListener(), this);
-//        Bukkit.getPluginManager().registerEvents(new InventoryDragListener(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerInteractListener(), this);
 
 
@@ -36,6 +35,7 @@ public class Tutorial extends JavaPlugin {
         this.getCommand("createWorld").setExecutor(new WorldCommand(this));
         this.getCommand("worlds").setExecutor(new WorldCommand(this));
         this.getCommand("nowTime").setExecutor(new PlayTimeCommand());
+        this.getCommand("updateTheEmpressDowager").setExecutor(new AchievementCommand());
         this.getCommand("test").setExecutor(new TestCommand());
     }
 }

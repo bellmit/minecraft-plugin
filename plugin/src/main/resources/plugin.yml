@@ -27,4 +27,6 @@ commands:
     description: "获取世界列表"
   test:
     description: "各种测试命令"
-
+  updateTheEmpressDowager:
+    description: "倾国倾城"
+    usage: /updateTheEmpressDowager [玩家名]

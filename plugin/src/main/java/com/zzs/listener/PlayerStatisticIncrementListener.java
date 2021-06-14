@@ -19,88 +19,123 @@ import org.bukkit.event.player.PlayerStatisticIncrementEvent;
  * @Date 2021/6/4 10:25
  */
 public class PlayerStatisticIncrementListener implements Listener {
+    private Player player;
 
     @EventHandler
     public void StatisticIncrement(PlayerStatisticIncrementEvent event) {
-        Player player = event.getPlayer();
+        player = event.getPlayer();
         if (event.getStatistic() != null) {
             int timeCount = player.getStatistic(Statistic.PLAY_ONE_MINUTE);
             //初学者
-            this.isAccomplishBeginner(player, timeCount);
+            this.isAccomplishBeginner(timeCount);
             //渔夫
-            this.isAccomplishFisher(player);
+            this.isAccomplishFisher();
             //矿工
-            this.isAccomplishMiner(player);
+            this.isAccomplishMiner();
             //农夫
-            this.isAccomplishFarmer(player);
+            this.isAccomplishFarmer();
             //学识者
-            isAccomplishKnowledgePeople(player, timeCount);
+            isAccomplishKnowledgePeople(timeCount);
             //钻石大亨
-            this.isAccomplishDiamondBigShort(player);
+            this.isAccomplishDiamondBigShort();
             //猎尸者
-            this.isAccomplishHuntingCorpse(player);
+            this.isAccomplishHuntingCorpse();
             //探险家
-            this.isAccomplishExplorer(player);
+            this.isAccomplishExplorer();
             //伐木工
-            this.isAccomplishTimberjack(player);
+            this.isAccomplishTimberjack();
             //附魔师
-            this.isAccomplishEnchanter(player);
-            //巫师
-//            this.isAccomplishSorcerer(player);
-//            //屠夫
-//            this.isAccomplishButcher(player);
+            this.isAccomplishEnchanter();
+            //巫师 //TODO
+            this.isAccomplishSorcerer();
+            //屠夫
+            this.isAccomplishButcher();
 //            //倾国倾城
-//            this.isAccomplishTheEmpressDowager(player);
+//            this.isAccomplishTheEmpressDowager();
 //            //B站主播
-//            this.isAccomplishBiliAnchor(player);
+//            this.isAccomplishBiliAnchor();
 //            //元老
-//            this.isAccomplishOldHead(player);
+//            this.isAccomplishOldHead();
 //            //小财主
-//            this.isAccomplishSmallRichMan(player);
+//            this.isAccomplishSmallRichMan();
 //            //杀戮者
-//            this.isAccomplishPlayerKiller(player);
+//            this.isAccomplishPlayerKiller();
 //            //巡查组
-//            this.isAccomplishPatrolGroup(player);
+//            this.isAccomplishPatrolGroup();
 //            //虎牙主播
-//            this.isAccomplishHuYaAnchor(player);
+//            this.isAccomplishHuYaAnchor();
 //            //空前绝后
-//            this.isAccomplishACompleteOneOff(player);
+//            this.isAccomplishACompleteOneOff();
 //            //财大气粗
-//            this.isAccomplishOstentatious(player);
+//            this.isAccomplishOstentatious();
 //            //头颅收集者
-//            this.isAccomplishHeadCollector(player);
+//            this.isAccomplishHeadCollector();
 //            //吉祥物
-//            this.isAccomplishMascot(player);
+//            this.isAccomplishMascot();
 //            //绝代风华
-//            this.isAccomplishTimelessIcon(player);
+//            this.isAccomplishTimelessIcon();
 //            //恒古尊耀
-//            this.isAccomplishHengGuZunYao(player);
+//            this.isAccomplishHengGuZunYao();
 
         }
     }
 
     /**
+     * 是否达成屠夫称号
+     */
+    private void isAccomplishButcher() {
+        int sheepKills = player.getStatistic(Statistic.KILL_ENTITY, EntityType.SHEEP);
+        int cowKills = player.getStatistic(Statistic.KILL_ENTITY, EntityType.COW);
+        int chickenKills = player.getStatistic(Statistic.KILL_ENTITY, EntityType.CHICKEN);
+        if (sheepKills >= 50 && cowKills >= 50 && chickenKills == 50) {
+            if (sheepKills == 50) {
+                sheepKills++;
+                player.setStatistic(Statistic.KILL_ENTITY, EntityType.SHEEP, sheepKills);
+            }
+            if (cowKills == 50) {
+                cowKills++;
+                player.setStatistic(Statistic.KILL_ENTITY, EntityType.COW, cowKills);
+            }
+            chickenKills++;
+            player.setStatistic(Statistic.KILL_ENTITY, EntityType.CHICKEN, chickenKills);
+            this.updateAchievementStatus("【屠夫】");
+        } else if (sheepKills > 50 && cowKills == 50 && chickenKills > 50) {
+            cowKills++;
+            player.setStatistic(Statistic.KILL_ENTITY, EntityType.COW, cowKills);
+            this.updateAchievementStatus("【屠夫】");
+        } else if (sheepKills == 50 && cowKills > 50 && chickenKills > 50) {
+            sheepKills++;
+            player.setStatistic(Statistic.KILL_ENTITY, EntityType.SHEEP, sheepKills);
+            this.updateAchievementStatus("【屠夫】");
+        }
+    }
+
+    /**
+     * 是否达成巫师称号
+     * 制作  夜视药水*50 治疗药水*30 虚弱药水*30
+     */
+    private void isAccomplishSorcerer() {
+
+    }
+
+    /**
      * 是否达成附魔师称号
      * 附魔物品*1000
-     *
-     * @param player
      */
-    private void isAccomplishEnchanter(Player player) {
+    private void isAccomplishEnchanter() {
         int itemEnchantedCount = player.getStatistic(Statistic.ITEM_ENCHANTED);
         if (itemEnchantedCount == 1000) {
             itemEnchantedCount++;
             player.setStatistic(Statistic.ITEM_ENCHANTED, itemEnchantedCount);
-            this.updateAchievementStatus(player, "【附魔师】");
+            this.updateAchievementStatus("【附魔师】");
         }
     }
 
     /**
      * 是否达成伐木工称号
      * 橡树木*640  白桦木*640  从林木*640
-     *
-     * @param player
      */
-    private void isAccomplishTimberjack(Player player) {
+    private void isAccomplishTimberjack() {
         //橡树木
         int oakLogCount = player.getStatistic(Statistic.MINE_BLOCK, Material.OAK_LOG);
         //白桦木
@@ -118,39 +153,35 @@ public class PlayerStatisticIncrementListener implements Listener {
             }
             jungleLogCount++;
             player.setStatistic(Statistic.MINE_BLOCK, Material.JUNGLE_LOG, jungleLogCount);
-            this.updateAchievementStatus(player, "【伐木工】");
+            this.updateAchievementStatus("【伐木工】");
         } else if (oakLogCount > 640 && birchLogCount == 640 && jungleLogCount > 640) {
             birchLogCount++;
-            this.updateAchievementStatus(player, "【伐木工】");
+            this.updateAchievementStatus("【伐木工】");
         } else if (oakLogCount == 640 && birchLogCount > 640 && jungleLogCount > 640) {
             oakLogCount++;
-            this.updateAchievementStatus(player, "【伐木工】");
+            this.updateAchievementStatus("【伐木工】");
         }
     }
 
     /**
      * 是否达成探险家称号
      * 行走30000米，获取的行走距离单位为cm
-     *
-     * @param player
      */
-    private void isAccomplishExplorer(Player player) {
+    private void isAccomplishExplorer() {
         //行走距离(cm)
         int walkDistance = player.getStatistic(Statistic.WALK_ONE_CM);
         if (walkDistance == 3000000) {
             walkDistance++;
             player.setStatistic(Statistic.WALK_ONE_CM, walkDistance);
-            this.updateAchievementStatus(player, "【探险家】");
+            this.updateAchievementStatus("【探险家】");
         }
     }
 
     /**
      * 是否达成猎尸者称号
      * 僵尸*50    僵尸骷髅*50    僵尸猪人*30
-     *
-     * @param player
      */
-    private void isAccomplishHuntingCorpse(Player player) {
+    private void isAccomplishHuntingCorpse() {
         int zombieKills = player.getStatistic(Statistic.KILL_ENTITY, EntityType.ZOMBIE);
         int skeletonKills = player.getStatistic(Statistic.KILL_ENTITY, EntityType.SKELETON);
         int zombifiedPigKills = player.getStatistic(Statistic.KILL_ENTITY, EntityType.ZOMBIFIED_PIGLIN);
@@ -165,30 +196,28 @@ public class PlayerStatisticIncrementListener implements Listener {
             }
             zombifiedPigKills++;
             player.setStatistic(Statistic.KILL_ENTITY, EntityType.ZOMBIFIED_PIGLIN, zombifiedPigKills);
-            this.updateAchievementStatus(player, "【猎尸者】");
+            this.updateAchievementStatus("【猎尸者】");
         } else if (zombieKills > 50 && skeletonKills == 50 && zombifiedPigKills > 30) {
             skeletonKills++;
             player.setStatistic(Statistic.KILL_ENTITY, EntityType.SKELETON, skeletonKills);
-            this.updateAchievementStatus(player, "【猎尸者】");
+            this.updateAchievementStatus("【猎尸者】");
         } else if (zombieKills == 50 && skeletonKills > 50 && zombifiedPigKills > 30) {
             zombieKills++;
             player.setStatistic(Statistic.KILL_ENTITY, EntityType.ZOMBIE, zombieKills);
-            this.updateAchievementStatus(player, "【猎尸者】");
+            this.updateAchievementStatus("【猎尸者】");
         }
     }
 
     /**
      * 是否达成钻石大亨称号
      * 钻石开采次数*640
-     *
-     * @param player
      */
-    private void isAccomplishDiamondBigShort(Player player) {
+    private void isAccomplishDiamondBigShort() {
         int diamondOreCount = player.getStatistic(Statistic.MINE_BLOCK, Material.DIAMOND_ORE);
         if (diamondOreCount == 640) {
             diamondOreCount++;
             player.setStatistic(Statistic.MINE_BLOCK, Material.DIAMOND_ORE, diamondOreCount);
-            this.updateAchievementStatus(player, "钻石大亨");
+            this.updateAchievementStatus("钻石大亨");
         }
     }
 
@@ -196,22 +225,19 @@ public class PlayerStatisticIncrementListener implements Listener {
      * 是否达成学识者称号
      * 累计在线7天,游戏中每20/s
      *
-     * @param player
      * @param timeCount 累计在线时间
      */
-    private void isAccomplishKnowledgePeople(Player player, int timeCount) {
+    private void isAccomplishKnowledgePeople(int timeCount) {
         if (timeCount == 12096000) {
-            this.updateAchievementStatus(player, "【学识者】");
+            this.updateAchievementStatus("【学识者】");
         }
     }
 
     /**
      * 是否达成农夫称号
      * 小麦*500 西瓜*600 南瓜**300
-     *
-     * @param player
      */
-    private void isAccomplishFarmer(Player player) {
+    private void isAccomplishFarmer() {
         //小麦采集次数
         int wheatCount = player.getStatistic(Statistic.MINE_BLOCK, Material.WHEAT);
         //西瓜采集次数
@@ -230,25 +256,23 @@ public class PlayerStatisticIncrementListener implements Listener {
             }
             pumpkinCount++;
             player.setStatistic(Statistic.MINE_BLOCK, Material.PUMPKIN, pumpkinCount);
-            this.updateAchievementStatus(player, "【农夫】");
+            this.updateAchievementStatus("【农夫】");
         } else if (wheatCount > 500 && melonCount == 600 && pumpkinCount > 300) {
             melonCount++;
             player.setStatistic(Statistic.MINE_BLOCK, Material.MELON, melonCount);
-            this.updateAchievementStatus(player, "【农夫】");
+            this.updateAchievementStatus("【农夫】");
         } else if (wheatCount == 500 && melonCount > 600 && pumpkinCount > 300) {
             wheatCount++;
             player.setStatistic(Statistic.MINE_BLOCK, Material.WHEAT, wheatCount);
-            this.updateAchievementStatus(player, "【农夫】");
+            this.updateAchievementStatus("【农夫】");
         }
     }
 
     /**
      * 是否达成矿工称号
      * 铁矿*500，金矿*300
-     *
-     * @param player 玩家
      */
-    private void isAccomplishMiner(Player player) {
+    private void isAccomplishMiner() {
         //开采铁矿次数
         int ironOreCount = player.getStatistic(Statistic.MINE_BLOCK, Material.IRON_ORE);
         //开采金矿次数
@@ -260,28 +284,26 @@ public class PlayerStatisticIncrementListener implements Listener {
             }
             player.setStatistic(Statistic.MINE_BLOCK, Material.GOLD_ORE, goldOreCount);
             goldOreCount++;
-            this.updateAchievementStatus(player, "【矿工】");
+            this.updateAchievementStatus("【矿工】");
         } else if (ironOreCount == 500 && goldOreCount > 300) {
             ironOreCount++;
             player.setStatistic(Statistic.MINE_BLOCK, Material.IRON_ORE, ironOreCount);
-            this.updateAchievementStatus(player, "【矿工】");
+            this.updateAchievementStatus("【矿工】");
         }
     }
 
     /**
      * 是否达成渔夫称号
      * 钓到的鱼数 * 1000
-     *
-     * @param player
      */
-    private void isAccomplishFisher(Player player) {
+    private void isAccomplishFisher() {
         //钓鱼获得次数
         int fishCount = player.getStatistic(Statistic.FISH_CAUGHT);
         if (fishCount == 1000) {
             fishCount++;
             //更改变量防止重复运行该代码造成数据库连接过多
             player.setStatistic(Statistic.FISH_CAUGHT, fishCount);
-            this.updateAchievementStatus(player, "【渔夫】");
+            this.updateAchievementStatus("【渔夫】");
         }
     }
 
@@ -289,22 +311,20 @@ public class PlayerStatisticIncrementListener implements Listener {
      * 是否达成初学者称号
      * 累计在线24h,游戏中每20/s
      *
-     * @param player
      * @param timeCount
      */
-    private void isAccomplishBeginner(Player player, int timeCount) {
+    private void isAccomplishBeginner(int timeCount) {
         if (timeCount == 1728000) {
-            this.updateAchievementStatus(player, "【初学者】");
+            this.updateAchievementStatus("【初学者】");
         }
     }
 
     /**
      * 修改称号获得状态
      *
-     * @param player
      * @param message
      */
-    private void updateAchievementStatus(Player player, String message) {
+    private void updateAchievementStatus(String message) {
         SqlSession sqlSession = SqlSessionUtil.getSqlSession();
         AchievementMapper achievementMapper = sqlSession.getMapper(AchievementMapper.class);
         Achievement achievement = new Achievement();

@@ -25,11 +25,13 @@ public class ServerLoadListener implements Listener {
     @EventHandler
     public void onServerLoad(ServerLoadEvent event) {
         Server server = plugin.getServer();
-        List<String> strings = Arrays.asList("main_city", "world_1", "world_2", "akira_rakani", "jin_gan_dian");
-        strings.forEach(s -> {
-            WorldCreator creator = new WorldCreator(s);
-            plugin.getLogger().info("开始载入世界：" + s);
-            server.createWorld(creator);
-        });
+        List<String> strings = Arrays.asList(/*"main_city", "world_1", "world_2", "akira_rakani", "jin_gan_dian"*/);
+        if (strings.size() != 0) {
+            strings.forEach(s -> {
+                WorldCreator creator = new WorldCreator(s);
+                plugin.getLogger().info("§f开始载入世界：" + s);
+                server.createWorld(creator);
+            });
+        }
     }
 }

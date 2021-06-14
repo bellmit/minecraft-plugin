@@ -27,8 +27,8 @@ public class PlayerJoinListener implements Listener {
         player.setInvulnerable(Boolean.TRUE);
         player.setGameMode(GameMode.ADVENTURE);
         player.sendMessage("§6〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓");
-        player.sendMessage("§6〓                          " + "§l§e欢迎加入" + "                            §6〓");
-        player.sendMessage("§6〓                          " + "§l§a四季甜橙" + "                            §6〓");
+        player.sendMessage("§6〓                          " + "§e§l欢迎加入" + "                      §6〓");
+        player.sendMessage("§6〓                          " + "§a§l四季甜橙" + "                      §6〓");
         player.sendMessage("§6〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓");
         String[] s1 = {"请输入 §2/register  " + "§f<" + "§2密码" + "§f>" + " " + "§f<" + "§2再次确认密码" + "§f>" + " 注册", "如 /register 123456 123456",
                 "请输入 §2/login " + "§f<" + "§2密码" + "§f>" + " 登录", "如 /login 123456"};

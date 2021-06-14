@@ -7,6 +7,7 @@ import com.zzs.entity.User;
 import com.zzs.util.CommonMethodUtil;
 import com.zzs.util.SqlSessionUtil;
 import org.apache.ibatis.session.SqlSession;
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -58,19 +59,22 @@ public class RegisterCommand implements CommandExecutor {
                     return true;
                 }
             }
-            User user1 = new User();
-            user1.setUuid(player.getUniqueId().toString())
+            User userEntity = new User();
+            userEntity.setUuid(player.getUniqueId().toString())
                     .setIpAddress(player.getAddress().toString())
                     .setUserName(player.getName())
                     .setPassword(strings[0]);
-            userMapper.insert(user1);
+            userMapper.insert(userEntity);
 
             AchievementMapper achievementMapper = sqlSession.getMapper(AchievementMapper.class);
             Achievement achievement = new Achievement();
             achievement.setUuid(player.getUniqueId().toString());
+            achievement.setUserName(player.getName());
             achievementMapper.insert(achievement);
-
             SqlSessionUtil.commitSql(sqlSession);
+
+            player.setDisplayName("§a【萌新】§f" + player.getName());
+            player.setPlayerListName("§a【萌新】§f" + player.getName());
 
             player.setWalkSpeed(0.2F);
             player.setFlySpeed(0.1F);
@@ -84,6 +88,7 @@ public class RegisterCommand implements CommandExecutor {
             itemMeta.setLore(Arrays.asList("右键打开菜单栏"));
             itemStack.setItemMeta(itemMeta);
             inventory.addItem(itemStack);
+            Bukkit.getServer().broadcastMessage(player.getName() + "加入了游戏");
             player.sendMessage("§a注册成功");
             return true;
         }

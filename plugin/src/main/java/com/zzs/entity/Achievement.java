@@ -17,6 +17,8 @@ import java.io.Serializable;
 public class Achievement implements Serializable {
     @TableId(value = "uuid")
     private String uuid;
+
+    private String userName;
     /**
      * 【萌新】
      */

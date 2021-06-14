@@ -5,6 +5,7 @@ import com.zzs.entity.User;
 import com.zzs.util.CommonMethodUtil;
 import com.zzs.util.SqlSessionUtil;
 import org.apache.ibatis.session.SqlSession;
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
@@ -63,7 +64,10 @@ public class LoginCommand implements CommandExecutor {
             user.setIsLogin(Boolean.TRUE);
             userMapper.updateById(user);
             SqlSessionUtil.commitSql(sqlSession);
-            player.sendMessage("§a登录成功");
+            player.setDisplayName("§a【萌新】§f" + player.getName());
+            player.setPlayerListName("§a【萌新】§f" + player.getName());
+            Bukkit.getServer().broadcastMessage(player.getDisplayName() + "加入了游戏");
+            player.sendMessage("§d§l好久不见§f§l " + player.getName() + " §d§l欢迎回家~");
             return true;
         }
         if (command.getName().equalsIgnoreCase("diamondSword")) {
