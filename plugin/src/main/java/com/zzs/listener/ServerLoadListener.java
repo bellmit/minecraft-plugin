@@ -1,7 +1,7 @@
 package com.zzs.listener;
 
 import com.zzs.Tutorial;
-import org.bukkit.Server;
+import org.bukkit.Bukkit;
 import org.bukkit.WorldCreator;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -24,13 +24,12 @@ public class ServerLoadListener implements Listener {
 
     @EventHandler
     public void onServerLoad(ServerLoadEvent event) {
-        Server server = plugin.getServer();
-        List<String> strings = Arrays.asList(/*"main_city", "world_1", "world_2", "akira_rakani", "jin_gan_dian"*/);
+        List<String> strings = Arrays.asList("main_city", "akira_rakani");
         if (strings.size() != 0) {
             strings.forEach(s -> {
-                WorldCreator creator = new WorldCreator(s);
-                plugin.getLogger().info("§f开始载入世界：" + s);
-                server.createWorld(creator);
+                WorldCreator creator = WorldCreator.name(s);
+                plugin.getLogger().info("开始载入世界：" + s);
+                Bukkit.createWorld(creator);
             });
         }
     }

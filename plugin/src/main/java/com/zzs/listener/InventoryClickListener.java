@@ -10,6 +10,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Statistic;
 import org.bukkit.World;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -103,10 +104,10 @@ public class InventoryClickListener implements Listener {
                         World world = plugin.getServer().getWorld("world");
                         player.teleport(world.getSpawnLocation());
                         break;
-                    case "资源世界":
+                    /*case "资源世界":
                         World world_resource = plugin.getServer().getWorld("world_resource");
                         player.teleport(world_resource.getSpawnLocation());
-                        break;
+                        break;*/
                     case "地狱":
                         World world_nether = plugin.getServer().getWorld("world_nether");
                         player.teleport(world_nether.getSpawnLocation());
@@ -115,30 +116,21 @@ public class InventoryClickListener implements Listener {
                         World world_the_end = plugin.getServer().getWorld("world_the_end");
                         player.teleport(world_the_end.getSpawnLocation());
                         break;
-                    case "world_1":
-                        World world_1 = plugin.getServer().getWorld("world_1");
-                        player.teleport(world_1.getSpawnLocation());
-                        break;
-                    case "world_2":
-                        World world_2 = plugin.getServer().getWorld("world_2");
-                        player.teleport(world_2.getSpawnLocation());
-                        break;
                     case "akira_rakani":
                         World akira_rakani = plugin.getServer().getWorld("akira_rakani");
                         player.teleport(akira_rakani.getSpawnLocation());
-                        break;
-                    case "jin_gan_dian":
-                        World jin_gan_dian = plugin.getServer().getWorld("jin_gan_dian");
-                        player.teleport(jin_gan_dian.getSpawnLocation());
                         break;
                 }
             }
         }
 
+        List<String> titleList = Arrays.asList("菜单栏", "所有世界", "称号簿");
         //防止玩家将物品转移到菜单物品栏内
-        if (event.getView().getTitle().equals("菜单栏") || event.getView().getTitle().equals("所有世界")) {
-            event.setCancelled(true);
-        }
+        titleList.forEach(s -> {
+            if (event.getView().getTitle().equals(s)) {
+                event.setCancelled(true);
+            }
+        });
     }
 
     /**
@@ -153,7 +145,7 @@ public class InventoryClickListener implements Listener {
         List<String> greenAchievementList = Arrays.asList("§a【萌新】", "§a【初学者】", "§a【渔夫】", "§a【矿工】", "§a【农夫】");
         this.createAchievement(inventory, achievement, greenAchievementList);
         //蓝色称号
-        List<String> blueAchievementList = Arrays.asList("§9【学识者】", "§9【钻石大亨】", "§9【探险家】", "§9【伐木工】", "§9【附魔师】", "§9【巫师】");
+        List<String> blueAchievementList = Arrays.asList("§9【学识者】", "§9【钻石大亨】", "§9【猎尸者】", "§9【探险家】", "§9【伐木工】", "§9【附魔师】", "§9【巫师】");
         this.createAchievement(inventory, achievement, blueAchievementList);
         return inventory;
     }
@@ -185,6 +177,7 @@ public class InventoryClickListener implements Listener {
                 case "§9":
                     inventory.setItem(secondRow, itemStack);
                     secondRow++;
+                    break;
             }
         }
         return inventory;
@@ -201,70 +194,119 @@ public class InventoryClickListener implements Listener {
             case "§a【萌新】":
                 List<String> newPeopleList = new LinkedList<>();
                 newPeopleList.add("  §d小小新星,初见萌新的标志");
+                newPeopleList.add("");
                 itemMeta.setLore(newPeopleList);
                 break;
             case "§a【初学者】":
                 List<String> beginnerList = new LinkedList<>();
                 beginnerList.add("  §d略知一二,对事物有了一定认知");
+                beginnerList.add("");
                 beginnerList.add("§f达成条件：累计在线24小时");
-                if (!achievement.getIsBeginner()) {
-
-                }
                 itemMeta.setLore(beginnerList);
                 break;
             case "§a【渔夫】":
                 List<String> fisherList = new LinkedList<>();
                 fisherList.add("  §d悠哉悠哉的垂钓者");
+                fisherList.add("");
                 fisherList.add("§f达成条件：钓上1000条鱼");
+                int fishCount = player.getStatistic(Statistic.FISH_CAUGHT);
                 if (!achievement.getIsFisher()) {
-                    int fishCount = player.getStatistic(Statistic.FISH_CAUGHT);
-                    fisherList.add("§9当前进度： " + fishCount + "/1000");
+                    fisherList.add("§7当前进度： " + fishCount + "/1000");
+                } else {
+                    fisherList.add("§8当前进度： 1000/1000");
                 }
                 itemMeta.setLore(fisherList);
                 break;
             case "§a【矿工】":
                 List<String> minerList = new LinkedList<>();
-                minerList.add("  §d黑乎乎的矿洞工人。");
-                minerList.add("§f达成条件：挖掘 铁矿*500 金矿*300");
+                minerList.add("  §d灰头土脸的矿洞工人。");
+                minerList.add("");
+                minerList.add("§f达成条件：挖掘铁矿和金矿");
                 if (!achievement.getIsMiner()) {
                     int ironOreCount = player.getStatistic(Statistic.MINE_BLOCK, Material.IRON_ORE);
                     int goldOreCount = player.getStatistic(Statistic.MINE_BLOCK, Material.GOLD_ORE);
                     minerList.add("§9铁矿： " + ironOreCount + "/500");
                     minerList.add("§9金矿： " + goldOreCount + "/300");
+                } else {
+                    minerList.add("§7铁矿： 500/500");
+                    minerList.add("§7金矿： 300/300");
                 }
                 itemMeta.setLore(minerList);
                 break;
             case "§a【农夫】":
                 LinkedList<String> farmerList = new LinkedList<>();
                 farmerList.add("  §d汗滴禾下土,粒粒皆辛苦");
-                farmerList.add("§f达成条件：收获 小麦*500 西瓜*600 南瓜*300");
+                farmerList.add("");
+                farmerList.add("§f达成条件：收获指定农作物");
                 if (!achievement.getIsFarmer()) {
                     int wheatCount = player.getStatistic(Statistic.MINE_BLOCK, Material.WHEAT);
                     int melonCount = player.getStatistic(Statistic.PICKUP, Material.MELON_SLICE);
                     int pumpkinCount = player.getStatistic(Statistic.MINE_BLOCK, Material.PUMPKIN);
-                    farmerList.add("§9小麦： " + wheatCount + "/500");
-                    farmerList.add("§9西瓜： " + melonCount + "/600");
-                    farmerList.add("§9南瓜： " + pumpkinCount + "/300");
+                    farmerList.add("§7小麦： " + wheatCount + "/500");
+                    farmerList.add("§7西瓜： " + melonCount + "/600");
+                    farmerList.add("§7南瓜： " + pumpkinCount + "/300");
+                } else {
+                    farmerList.add("§9小麦： 500/500");
+                    farmerList.add("§9西瓜： 600/600");
+                    farmerList.add("§9南瓜： 300/300");
+
                 }
                 itemMeta.setLore(farmerList);
                 break;
             //蓝色颜色
-            case "【§9学识者】":
+            case "§9【学识者】":
+                LinkedList<String> knowledgePeopleList = new LinkedList<>();
+                knowledgePeopleList.add("  §d游荡知识的海洋,上知天文下知地理");
+                knowledgePeopleList.add("");
+                knowledgePeopleList.add("§f达成条件：累计在线7天");
+                itemMeta.setLore(knowledgePeopleList);
                 break;
-            case "【§9钻石大亨】":
+            case "§9【钻石大亨】":
+                LinkedList<String> diamondBigShortList = new LinkedList<>();
+                diamondBigShortList.add("  §d幸运与肝力并兼的下矿者");
+                diamondBigShortList.add("");
+                diamondBigShortList.add("§f达成条件：采掘钻石原矿");
+                if (!achievement.getIsDiamondBigShort()) {
+                    int diamondOreCount = player.getStatistic(Statistic.MINE_BLOCK, Material.DIAMOND_ORE);
+                    diamondBigShortList.add("§7当前进度： " + diamondOreCount + "/640");
+                } else {
+                    diamondBigShortList.add("§8当前进度： 640/640");
+                }
+                itemMeta.setLore(diamondBigShortList);
+                break;
+            case "§9【猎尸者】":
+                LinkedList<String> huntingCorpseList = new LinkedList<>();
+                huntingCorpseList.add("  §d僵尸怪物的噩梦");
+                huntingCorpseList.add("");
+                huntingCorpseList.add("§f达成条件：击杀指定怪物");
+                if (!achievement.getIsHuntingCorpse()) {
+                    int zombieKills = player.getStatistic(Statistic.KILL_ENTITY, EntityType.ZOMBIE);
+                    int skeletonKills = player.getStatistic(Statistic.KILL_ENTITY, EntityType.SKELETON);
+                    int zombifiedPigKills = player.getStatistic(Statistic.KILL_ENTITY, EntityType.ZOMBIFIED_PIGLIN);
+                    huntingCorpseList.add("§7僵尸: " + zombieKills + "/50");
+                    huntingCorpseList.add("§7僵尸骷髅: " + skeletonKills + "/50");
+                    huntingCorpseList.add("§7僵尸猪人: " + zombifiedPigKills + "/30");
+                } else {
+                    huntingCorpseList.add("§8僵尸: 50/50");
+                    huntingCorpseList.add("§8僵尸骷髅: 50/50");
+                    huntingCorpseList.add("§8僵尸猪人: 30/30");
+                }
+                itemMeta.setLore(huntingCorpseList);
+                break;
+            case "§9【探险家】":
+                LinkedList<String> explorerList = new LinkedList<>();
+                explorerList.add("  §d对未知地域的好奇,使你无法停下脚步");
+                explorerList.add("");
+
 
                 break;
-            case "【§9猎尸者】":
+            case "§9【伐木工】":
                 break;
-            case "【§9探险家】":
+            case "§9【附魔师】":
                 break;
-            case "【§9伐木工】":
+            case "§9【巫师】":
                 break;
-            case "【§9附魔师】":
-                break;
-            case "【§9巫师】":
-                break;
-            case "【§9屠夫】":
+            case "§9【屠夫】":
                 break;
             //粗字体粉色颜色
             case "【倾国倾城】":
@@ -320,29 +362,29 @@ public class InventoryClickListener implements Listener {
         });
 
 
-//        ItemStack grassBlock = new ItemStack(Material.GRASS_BLOCK);
-//        ItemMeta grassBlockItemMeta = grassBlock.getItemMeta();
-//        grassBlockItemMeta.setDisplayName("生存世界");
-//        grassBlock.setItemMeta(grassBlockItemMeta);
-//        inventory.setItem(2, grassBlock);
-//
-//        ItemStack diamondOre = new ItemStack(Material.DIAMOND_ORE);
-//        ItemMeta diamondOreItemMeta = diamondOre.getItemMeta();
-//        diamondOreItemMeta.setDisplayName("资源世界");
-//        diamondOre.setItemMeta(diamondOreItemMeta);
-//        inventory.setItem(4, diamondOre);
-//
-//        ItemStack netherrack = new ItemStack(Material.NETHERRACK);
-//        ItemMeta netherrackItemMeta = netherrack.getItemMeta();
-//        netherrackItemMeta.setDisplayName("地狱");
-//        netherrack.setItemMeta(netherrackItemMeta);
-//        inventory.setItem(6, netherrack);
-//
-//        ItemStack endStone = new ItemStack(Material.END_STONE);
-//        ItemMeta endStoneItemMeta = endStone.getItemMeta();
-//        endStoneItemMeta.setDisplayName("末地");
-//        endStone.setItemMeta(endStoneItemMeta);
-//        inventory.setItem(8, endStone);
+        ItemStack grassBlock = new ItemStack(Material.GRASS_BLOCK);
+        ItemMeta grassBlockItemMeta = grassBlock.getItemMeta();
+        grassBlockItemMeta.setDisplayName("生存世界");
+        grassBlock.setItemMeta(grassBlockItemMeta);
+        inventory.setItem(2, grassBlock);
+
+        ItemStack diamondOre = new ItemStack(Material.DIAMOND_ORE);
+        ItemMeta diamondOreItemMeta = diamondOre.getItemMeta();
+        diamondOreItemMeta.setDisplayName("资源世界");
+        diamondOre.setItemMeta(diamondOreItemMeta);
+        inventory.setItem(4, diamondOre);
+
+        ItemStack netherrack = new ItemStack(Material.NETHERRACK);
+        ItemMeta netherrackItemMeta = netherrack.getItemMeta();
+        netherrackItemMeta.setDisplayName("地狱");
+        netherrack.setItemMeta(netherrackItemMeta);
+        inventory.setItem(6, netherrack);
+
+        ItemStack endStone = new ItemStack(Material.END_STONE);
+        ItemMeta endStoneItemMeta = endStone.getItemMeta();
+        endStoneItemMeta.setDisplayName("末地");
+        endStone.setItemMeta(endStoneItemMeta);
+        inventory.setItem(8, endStone);
         return inventory;
     }
 }
