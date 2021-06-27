@@ -18,7 +18,7 @@ import java.util.List;
  * @author mountain
  * @since 2021/6/2 0:07
  */
-public class CommonMethodUtil {
+public class CommonUtil {
 
     /**
      * 创建菜单栏
@@ -46,9 +46,9 @@ public class CommonMethodUtil {
         inventory.setItem(2, beaconStack);
 
         //称号簿
-        ItemStack bookStack = new ItemStack(Material.BOOK);
+        ItemStack bookStack = new ItemStack(Material.WRITABLE_BOOK);
         ItemMeta bookMeta = bookStack.getItemMeta();
-        bookMeta.setDisplayName("§5称号簿");
+        bookMeta.setDisplayName("称号簿");
         bookStack.setItemMeta(bookMeta);
         inventory.setItem(4, bookStack);
         return inventory;

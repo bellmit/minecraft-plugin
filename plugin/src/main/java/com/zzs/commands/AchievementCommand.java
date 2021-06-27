@@ -3,6 +3,7 @@ package com.zzs.commands;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.zzs.dao.AchievementMapper;
 import com.zzs.entity.Achievement;
+import com.zzs.util.Const;
 import com.zzs.util.SqlSessionUtil;
 import org.apache.ibatis.session.SqlSession;
 import org.bukkit.command.Command;
@@ -27,7 +28,7 @@ public class AchievementCommand implements CommandExecutor {
         achievementQueryWrapper.eq("user_name", strings[0]);
         Achievement selectOne = achievementMapper.selectOne(achievementQueryWrapper);
         if (selectOne == null) {
-            commandSender.sendMessage("未找到该用户名");
+            commandSender.sendMessage(Const.SYSTEM_PREFIX + "未找到该用户名");
             return false;
         }
         Achievement achievement = new Achievement();
@@ -36,7 +37,7 @@ public class AchievementCommand implements CommandExecutor {
             achievement.setIsTheEmpressDowager(Boolean.TRUE);
             achievementMapper.update(achievement, achievementQueryWrapper);
             SqlSessionUtil.commitSql(sqlSession);
-            commandSender.sendMessage("执行成功");
+            commandSender.sendMessage(Const.SYSTEM_PREFIX + "执行成功");
             return true;
         }
         return false;

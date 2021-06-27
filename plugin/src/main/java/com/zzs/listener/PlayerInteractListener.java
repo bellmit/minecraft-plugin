@@ -1,6 +1,6 @@
 package com.zzs.listener;
 
-import com.zzs.util.CommonMethodUtil;
+import com.zzs.util.CommonUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -25,10 +25,11 @@ public class PlayerInteractListener implements Listener {
             if (item.getItemMeta() != null && event.getAction().equals(Action.RIGHT_CLICK_AIR) || event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
                 //手持菜单右键时打开菜单栏
                 if (item.getItemMeta().getDisplayName().equals("菜单")) {
-                    Inventory menu = CommonMethodUtil.createMenu();
+                    Inventory menu = CommonUtil.createMenu();
                     player.openInventory(menu);
                 }
             }
         }
+
     }
 }

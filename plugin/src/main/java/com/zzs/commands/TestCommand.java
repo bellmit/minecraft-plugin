@@ -1,6 +1,7 @@
 package com.zzs.commands;
 
-import com.zzs.util.CommonMethodUtil;
+import com.zzs.MainPlugin;
+import com.zzs.util.CommonUtil;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -17,9 +18,15 @@ import java.util.Arrays;
  * @Date 2021/6/8 16:14
  */
 public class TestCommand implements CommandExecutor {
+    private final MainPlugin plugin;
+
+    public TestCommand(MainPlugin plugin) {
+        this.plugin = plugin;
+    }
+
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        Player player = CommonMethodUtil.isPlayer(sender);
+        Player player = CommonUtil.isPlayer(sender);
         if (player == null) {
             return false;
         }
@@ -31,7 +38,6 @@ public class TestCommand implements CommandExecutor {
             itemMeta.setLore(Arrays.asList("右键打开菜单栏"));
             itemStack.setItemMeta(itemMeta);
             inventory.addItem(itemStack);
-            player.chat("/nick " + player.getDisplayName());
             return true;
         }
         return false;

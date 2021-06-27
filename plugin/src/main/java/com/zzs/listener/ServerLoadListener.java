@@ -1,6 +1,6 @@
 package com.zzs.listener;
 
-import com.zzs.Tutorial;
+import com.zzs.MainPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.WorldCreator;
 import org.bukkit.event.EventHandler;
@@ -16,9 +16,9 @@ import java.util.List;
  */
 public class ServerLoadListener implements Listener {
 
-    private final Tutorial plugin;
+    private final MainPlugin plugin;
 
-    public ServerLoadListener(Tutorial plugin) {
+    public ServerLoadListener(MainPlugin plugin) {
         this.plugin = plugin;
     }
 

@@ -1,6 +1,6 @@
 package com.zzs.commands;
 
-import com.zzs.util.CommonMethodUtil;
+import com.zzs.util.CommonUtil;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -14,12 +14,12 @@ import org.bukkit.inventory.Inventory;
 public class MenuCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
-        Player player = CommonMethodUtil.isPlayer(commandSender);
+        Player player = CommonUtil.isPlayer(commandSender);
         if (player == null) {
             return false;
         }
         if (command.getName().equalsIgnoreCase("menu")) {
-            Inventory inventory = CommonMethodUtil.createMenu();
+            Inventory inventory = CommonUtil.createMenu();
             player.openInventory(inventory);
             return true;
         }

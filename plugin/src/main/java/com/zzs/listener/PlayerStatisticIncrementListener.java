@@ -2,6 +2,7 @@ package com.zzs.listener;
 
 import com.zzs.dao.AchievementMapper;
 import com.zzs.entity.Achievement;
+import com.zzs.util.Const;
 import com.zzs.util.SqlSessionUtil;
 import org.apache.ibatis.session.SqlSession;
 import org.bukkit.Material;
@@ -170,7 +171,9 @@ public class PlayerStatisticIncrementListener implements Listener {
     private void isAccomplishExplorer() {
         //行走距离(cm)
         int walkDistance = player.getStatistic(Statistic.WALK_ONE_CM);
-        if (walkDistance == 3000000) {
+        //换算成米
+        walkDistance = walkDistance / 100;
+        if (walkDistance == 30000) {
             walkDistance++;
             player.setStatistic(Statistic.WALK_ONE_CM, walkDistance);
             this.updateAchievementStatus("【探险家】");
@@ -414,6 +417,6 @@ public class PlayerStatisticIncrementListener implements Listener {
         }
         achievementMapper.updateById(achievement);
         SqlSessionUtil.commitSql(sqlSession);
-        player.sendMessage("§f已获得称号  " + "§a" + message);
+        player.sendMessage(Const.SYSTEM_PREFIX + "§f已获得称号  " + "§a" + message);
     }
 }

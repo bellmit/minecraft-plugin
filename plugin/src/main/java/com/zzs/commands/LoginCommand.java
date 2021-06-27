@@ -2,10 +2,10 @@ package com.zzs.commands;
 
 import com.zzs.dao.UserMapper;
 import com.zzs.entity.User;
-import com.zzs.util.CommonMethodUtil;
+import com.zzs.util.CommonUtil;
+import com.zzs.util.Const;
 import com.zzs.util.SqlSessionUtil;
 import org.apache.ibatis.session.SqlSession;
-import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
@@ -30,7 +30,7 @@ import java.util.UUID;
 public class LoginCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
-        Player player = CommonMethodUtil.isPlayer(commandSender);
+        Player player = CommonUtil.isPlayer(commandSender);
         if (player == null) {
             return false;
         }
@@ -39,19 +39,19 @@ public class LoginCommand implements CommandExecutor {
         if (command.getName().equalsIgnoreCase("login")) {
             User user = userMapper.selectById(player.getUniqueId().toString());
             if (!(strings.length == 1)) {
-                player.sendMessage("§c请查看正确的命令使用规则！参数之间使用空格隔开！");
+                player.sendMessage(Const.SYSTEM_PREFIX + "§c请查看正确的命令使用规则！参数之间使用空格隔开！");
                 return false;
             }
             if (user == null) {
-                player.sendMessage("§c请注册后再使用登录命令！");
+                player.sendMessage(Const.SYSTEM_PREFIX + "§c请注册后再使用登录命令！");
                 return true;
             }
             if (!user.getPassword().equals(strings[0])) {
-                player.sendMessage("§c您输入的密码有误，请重新输入！");
+                player.sendMessage(Const.SYSTEM_PREFIX + "§c您输入的密码有误，请重新输入！");
                 return true;
             }
             if (user.getIsLogin()) {
-                player.sendMessage("§c请勿重复登录！");
+                player.sendMessage(Const.SYSTEM_PREFIX + "§c请勿重复登录！");
                 return true;
             }
             player.loadData();
@@ -64,10 +64,8 @@ public class LoginCommand implements CommandExecutor {
             user.setIsLogin(Boolean.TRUE);
             userMapper.updateById(user);
             SqlSessionUtil.commitSql(sqlSession);
-            player.setDisplayName("§a【萌新】§f" + player.getName());
-            player.setPlayerListName("§a【萌新】§f" + player.getName());
-            Bukkit.getServer().broadcastMessage(player.getDisplayName() + "加入了游戏");
-            player.sendMessage("§d§l好久不见§f§l " + player.getName() + " §d§l欢迎回家~");
+//            Bukkit.getServer().broadcastMessage(Const.SYSTEM_PREFIX+player.getDisplayName() + "§f加入了游戏");
+            player.sendMessage(Const.SYSTEM_PREFIX + "§d§l好久不见§f§l " + player.getName() + " §d§l欢迎回家~");
             return true;
         }
         if (command.getName().equalsIgnoreCase("diamondSword")) {

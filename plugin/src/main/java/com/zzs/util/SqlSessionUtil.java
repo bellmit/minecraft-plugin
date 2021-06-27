@@ -24,7 +24,8 @@ public class SqlSessionUtil {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        SqlSessionFactory sqlSessionFactory = new MybatisSqlSessionFactoryBuilder().build(inputStream);
+        MybatisSqlSessionFactoryBuilder mybatisSqlSessionFactoryBuilder = new MybatisSqlSessionFactoryBuilder();
+        SqlSessionFactory sqlSessionFactory = mybatisSqlSessionFactoryBuilder.build(inputStream);
         SqlSession sqlSession = SqlSessionUtils.getSqlSession(sqlSessionFactory);
         return sqlSession;
     }

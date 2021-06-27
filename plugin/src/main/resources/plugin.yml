@@ -1,30 +1,14 @@
-name: login-plugin
-main: com.zzs.Tutorial
+name: loginSystem
+main: com.zzs.MainPlugin
 version: 1.0
 api-version: 1.16
 
 commands:
-  createWorld:
-    description: "创建新世界"
-    usage: /createWorld [世界名称]
   menu:
     description: "打开菜单"
-  login:
-    description: "登录账号"
-    usage: /pw [密码]
   diamondSword:
     description: "石中剑"
     usage: "您没有权限使用该指令"  #指令的用法 当onCommand()方法返回false时提示这里的内容
-  register:
-    description: "注册账号"
-    usage: /register [密码] [再次确认密码]
-  warp:
-    description: "传送世界"
-    usage: /warp [需传送的世界名称]
-  nowTime:
-    description: "获取游戏时间"
-  worlds:
-    description: "获取世界列表"
   test:
     description: "各种测试命令"
   updateTheEmpressDowager:

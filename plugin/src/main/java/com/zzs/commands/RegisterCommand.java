@@ -4,7 +4,8 @@ import com.zzs.dao.AchievementMapper;
 import com.zzs.dao.UserMapper;
 import com.zzs.entity.Achievement;
 import com.zzs.entity.User;
-import com.zzs.util.CommonMethodUtil;
+import com.zzs.util.CommonUtil;
+import com.zzs.util.Const;
 import com.zzs.util.SqlSessionUtil;
 import org.apache.ibatis.session.SqlSession;
 import org.bukkit.Bukkit;
@@ -29,21 +30,21 @@ public class RegisterCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
-        Player player = CommonMethodUtil.isPlayer(commandSender);
+        Player player = CommonUtil.isPlayer(commandSender);
         if (player == null) {
             return false;
         }
         if (command.getName().equalsIgnoreCase("register")) {
             if (!(strings.length == 2)) {
-                player.sendMessage("§c请查看正确的命令使用规则！参数之间使用空格隔开！");
+                player.sendMessage(Const.SYSTEM_PREFIX + "§c请查看正确的命令使用规则！参数之间使用空格隔开！");
                 return false;
             }
             if (!strings[0].equals(strings[1])) {
-                player.sendMessage("§c两次密码输入不一致！");
+                player.sendMessage(Const.SYSTEM_PREFIX + "§c两次密码输入不一致！");
                 return true;
             }
             if (strings[0].length() < 6) {
-                player.sendMessage("§c密码长度不能小于6位！");
+                player.sendMessage(Const.SYSTEM_PREFIX + "§c密码长度不能小于6位！");
                 return true;
             }
             SqlSession sqlSession = SqlSessionUtil.getSqlSession();
@@ -51,11 +52,11 @@ public class RegisterCommand implements CommandExecutor {
             User user = userMapper.selectById(player.getUniqueId().toString());
             if (user != null) {
                 if (user.getIsLogin()) {
-                    player.sendMessage("§c禁止重复注册！");
+                    player.sendMessage(Const.SYSTEM_PREFIX + "§c禁止重复注册！");
                     return true;
                 }
                 if (user.getUserName().equals(player.getName())) {
-                    player.sendMessage("§c该用户名已被占用！");
+                    player.sendMessage("Const.SYSTEM_PREFIX+§c该用户名已被占用！");
                     return true;
                 }
             }
@@ -73,9 +74,6 @@ public class RegisterCommand implements CommandExecutor {
             achievementMapper.insert(achievement);
             SqlSessionUtil.commitSql(sqlSession);
 
-            player.setDisplayName("§a【萌新】§f" + player.getName());
-            player.setPlayerListName("§a【萌新】§f" + player.getName());
-
             player.setWalkSpeed(0.2F);
             player.setFlySpeed(0.1F);
             player.setInvulnerable(Boolean.FALSE);
@@ -88,8 +86,8 @@ public class RegisterCommand implements CommandExecutor {
             itemMeta.setLore(Arrays.asList("右键打开菜单栏"));
             itemStack.setItemMeta(itemMeta);
             inventory.addItem(itemStack);
-            Bukkit.getServer().broadcastMessage(player.getName() + "加入了游戏");
-            player.sendMessage("§a注册成功");
+            Bukkit.getServer().broadcastMessage(Const.SYSTEM_PREFIX + player.getDisplayName() + "§f加入了游戏");
+            player.sendMessage(Const.SYSTEM_PREFIX + "§a注册成功");
             return true;
         }
         return false;
