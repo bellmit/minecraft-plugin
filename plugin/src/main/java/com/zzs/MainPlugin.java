@@ -1,6 +1,7 @@
 package com.zzs;
 
 import com.zzs.commands.AchievementCommand;
+import com.zzs.commands.LoginCommand;
 import com.zzs.commands.MenuCommand;
 import com.zzs.commands.TestCommand;
 import com.zzs.listener.*;
@@ -30,7 +31,7 @@ public class MainPlugin extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new BlockPlaceListener(), this);
 
         //调用注册命令方法
-//        this.getCommand("diamondSword").setExecutor(new LoginCommand());
+        this.getCommand("diamondSword").setExecutor(new LoginCommand());
 //        this.getCommand("register").setExecutor(new RegisterCommand());
 //        this.getCommand("login").setExecutor(new LoginCommand());
         this.getCommand("menu").setExecutor(new MenuCommand());

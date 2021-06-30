@@ -13,49 +13,6 @@
     </modules>
     <dependencies>
 
-        <!--     称号头顶显示API       -->
-        <!--        <dependency>-->
-        <!--            <groupId>org.inventivetalent.nicknamer</groupId>-->
-        <!--            <artifactId>api</artifactId>-->
-        <!--            <version>3.19.0-SNAPSHOT</version>-->
-        <!--            <scope>provided</scope>-->
-        <!--            &lt;!&ndash;     排查冲突       &ndash;&gt;-->
-        <!--            <exclusions>-->
-        <!--                <exclusion>-->
-        <!--                    <groupId>junit</groupId>-->
-        <!--                    <artifactId>junit</artifactId>-->
-        <!--                </exclusion>-->
-        <!--                <exclusion>-->
-        <!--                    <groupId>org.projectlombok</groupId>-->
-        <!--                    <artifactId>lombok</artifactId>-->
-        <!--                </exclusion>-->
-        <!--                <exclusion>-->
-        <!--                    <groupId>org.bukkit</groupId>-->
-        <!--                    <artifactId>bukkit</artifactId>-->
-        <!--                </exclusion>-->
-        <!--                <exclusion>-->
-        <!--                    <groupId>com.google.guava</groupId>-->
-        <!--                    <artifactId>guava</artifactId>-->
-        <!--                </exclusion>-->
-        <!--                <exclusion>-->
-        <!--                    <groupId>com.google.code.gson</groupId>-->
-        <!--                    <artifactId>gson</artifactId>-->
-        <!--                </exclusion>-->
-        <!--                <exclusion>-->
-        <!--                    <groupId>com.google.code.findbugs</groupId>-->
-        <!--                    <artifactId>jsr305</artifactId>-->
-        <!--                </exclusion>-->
-        <!--                <exclusion>-->
-        <!--                    <groupId>org.ow2.asm</groupId>-->
-        <!--                    <artifactId>asm-commons</artifactId>-->
-        <!--                </exclusion>-->
-        <!--                <exclusion>-->
-        <!--                    <groupId>org.yaml</groupId>-->
-        <!--                    <artifactId>snakeyaml</artifactId>-->
-        <!--                </exclusion>-->
-        <!--            </exclusions>-->
-        <!--        </dependency>-->
-
         <!--    Citizens插件API    -->
         <dependency>
             <groupId>net.citizensnpcs</groupId>
