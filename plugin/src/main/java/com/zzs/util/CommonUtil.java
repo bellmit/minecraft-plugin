@@ -11,10 +11,14 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Properties;
 import java.util.logging.Level;
 
 /**
@@ -25,6 +29,16 @@ import java.util.logging.Level;
  */
 public class CommonUtil {
 
+    public static String getPropertiesParams(String params) throws IOException {
+        Properties properties = new Properties();
+        properties.load(new BufferedReader(new InputStreamReader(CommonUtil.class.getClassLoader().getResourceAsStream("config.properties")))
+        );
+
+        String property = properties.getProperty(params);
+        return property;
+    }
+
+
     /**
      * 发送物品信息到展示栏
      *
@@ -34,6 +48,10 @@ public class CommonUtil {
      */
     public static void sendItemTooltipMessage(Player player, String message, ItemStack item) {
         String itemJson = convertItemStackToJson(item);
+
+        StringBuilder builder = new StringBuilder();
+        builder.append(player.getDisplayName() + "展示了物品 ");
+        builder.append(itemJson);
 
         // Prepare a BaseComponent array with the itemJson as a text component
         BaseComponent[] hoverEventComponents = new BaseComponent[]{
@@ -48,8 +66,12 @@ public class CommonUtil {
         TextComponent component = new TextComponent(message);
         component.setHoverEvent(event);
 
+        TextComponent textComponent = new TextComponent("");
+        textComponent.addExtra(player.getDisplayName() + "展示了 ");
+
+
         // Finally, send the message to the player
-        player.spigot().sendMessage(component);
+        player.spigot().sendMessage(textComponent, component);
     }
 
     /**

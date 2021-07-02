@@ -1,9 +1,6 @@
 package com.zzs;
 
-import com.zzs.commands.AchievementCommand;
-import com.zzs.commands.LoginCommand;
-import com.zzs.commands.MenuCommand;
-import com.zzs.commands.TestCommand;
+import com.zzs.commands.*;
 import com.zzs.listener.*;
 import lombok.SneakyThrows;
 import org.bukkit.Bukkit;
@@ -23,6 +20,7 @@ public class MainPlugin extends JavaPlugin {
 //        new LoginListener(this);
         new MenuClickListener(this);
         new NpcClickListener(this);
+        new PlayerChatListener(this);
         Bukkit.getPluginManager().registerEvents(new PlayerCommandPreprocessListener(), this);
         Bukkit.getPluginManager().registerEvents(new ServerLoadListener(this), this);
         Bukkit.getPluginManager().registerEvents(new PlayerStatisticIncrementListener(), this);
@@ -32,10 +30,9 @@ public class MainPlugin extends JavaPlugin {
 
         //调用注册命令方法
         this.getCommand("diamondSword").setExecutor(new LoginCommand());
-//        this.getCommand("register").setExecutor(new RegisterCommand());
-//        this.getCommand("login").setExecutor(new LoginCommand());
         this.getCommand("menu").setExecutor(new MenuCommand());
         this.getCommand("updateTheEmpressDowager").setExecutor(new AchievementCommand());
         this.getCommand("test").setExecutor(new TestCommand(this));
+        this.getCommand("show").setExecutor(new ShowItemCommand(this));
     }
 }

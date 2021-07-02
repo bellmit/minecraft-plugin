@@ -4,6 +4,8 @@ version: 1.0
 api-version: 1.16
 
 commands:
+  show:
+    usage: "/show   展示手中物品到聊天中"
   menu:
     description: "打开菜单"
   diamondSword:

@@ -68,9 +68,6 @@ public class TestCommand implements CommandExecutor {
             itemMeta.setLore(Arrays.asList("右键打开菜单栏"));
             itemStack.setItemMeta(itemMeta);
             inventory.addItem(itemStack);
-
-            ItemStack item = player.getInventory().getItem(EquipmentSlot.HAND);
-            CommonUtil.sendItemTooltipMessage(player, item.getItemMeta().getDisplayName(), item);
             return true;
         }
         return false;

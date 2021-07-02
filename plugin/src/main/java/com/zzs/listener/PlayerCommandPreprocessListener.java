@@ -19,7 +19,7 @@ public class PlayerCommandPreprocessListener implements Listener {
         Player player = event.getPlayer();
         if (event.getMessage().contains("/nickname") && !player.isOp()) {
             player.sendMessage(Const.SYSTEM_PREFIX + "§c无权使用该命令！");
-            event.setMessage("/0");
+            event.setCancelled(true);
         }
     }
 }
