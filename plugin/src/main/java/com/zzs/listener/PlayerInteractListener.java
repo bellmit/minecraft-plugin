@@ -31,4 +31,17 @@ public class PlayerInteractListener implements Listener {
             }
         }
     }
+
+    /**
+     * 建立基地
+     *
+     * @param event
+     */
+    @EventHandler
+    public void onCreateBase(PlayerInteractEvent event) {
+        Player player = event.getPlayer();
+        if (event.getItem() != null) {
+        }
+
+    }
 }

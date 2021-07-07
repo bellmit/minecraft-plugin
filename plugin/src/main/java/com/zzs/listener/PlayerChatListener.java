@@ -1,6 +1,7 @@
 package com.zzs.listener;
 
 import com.zzs.MainPlugin;
+import com.zzs.papi.PAPIParams;
 import com.zzs.util.CommonUtil;
 import com.zzs.util.Const;
 import net.md_5.bungee.api.chat.ClickEvent;
@@ -32,20 +33,21 @@ public class PlayerChatListener implements Listener {
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.MONITOR,
+            ignoreCancelled = true)
     public void onPlayerChat(AsyncPlayerChatEvent event) {
         Player player = event.getPlayer();
         String message = event.getMessage();
         World world = player.getWorld();
         String c = String.valueOf(message.charAt(0));
         if (!c.equals("/")) {
-            event.setCancelled(true);
             try {
-                TextComponent worldComponent = new TextComponent(String.format(Const.WORLD_NAME, world.getName()));
+                String worldName = "§a" + PAPIParams.initWorldName(world);
+                TextComponent worldComponent = new TextComponent(String.format(Const.FORMAT, worldName));
 
                 String at_present_world = String.format(CommonUtil.getPropertiesParams("at_present_world"), world.getName());
                 worldComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(at_present_world)));
-                worldComponent.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/world " + world.getName()));
+                worldComponent.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tpWorld " + world.getName()));
 
                 TextComponent playerComponent = new TextComponent();
                 playerComponent.addExtra(player.getDisplayName());
@@ -53,20 +55,21 @@ public class PlayerChatListener implements Listener {
                 stringBuilder.append(String.format(Const.PLAYER_NAME, player.getName() + "\n"));
                 stringBuilder.append(String.format(Const.PLAYER_HEATH, player.getHealth() + "\n"));
                 stringBuilder.append(String.format(Const.PLAYER_HUNGER, player.getSaturation() + "\n"));
-                stringBuilder.append("§c点击玩家昵称即可TP到他身边");
+                stringBuilder.append("§c点击请求TP到他身边");
 
                 playerComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(stringBuilder.toString())));
-                playerComponent.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tp " + player.getUniqueId()));
+                playerComponent.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tpa " + player.getUniqueId()));
 
                 TextComponent messageComponent = new TextComponent();
                 messageComponent.addExtra(" §6-> ");
                 messageComponent.addExtra(message);
 
-                player.spigot().sendMessage(worldComponent, playerComponent, messageComponent);
+                plugin.getServer().spigot().broadcast(worldComponent, playerComponent, messageComponent);
             } catch (IOException e) {
                 plugin.getLogger().info("警告：获取config文件属性失败");
                 e.printStackTrace();
             }
+            event.setCancelled(true);
         }
 
     }

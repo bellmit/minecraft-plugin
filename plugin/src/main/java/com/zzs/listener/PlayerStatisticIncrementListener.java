@@ -5,6 +5,7 @@ import com.zzs.entity.Achievement;
 import com.zzs.util.Const;
 import com.zzs.util.SqlSessionUtil;
 import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.bukkit.Material;
 import org.bukkit.Statistic;
 import org.bukkit.entity.EntityType;
@@ -99,15 +100,15 @@ public class PlayerStatisticIncrementListener implements Listener {
             }
             chickenKills++;
             player.setStatistic(Statistic.KILL_ENTITY, EntityType.CHICKEN, chickenKills);
-            this.updateAchievementStatus("【屠夫】");
+            this.updateAchievementStatus("屠夫");
         } else if (sheepKills > 50 && cowKills == 50 && chickenKills > 50) {
             cowKills++;
             player.setStatistic(Statistic.KILL_ENTITY, EntityType.COW, cowKills);
-            this.updateAchievementStatus("【屠夫】");
+            this.updateAchievementStatus("屠夫");
         } else if (sheepKills == 50 && cowKills > 50 && chickenKills > 50) {
             sheepKills++;
             player.setStatistic(Statistic.KILL_ENTITY, EntityType.SHEEP, sheepKills);
-            this.updateAchievementStatus("【屠夫】");
+            this.updateAchievementStatus("屠夫");
         }
     }
 
@@ -128,7 +129,7 @@ public class PlayerStatisticIncrementListener implements Listener {
         if (itemEnchantedCount == 1000) {
             itemEnchantedCount++;
             player.setStatistic(Statistic.ITEM_ENCHANTED, itemEnchantedCount);
-            this.updateAchievementStatus("【附魔师】");
+            this.updateAchievementStatus("附魔师");
         }
     }
 
@@ -154,13 +155,13 @@ public class PlayerStatisticIncrementListener implements Listener {
             }
             jungleLogCount++;
             player.setStatistic(Statistic.MINE_BLOCK, Material.JUNGLE_LOG, jungleLogCount);
-            this.updateAchievementStatus("【伐木工】");
+            this.updateAchievementStatus("伐木工");
         } else if (oakLogCount > 640 && birchLogCount == 640 && jungleLogCount > 640) {
             birchLogCount++;
-            this.updateAchievementStatus("【伐木工】");
+            this.updateAchievementStatus("伐木工");
         } else if (oakLogCount == 640 && birchLogCount > 640 && jungleLogCount > 640) {
             oakLogCount++;
-            this.updateAchievementStatus("【伐木工】");
+            this.updateAchievementStatus("伐木工");
         }
     }
 
@@ -176,7 +177,7 @@ public class PlayerStatisticIncrementListener implements Listener {
         if (walkDistance == 30000) {
             walkDistance++;
             player.setStatistic(Statistic.WALK_ONE_CM, walkDistance);
-            this.updateAchievementStatus("【探险家】");
+            this.updateAchievementStatus("探险家");
         }
     }
 
@@ -199,15 +200,15 @@ public class PlayerStatisticIncrementListener implements Listener {
             }
             zombifiedPigKills++;
             player.setStatistic(Statistic.KILL_ENTITY, EntityType.ZOMBIFIED_PIGLIN, zombifiedPigKills);
-            this.updateAchievementStatus("【猎尸者】");
+            this.updateAchievementStatus("猎尸者");
         } else if (zombieKills > 50 && skeletonKills == 50 && zombifiedPigKills > 30) {
             skeletonKills++;
             player.setStatistic(Statistic.KILL_ENTITY, EntityType.SKELETON, skeletonKills);
-            this.updateAchievementStatus("【猎尸者】");
+            this.updateAchievementStatus("猎尸者");
         } else if (zombieKills == 50 && skeletonKills > 50 && zombifiedPigKills > 30) {
             zombieKills++;
             player.setStatistic(Statistic.KILL_ENTITY, EntityType.ZOMBIE, zombieKills);
-            this.updateAchievementStatus("【猎尸者】");
+            this.updateAchievementStatus("猎尸者");
         }
     }
 
@@ -232,7 +233,7 @@ public class PlayerStatisticIncrementListener implements Listener {
      */
     private void isAccomplishKnowledgePeople(int timeCount) {
         if (timeCount == 12096000) {
-            this.updateAchievementStatus("【学识者】");
+            this.updateAchievementStatus("学识者");
         }
     }
 
@@ -259,15 +260,15 @@ public class PlayerStatisticIncrementListener implements Listener {
             }
             pumpkinCount++;
             player.setStatistic(Statistic.MINE_BLOCK, Material.PUMPKIN, pumpkinCount);
-            this.updateAchievementStatus("【农夫】");
+            this.updateAchievementStatus("农夫");
         } else if (wheatCount > 500 && melonCount == 600 && pumpkinCount > 300) {
             melonCount++;
             player.setStatistic(Statistic.MINE_BLOCK, Material.MELON, melonCount);
-            this.updateAchievementStatus("【农夫】");
+            this.updateAchievementStatus("农夫");
         } else if (wheatCount == 500 && melonCount > 600 && pumpkinCount > 300) {
             wheatCount++;
             player.setStatistic(Statistic.MINE_BLOCK, Material.WHEAT, wheatCount);
-            this.updateAchievementStatus("【农夫】");
+            this.updateAchievementStatus("农夫");
         }
     }
 
@@ -287,11 +288,11 @@ public class PlayerStatisticIncrementListener implements Listener {
             }
             player.setStatistic(Statistic.MINE_BLOCK, Material.GOLD_ORE, goldOreCount);
             goldOreCount++;
-            this.updateAchievementStatus("【矿工】");
+            this.updateAchievementStatus("矿工");
         } else if (ironOreCount == 500 && goldOreCount > 300) {
             ironOreCount++;
             player.setStatistic(Statistic.MINE_BLOCK, Material.IRON_ORE, ironOreCount);
-            this.updateAchievementStatus("【矿工】");
+            this.updateAchievementStatus("矿工");
         }
     }
 
@@ -306,7 +307,7 @@ public class PlayerStatisticIncrementListener implements Listener {
             fishCount++;
             //更改变量防止重复运行该代码造成数据库连接过多
             player.setStatistic(Statistic.FISH_CAUGHT, fishCount);
-            this.updateAchievementStatus("【渔夫】");
+            this.updateAchievementStatus("渔夫");
         }
     }
 
@@ -318,7 +319,7 @@ public class PlayerStatisticIncrementListener implements Listener {
      */
     private void isAccomplishBeginner(int timeCount) {
         if (timeCount == 1728000) {
-            this.updateAchievementStatus("【初学者】");
+            this.updateAchievementStatus("初学者");
         }
     }
 
@@ -328,95 +329,98 @@ public class PlayerStatisticIncrementListener implements Listener {
      * @param message
      */
     private void updateAchievementStatus(String message) {
-        SqlSession sqlSession = SqlSessionUtil.getSqlSession();
-        AchievementMapper achievementMapper = sqlSession.getMapper(AchievementMapper.class);
-        Achievement achievement = new Achievement();
-        achievement.setUuid(player.getUniqueId().toString());
-        switch (message) {
-            //绿色颜色
-            case "【初学者】":
-                achievement.setIsBeginner(Boolean.TRUE);
-                break;
-            case "【渔夫】":
-                achievement.setIsFisher(Boolean.TRUE);
-                break;
-            case "【矿工】":
-                achievement.setIsMiner(Boolean.TRUE);
-                break;
-            case "【农夫】":
-                achievement.setIsFarmer(Boolean.TRUE);
-                break;
-            //蓝色颜色
-            case "【学识者】":
-                achievement.setIsKnowledgePeople(Boolean.TRUE);
-                break;
-            case "【钻石大亨】":
-                achievement.setIsDiamondBigShort(Boolean.TRUE);
-                break;
-            case "【猎尸者】":
-                achievement.setIsHuntingCorpse(Boolean.TRUE);
-                break;
-            case "【探险家】":
-                achievement.setIsExplorer(Boolean.TRUE);
-                break;
-            case "【伐木工】":
-                achievement.setIsTimberjack(Boolean.TRUE);
-                break;
-            case "【附魔师】":
-                achievement.setIsEnchanter(Boolean.TRUE);
-                break;
-            case "【巫师】":
-                achievement.setIsSorcerer(Boolean.TRUE);
-                break;
-            case "【屠夫】":
-                achievement.setIsButcher(Boolean.TRUE);
-                break;
-            //粗字体粉色颜色
-            case "【倾国倾城】":
-                achievement.setIsTheEmpressDowager(Boolean.TRUE);
-                break;
-            case "【B站主播】":
-                achievement.setIsBiliAnchor(Boolean.TRUE);
-                break;
-            //粗字体紫色
-            case "【元老】":
-                achievement.setIsOldHead(Boolean.TRUE);
-                break;
-            case "【小财主】":
-                achievement.setIsSmallRichMan(Boolean.TRUE);
-                break;
-            case "【杀戮者】":
-                achievement.setIsPlayerKiller(Boolean.TRUE);
-                break;
-            case "【巡查组】":
-                achievement.setIsPatrolGroup(Boolean.TRUE);
-                break;
-            //粗字体金色
-            case "【虎牙主播】":
-                achievement.setIsHuYaAnchor(Boolean.TRUE);
-                break;
-            case "【空前绝后】":
-                achievement.setIsACompleteOneOff(Boolean.TRUE);
-                break;
-            case "【财大气粗】":
-                achievement.setIsOstentatious(Boolean.TRUE);
-                break;
-            case "【头颅收集者】":
-                achievement.setIsHeadCollector(Boolean.TRUE);
-                break;
-            //粗字体彩色
-            case "【吉祥物】":
-                achievement.setIsMascot(Boolean.TRUE);
-                break;
-            case "【绝代风华】":
-                achievement.setIsTimelessIcon(Boolean.TRUE);
-                break;
-            case "【恒古尊耀】":
-                achievement.setIsHengGuZunYao(Boolean.TRUE);
-                break;
+        SqlSessionFactory sqlSessionFactory = SqlSessionUtil.getSqlSessionFactory();
+        try (SqlSession session = sqlSessionFactory.openSession()) {
+            AchievementMapper achievementMapper = session.getMapper(AchievementMapper.class);
+            Achievement achievement = new Achievement();
+            achievement.setUuid(player.getUniqueId().toString());
+            switch (message) {
+                //绿色颜色
+                case "初学者":
+                    achievement.setIsBeginner(Boolean.TRUE);
+                    break;
+                case "渔夫":
+                    achievement.setIsFisher(Boolean.TRUE);
+                    break;
+                case "矿工":
+                    achievement.setIsMiner(Boolean.TRUE);
+                    break;
+                case "农夫":
+                    achievement.setIsFarmer(Boolean.TRUE);
+                    break;
+                //蓝色颜色
+                case "学识者":
+                    achievement.setIsKnowledgePeople(Boolean.TRUE);
+                    break;
+                case "钻石大亨":
+                    achievement.setIsDiamondBigShort(Boolean.TRUE);
+                    break;
+                case "猎尸者":
+                    achievement.setIsHuntingCorpse(Boolean.TRUE);
+                    break;
+                case "探险家":
+                    achievement.setIsExplorer(Boolean.TRUE);
+                    break;
+                case "伐木工":
+                    achievement.setIsTimberjack(Boolean.TRUE);
+                    break;
+                case "附魔师":
+                    achievement.setIsEnchanter(Boolean.TRUE);
+                    break;
+                case "巫师":
+                    achievement.setIsSorcerer(Boolean.TRUE);
+                    break;
+                case "屠夫":
+                    achievement.setIsButcher(Boolean.TRUE);
+                    break;
+                //粗字体粉色颜色
+                case "倾国倾城":
+                    achievement.setIsTheEmpressDowager(Boolean.TRUE);
+                    break;
+                case "B站主播":
+                    achievement.setIsBiliAnchor(Boolean.TRUE);
+                    break;
+                //粗字体紫色
+                case "元老":
+                    achievement.setIsOldHead(Boolean.TRUE);
+                    break;
+                case "小财主":
+                    achievement.setIsSmallRichMan(Boolean.TRUE);
+                    break;
+                case "杀戮者":
+                    achievement.setIsPlayerKiller(Boolean.TRUE);
+                    break;
+                case "巡查组":
+                    achievement.setIsPatrolGroup(Boolean.TRUE);
+                    break;
+                //粗字体金色
+                case "虎牙主播":
+                    achievement.setIsHuYaAnchor(Boolean.TRUE);
+                    break;
+                case "空前绝后":
+                    achievement.setIsACompleteOneOff(Boolean.TRUE);
+                    break;
+                case "财大气粗":
+                    achievement.setIsOstentatious(Boolean.TRUE);
+                    break;
+                case "头颅收集者":
+                    achievement.setIsHeadCollector(Boolean.TRUE);
+                    break;
+                //粗字体彩色
+                case "吉祥物":
+                    achievement.setIsMascot(Boolean.TRUE);
+                    break;
+                case "绝代风华":
+                    achievement.setIsTimelessIcon(Boolean.TRUE);
+                    break;
+                case "恒古尊耀":
+                    achievement.setIsHengGuZunYao(Boolean.TRUE);
+                    break;
+            }
+            achievementMapper.updateById(achievement);
+            session.commit();
+            player.sendMessage(Const.SYSTEM_PREFIX + "§f已获得称号  " + "§a" + message);
         }
-        achievementMapper.updateById(achievement);
-        SqlSessionUtil.commitSql(sqlSession);
-        player.sendMessage(Const.SYSTEM_PREFIX + "§f已获得称号  " + "§a" + message);
     }
 }
+

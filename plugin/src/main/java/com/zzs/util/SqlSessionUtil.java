@@ -3,9 +3,8 @@ package com.zzs.util;
 
 import com.baomidou.mybatisplus.core.MybatisSqlSessionFactoryBuilder;
 import org.apache.ibatis.io.Resources;
-import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
-import org.mybatis.spring.SqlSessionUtils;
+import org.bukkit.Bukkit;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,26 +15,21 @@ import java.io.InputStream;
  */
 public class SqlSessionUtil {
 
-    public static SqlSession getSqlSession() {
-        String resource = "mybatis/SqlMapperConfig.xml";
-        InputStream inputStream = null;
+    private static SqlSessionFactory sqlSessionFactory;
+
+    public static SqlSessionFactory getSqlSessionFactory() {
         try {
-            inputStream = Resources.getResourceAsStream(resource);
+            InputStream inputStream = Resources.getResourceAsStream("mybatisPlusConfig.xml");
+            MybatisSqlSessionFactoryBuilder mybatisSqlSessionFactoryBuilder = new MybatisSqlSessionFactoryBuilder();
+            if (sqlSessionFactory == null) {
+                sqlSessionFactory = mybatisSqlSessionFactoryBuilder.build(inputStream);
+            }
+            return sqlSessionFactory;
         } catch (IOException e) {
+            Bukkit.getLogger().info("获取数据库配置文件失败");
             e.printStackTrace();
+            return null;
         }
-        MybatisSqlSessionFactoryBuilder mybatisSqlSessionFactoryBuilder = new MybatisSqlSessionFactoryBuilder();
-        SqlSessionFactory sqlSessionFactory = mybatisSqlSessionFactoryBuilder.build(inputStream);
-        SqlSession sqlSession = SqlSessionUtils.getSqlSession(sqlSessionFactory);
-        return sqlSession;
     }
 
-    public static void commitSql(SqlSession sqlSession) {
-        try {
-            sqlSession.commit();
-        } catch (Exception e) {
-            sqlSession.rollback();
-            e.printStackTrace();
-        }
-    }
 }
