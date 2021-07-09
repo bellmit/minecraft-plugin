@@ -23,19 +23,26 @@ import java.util.List;
 
 
 /**
+ * 称号点击事件
+ *
  * @author mountain
  * @since 2021/6/23 17:02
  */
-public class NpcClickListener implements Listener {
+public class AchievementClickListener implements Listener {
     private final MainPlugin plugin;
 
     private Player player;
 
-    public NpcClickListener(MainPlugin plugin) {
+    public AchievementClickListener(MainPlugin plugin) {
         this.plugin = plugin;
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
 
+    /**
+     * 右键NPC事件
+     *
+     * @param event
+     */
     @EventHandler
     public void onNpcRightClickEvent(NPCRightClickEvent event) {
         player = event.getClicker();
@@ -46,6 +53,7 @@ public class NpcClickListener implements Listener {
 
     @EventHandler
     public void onClickAchievement(InventoryClickEvent event) {
+        player = (Player) event.getWhoClicked();
         ItemStack currentItem = event.getCurrentItem();
         if (event.getClick().equals(ClickType.LEFT) && currentItem != null) {
             //称号使者打开左键可佩带
@@ -60,57 +68,56 @@ public class NpcClickListener implements Listener {
                             if (menuTitle.contains("珍")) {
                                 menuTitle = "珍藏";
                             }
-
                             if (openInventory.getTitle().equals(menuTitle) && !CollectionUtils.isEmpty(itemMeta.getLore())) {
                                 List<String> lore = itemMeta.getLore();
                                 switch (displayName) {
-                                    case "§a[萌新]":
+                                    case "§6[§a萌新§6]":
                                         this.useAchievementName(Boolean.TRUE, displayName, openInventory, lore);
                                         break;
-                                    case "§a[初学者]":
+                                    case "§6[§a初学者§6]":
                                         Boolean is_beginner = this.getAchievementStatus("is_beginner").getIsBeginner();
                                         this.useAchievementName(is_beginner, displayName, openInventory, lore);
                                         break;
-                                    case "§a[渔夫]":
+                                    case "§6[§a渔夫§6]":
                                         Boolean is_fisher = this.getAchievementStatus("is_fisher").getIsFisher();
                                         this.useAchievementName(is_fisher, displayName, openInventory, lore);
                                         break;
-                                    case "§a[矿工]":
+                                    case "§6[§a矿工§6]":
                                         Boolean is_miner = this.getAchievementStatus("is_miner").getIsMiner();
                                         this.useAchievementName(is_miner, displayName, openInventory, lore);
                                         break;
-                                    case "§a[农夫]":
+                                    case "§6[§a农夫§6]":
                                         Boolean is_farmer = this.getAchievementStatus("is_farmer").getIsFarmer();
                                         this.useAchievementName(is_farmer, displayName, openInventory, lore);
                                         break;
                                     //蓝色颜色
-                                    case "§9[学识者]":
+                                    case "§6[§9学识者§6]":
                                         Boolean is_knowledge_people = this.getAchievementStatus("is_knowledge_people").getIsKnowledgePeople();
                                         this.useAchievementName(is_knowledge_people, displayName, openInventory, lore);
                                         break;
-                                    case "§9[钻石大亨]":
+                                    case "§6[§9钻石大亨§6]":
                                         Boolean is_diamond_big_short = this.getAchievementStatus("is_diamond_big_short").getIsDiamondBigShort();
                                         this.useAchievementName(is_diamond_big_short, displayName, openInventory, lore);
                                         break;
-                                    case "§9[猎尸者]":
+                                    case "§6[§9猎尸者§6]":
                                         Boolean is_hunting_corpse = this.getAchievementStatus("is_hunting_corpse").getIsHuntingCorpse();
                                         this.useAchievementName(is_hunting_corpse, displayName, openInventory, lore);
                                         break;
-                                    case "§9[探险家]":
+                                    case "§6[§9探险家§6]":
                                         Boolean is_explorer = this.getAchievementStatus("is_explorer").getIsExplorer();
                                         this.useAchievementName(is_explorer, displayName, openInventory, lore);
                                         break;
-                                    case "§9[伐木工]":
+                                    case "§6[§9伐木工§6]":
                                         Boolean is_timberjack = this.getAchievementStatus("is_timberjack").getIsTimberjack();
                                         this.useAchievementName(is_timberjack, displayName, openInventory, lore);
                                         break;
-                                    case "§9[附魔师]":
+                                    case "§6[§9附魔师§6]":
                                         Boolean is_enchanter = this.getAchievementStatus("is_enchanter").getIsEnchanter();
                                         this.useAchievementName(is_enchanter, displayName, openInventory, lore);
                                         break;
-            /*case "§9[巫师]":
+            /*case "§6[§9巫师]§6":
                 break;*/
-                                    case "§9[屠夫]":
+                                    case "§6[§9屠夫§6]":
                                         Boolean is_butcher = this.getAchievementStatus("is_butcher").getIsButcher();
                                         this.useAchievementName(is_butcher, displayName, openInventory, lore);
                                         break;
@@ -190,7 +197,7 @@ public class NpcClickListener implements Listener {
      * @param achievementStatus 称号获得状态
      * @param displayName       命名牌物品的自定义名字
      * @param openInventory     打开的容器
-     * @param lore
+     * @param lore              称号的lore
      */
     private void useAchievementName(Boolean achievementStatus, String displayName, InventoryView openInventory, List<String> lore) {
         if (achievementStatus) {

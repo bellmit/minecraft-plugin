@@ -4,6 +4,7 @@ import com.zzs.MainPlugin;
 import com.zzs.dao.AchievementMapper;
 import com.zzs.entity.Achievement;
 import com.zzs.util.CommonUtil;
+import com.zzs.util.Const;
 import com.zzs.util.SqlSessionUtil;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -34,12 +35,40 @@ import java.util.List;
  */
 public class MenuClickListener implements Listener {
 
+    /**
+     * 称号本分类
+     */
+    public static List<String> achievementBookList = Arrays.asList("§a常见", "§9普通", "§5稀有", "§c超稀有", "§d专属", "§6传说", "§b珍§c藏");
+    /**
+     * 绿色称号
+     */
+    public static List<String> greenAchievementList = Arrays.asList("§a萌新", "§a初学者", "§a渔夫", "§a矿工", "§a农夫");
+    /**
+     * 蓝色称号
+     */
+    public static List<String> blueAchievementList = Arrays.asList("§9学识者", "§9钻石大亨", "§9探险家", "§9伐木工", "§9附魔师"/*, "§9巫师"*/);
+    /**
+     * 粗紫色
+     */
+    public static List<String> boldPurpleAchievementList = Arrays.asList("§5元老", "§5头颅收集者");
+    /**
+     * 粗粉色
+     */
+    public static List<String> boldPinkAchievementList = Arrays.asList("§d虎牙主播", "§dB站主播", "§d倾国倾城", "§d巡查组");
+    /**
+     * 粗红色
+     */
+    public static List<String> boldRedAchievementList = Arrays.asList("§c杀戮者", "§c猎尸者");
+    /**
+     * 粗金色
+     */
+    public static List<String> boldGoldenAchievementList = Arrays.asList("§6财大气粗", "§6小财主", "§6空前绝后");
+    /**
+     * 粗彩色
+     */
+    public static List<String> boldColoursAchievementList = Arrays.asList("§0§a§c§l吉§e§l祥§d§l物§a", "§0§a§9§l绝§e§l代§d§l风§b§l华§a", "§0§a§4§l恒§1§l古§2§l尊§5§l耀§a");
 
-    static List<String> achievementBookList = Arrays.asList("§a常见", "§9普通", "§5稀有", "§c超稀有", "§d专属", "§6传说", "§b珍§c藏");
     private final MainPlugin plugin;
-    List<String> worldList = Arrays.asList("生存世界", "主城", "资源世界", "地狱", "akira_rakani", "末地");
-
-    List<String> menuList = Arrays.asList("个人信息", "传送菜单", "称号簿");
 
     public MenuClickListener(MainPlugin plugin) {
         this.plugin = plugin;
@@ -49,26 +78,6 @@ public class MenuClickListener implements Listener {
     private Player player;
 
     /**
-     * 创建称号簿视图
-     *
-     * @param player
-     * @param title  容器标题
-     * @return
-     */
-    public static void createAchievementView(Player player, String title) {
-        Inventory inventory = Bukkit.createInventory(null, 27, title);
-        //创建称号种类
-        achievementBookList.forEach(s -> {
-            ItemStack itemStack = new ItemStack(Material.BOOK);
-            ItemMeta itemMeta = itemStack.getItemMeta();
-            itemMeta.setDisplayName(s);
-            itemStack.setItemMeta(itemMeta);
-            inventory.addItem(itemStack);
-        });
-        player.openInventory(inventory);
-    }
-
-    /**
      * 设置称号详细属性
      *
      * @param achievementName 称号名称
@@ -76,82 +85,80 @@ public class MenuClickListener implements Listener {
      */
     public static ItemMeta setAchievementLore(String achievementName, Achievement achievement, ItemMeta itemMeta, Player player) {
         switch (achievementName) {
-            case "§a[萌新]":
+            case "§a萌新":
                 List<String> newPeopleList = new LinkedList<>();
                 newPeopleList.add("  §d小小新星,初见萌新的标志");
                 newPeopleList.add("");
-                newPeopleList.add("§f达成条件：成功注册的玩家");
+                newPeopleList.add("§f达成条件：");
+                newPeopleList.add("§f  - 成功注册的玩家");
                 addFinishText(newPeopleList, player);
                 itemMeta.setLore(newPeopleList);
                 break;
-            case "§a[初学者]":
+            case "§a初学者":
                 List<String> beginnerList = new LinkedList<>();
                 beginnerList.add("  §d略知一二,对事物有了一定认知");
-                beginnerList.add("");
-                beginnerList.add("§f达成条件：累计在线24小时");
+                setAchievementText(beginnerList, "§f  - 累计在线24小时");
                 if (achievement.getIsBeginner()) {
-                    beginnerList.add("§8当前进度: 24/24小时");
+                    beginnerList.add("§f  - 在线时间:§8 24/24小时");
                     addFinishText(beginnerList, player);
                 } else {
                     int timeCount = player.getStatistic(Statistic.PLAY_ONE_MINUTE);
-                    Long hour = Long.valueOf(timeCount / 20 / 3600);
-                    beginnerList.add("§7当前进度: " + hour + "/24小时");
+                    int i = timeCount / 20 / 3600;
+                    Long hour = Long.valueOf(i);
+                    beginnerList.add("§f  - 在线时间: §7" + hour + "/24小时");
                 }
                 itemMeta.setLore(beginnerList);
                 break;
-            case "§a[渔夫]":
+            case "§a渔夫":
                 List<String> fisherList = new LinkedList<>();
                 fisherList.add("  §d悠哉悠哉的垂钓者");
-                fisherList.add("");
-                fisherList.add("§f达成条件：钓上1000条鱼");
+                setAchievementText(fisherList, "§f  - 钓上1000条鱼");
                 int fishCount = player.getStatistic(Statistic.FISH_CAUGHT);
                 if (achievement.getIsFisher()) {
-                    fisherList.add("§8当前进度： 1000/1000");
+                    fisherList.add("§f  - 钓上的鱼数:§8 1000/1000");
                     addFinishText(fisherList, player);
                 } else {
-                    fisherList.add("§7当前进度： " + fishCount + "/1000");
+                    fisherList.add("§f  - 钓上的鱼数:§7 " + fishCount + "/1000");
                 }
                 itemMeta.setLore(fisherList);
                 break;
-            case "§a[矿工]":
+            case "§a矿工":
                 List<String> minerList = new LinkedList<>();
                 minerList.add("  §d灰头土脸的矿洞工人。");
-                minerList.add("");
-                minerList.add("§f达成条件：挖掘铁矿和金矿");
+                setAchievementText(minerList, "§f  - 采掘一定数量的铁矿和金矿");
                 if (achievement.getIsMiner()) {
-                    minerList.add("§8铁矿： 500/500");
-                    minerList.add("§8金矿： 300/300");
+                    minerList.add("§f  - 铁矿采掘数:§8 500/500");
+                    minerList.add("§f  - 金矿采掘数:§8 300/300");
                     addFinishText(minerList, player);
                 } else {
                     int ironOreCount = player.getStatistic(Statistic.MINE_BLOCK, Material.IRON_ORE);
                     int goldOreCount = player.getStatistic(Statistic.MINE_BLOCK, Material.GOLD_ORE);
-                    minerList.add("§7铁矿： " + ironOreCount + "/500");
-                    minerList.add("§7金矿： " + goldOreCount + "/300");
+                    minerList.add("§f  - 铁矿采掘数:§7 " + ironOreCount + "/500");
+                    minerList.add("§f  - 铁矿采掘数:§7 " + goldOreCount + "/300");
                 }
                 itemMeta.setLore(minerList);
                 break;
-            case "§a[农夫]":
+            case "§a农夫":
                 LinkedList<String> farmerList = new LinkedList<>();
                 farmerList.add("  §d汗滴禾下土,粒粒皆辛苦");
-                farmerList.add("");
-                farmerList.add("§f达成条件：收获指定农作物");
+                setAchievementText(farmerList, "§f  - 达成条件：收获指定农作物数量");
                 if (achievement.getIsFarmer()) {
-                    farmerList.add("§8小麦： 500/500");
-                    farmerList.add("§8西瓜： 600/600");
-                    farmerList.add("§8南瓜： 300/300");
+                    farmerList.add("§f  - 小麦收获数§8: 500/500");
+                    farmerList.add("§f  - 西瓜收获数§8: 600/600");
+                    farmerList.add("§f  - 南瓜收获数§8: 300/300");
                     addFinishText(farmerList, player);
                 } else {
                     int wheatCount = player.getStatistic(Statistic.MINE_BLOCK, Material.WHEAT);
                     int melonCount = player.getStatistic(Statistic.PICKUP, Material.MELON_SLICE);
                     int pumpkinCount = player.getStatistic(Statistic.MINE_BLOCK, Material.PUMPKIN);
-                    farmerList.add("§7小麦： " + wheatCount + "/500");
-                    farmerList.add("§7西瓜： " + melonCount + "/600");
-                    farmerList.add("§7南瓜： " + pumpkinCount + "/300");
+                    farmerList.add("§f  - 小麦收获数§7: " + wheatCount + "/500");
+                    farmerList.add("§f  - 西瓜收获数§7: " + melonCount + "/600");
+                    farmerList.add("§f  - 南瓜收获数§7: " + pumpkinCount + "/300");
                 }
                 itemMeta.setLore(farmerList);
                 break;
             //蓝色颜色
-            case "§9[学识者]":
+            case "§9学识者":
                 LinkedList<String> knowledgePeopleList = new LinkedList<>();
                 knowledgePeopleList.add("  §d游荡知识的海洋,上知天文下知地理");
                 knowledgePeopleList.add("");
@@ -166,7 +173,7 @@ public class MenuClickListener implements Listener {
                 }
                 itemMeta.setLore(knowledgePeopleList);
                 break;
-            case "§9[钻石大亨]":
+            case "§9钻石大亨":
                 LinkedList<String> diamondBigShortList = new LinkedList<>();
                 diamondBigShortList.add("  §d幸运与肝力并兼的下矿者");
                 diamondBigShortList.add("");
@@ -180,27 +187,7 @@ public class MenuClickListener implements Listener {
                 }
                 itemMeta.setLore(diamondBigShortList);
                 break;
-            case "§9[猎尸者]":
-                LinkedList<String> huntingCorpseList = new LinkedList<>();
-                huntingCorpseList.add("  §d僵尸怪物的噩梦");
-                huntingCorpseList.add("");
-                huntingCorpseList.add("§f达成条件：击杀指定怪物");
-                if (achievement.getIsHuntingCorpse()) {
-                    huntingCorpseList.add("§8僵尸: 50/50");
-                    huntingCorpseList.add("§8僵尸骷髅: 50/50");
-                    huntingCorpseList.add("§8僵尸猪人: 30/30");
-                    addFinishText(huntingCorpseList, player);
-                } else {
-                    int zombieKills = player.getStatistic(Statistic.KILL_ENTITY, EntityType.ZOMBIE);
-                    int skeletonKills = player.getStatistic(Statistic.KILL_ENTITY, EntityType.SKELETON);
-                    int zombifiedPigKills = player.getStatistic(Statistic.KILL_ENTITY, EntityType.ZOMBIFIED_PIGLIN);
-                    huntingCorpseList.add("§7僵尸: " + zombieKills + "/50");
-                    huntingCorpseList.add("§7僵尸骷髅: " + skeletonKills + "/50");
-                    huntingCorpseList.add("§7僵尸猪人: " + zombifiedPigKills + "/30");
-                }
-                itemMeta.setLore(huntingCorpseList);
-                break;
-            case "§9[探险家]":
+            case "§9探险家":
                 LinkedList<String> explorerList = new LinkedList<>();
                 explorerList.add("  §d对未知地域的好奇,使你无法停下脚步");
                 explorerList.add("");
@@ -217,7 +204,7 @@ public class MenuClickListener implements Listener {
                 }
                 itemMeta.setLore(explorerList);
                 break;
-            case "§9[伐木工]":
+            case "§9伐木工":
                 LinkedList<String> timberjackList = new LinkedList<>();
                 timberjackList.add("  §d要想富先撸树");
                 timberjackList.add("");
@@ -240,7 +227,7 @@ public class MenuClickListener implements Listener {
                 }
                 itemMeta.setLore(timberjackList);
                 break;
-            case "§9[附魔师]":
+            case "§9附魔师":
                 LinkedList<String> enchanterList = new LinkedList<>();
                 enchanterList.add("  §d将书籍知识运用到实际中的伟大附魔师");
                 enchanterList.add("");
@@ -254,11 +241,11 @@ public class MenuClickListener implements Listener {
                 }
                 itemMeta.setLore(enchanterList);
                 break;
-            /*case "§9[巫师]":
+            /*case "§9巫师":
                 break;*/
-            case "§9[屠夫]":
+            case "§9屠夫":
                 LinkedList<String> butcherList = new LinkedList<>();
-                butcherList.add("  §d身上的杀气散发,使他们变得焦躁不安");
+                butcherList.add("  §d身上的杀气散发,使动物们变得焦躁不安");
                 butcherList.add("");
                 butcherList.add("§f达成条件: 击杀指定动物种类");
                 if (achievement.getIsButcher()) {
@@ -276,19 +263,19 @@ public class MenuClickListener implements Listener {
                 }
                 itemMeta.setLore(butcherList);
                 break;
-            case "§d[倾国倾城]":
-                LinkedList<String> aCompleteOneOffList = new LinkedList<>();
-                aCompleteOneOffList.add("  §d认证专属，认证请找服主/管理");
-                aCompleteOneOffList.add("");
-                aCompleteOneOffList.add("§f达成条件: 女村民限定");
-                if (achievement.getIsTheEmpressDowager()) {
-                    addFinishText(aCompleteOneOffList, player);
+            case "§d虎牙主播":
+                LinkedList<String> huyaAnchorList = new LinkedList<>();
+                huyaAnchorList.add("  §d认证专属，认证请找服主");
+                huyaAnchorList.add("");
+                huyaAnchorList.add("§f达成条件: 在虎牙有自己的直播间");
+                if (achievement.getIsBiliAnchor()) {
+                    addFinishText(huyaAnchorList, player);
                 }
-                itemMeta.setLore(aCompleteOneOffList);
+                itemMeta.setLore(huyaAnchorList);
                 break;
-            case "§d[B站主播]":
+            case "§dB站主播":
                 LinkedList<String> biliAnchorList = new LinkedList<>();
-                biliAnchorList.add("  §d认证专属，认证请找服主/管理");
+                biliAnchorList.add("  §d认证专属，认证请找服主");
                 biliAnchorList.add("");
                 biliAnchorList.add("§f达成条件: 在B站有自己的直播间");
                 if (achievement.getIsBiliAnchor()) {
@@ -296,24 +283,80 @@ public class MenuClickListener implements Listener {
                 }
                 itemMeta.setLore(biliAnchorList);
                 break;
-            case "[元老]":
+            case "§d倾国倾城":
+                LinkedList<String> theEmpressDowagerList = new LinkedList<>();
+                theEmpressDowagerList.add("  §d认证专属，认证请找服主");
+                theEmpressDowagerList.add("");
+                theEmpressDowagerList.add("§f达成条件: 女村民限定");
+                if (achievement.getIsTheEmpressDowager()) {
+                    addFinishText(theEmpressDowagerList, player);
+                }
+                itemMeta.setLore(theEmpressDowagerList);
+                break;
+            case "§d巡查组":
+                LinkedList<String> patrolGroupList = new LinkedList<>();
+                patrolGroupList.add("  §d认证专属，认证请找服主");
+                patrolGroupList.add("");
+                patrolGroupList.add("§f达成条件: 购买尊耀MVP后找服主申请资格");
+                if (achievement.getIsPatrolGroup()) {
+                    addFinishText(patrolGroupList, player);
+                }
+                itemMeta.setLore(patrolGroupList);
+                break;
+            case "§c杀戮者":
+                LinkedList<String> playerKillerList = new LinkedList<>();
+                playerKillerList.add("  §d无情的杀戮机器");
+                playerKillerList.add("");
+                playerKillerList.add("§f达成条件：击杀指定玩家数");
+                if (achievement.getIsPlayerKiller()) {
+                    playerKillerList.add("§8击杀玩家数: 500/500");
+                    addFinishText(playerKillerList, player);
+                } else {
+                    int playerKills = player.getStatistic(Statistic.PLAYER_KILLS);
+                    playerKillerList.add("§7击杀玩家数: " + playerKills + "/500");
+                }
+                itemMeta.setLore(playerKillerList);
+                break;
+            case "§c猎尸者":
+                LinkedList<String> huntingCorpseList = new LinkedList<>();
+                huntingCorpseList.add("  §d僵尸怪物的噩梦");
+                huntingCorpseList.add("");
+                huntingCorpseList.add("§f达成条件：击杀指定怪物");
+                if (achievement.getIsHuntingCorpse()) {
+                    huntingCorpseList.add("§8僵尸: 50/50");
+                    huntingCorpseList.add("§8僵尸骷髅: 50/50");
+                    huntingCorpseList.add("§8僵尸猪人: 30/30");
+                    addFinishText(huntingCorpseList, player);
+                } else {
+                    int zombieKills = player.getStatistic(Statistic.KILL_ENTITY, EntityType.ZOMBIE);
+                    int skeletonKills = player.getStatistic(Statistic.KILL_ENTITY, EntityType.SKELETON);
+                    int zombifiedPigKills = player.getStatistic(Statistic.KILL_ENTITY, EntityType.ZOMBIFIED_PIGLIN);
+                    huntingCorpseList.add("§7僵尸: " + zombieKills + "/50");
+                    huntingCorpseList.add("§7僵尸骷髅: " + skeletonKills + "/50");
+                    huntingCorpseList.add("§7僵尸猪人: " + zombifiedPigKills + "/30");
+                }
+                itemMeta.setLore(huntingCorpseList);
+                break;
+            case "§5元老":
                 LinkedList<String> oldHeadList = new LinkedList<>();
-                oldHeadList.add("  §d服务器终极老玩家,随时可见。");
+                oldHeadList.add("  §d服务器终极老玩家,经常游荡在服务器。");
                 oldHeadList.add("");
                 oldHeadList.add("§f达成条件: ");
                 if (achievement.getIsOldHead()) {
-                    oldHeadList.add("  -累计签到：60/60天");
-                    oldHeadList.add("  -拥有金币：500000/500000");
-                    oldHeadList.add("  -拥有领地：2/2");
+                    oldHeadList.add("  §7-累计签到：60/60天");
+                    oldHeadList.add("  §7-拥有金币：500000/500000");
+                    oldHeadList.add("  §7-拥有领地：2/2");
                     addFinishText(oldHeadList, player);
                 } else {
-                    oldHeadList.add("  -累计签到：0/60天");
-                    oldHeadList.add("  -拥有金币：0/500000");
-                    oldHeadList.add("  -拥有领地：0/2");
+                    oldHeadList.add("  §7-累计签到：0/60天");
+                    oldHeadList.add("  §7-拥有金币：0/500000");
+                    oldHeadList.add("  §7-拥有领地：0/2");
                 }
                 itemMeta.setLore(oldHeadList);
                 break;
-            case "[小财主]":
+            case "§5头颅收集者":
+                break;
+            case "§6小财主":
                 LinkedList<String> smallRichManList = new LinkedList<>();
                 smallRichManList.add("  §d腰缠万贯的阔佬,小意思。");
                 smallRichManList.add("");
@@ -326,132 +369,75 @@ public class MenuClickListener implements Listener {
                 }
                 itemMeta.setLore(smallRichManList);
                 break;
-            case "[杀戮者]":
+            case "§6空前绝后":
+                LinkedList<String> aCompleteOneOffList = new LinkedList<>();
+                aCompleteOneOffList.add("  §d腰缠万贯的阔佬,小意思。");
+                aCompleteOneOffList.add("");
+                aCompleteOneOffList.add("§f达成条件: 主城商店购买");
+                if (achievement.getIsACompleteOneOff()) {
+                    aCompleteOneOffList.add("§8当前进度: 1/1");
+                    addFinishText(aCompleteOneOffList, player);
+                } else {
+                    aCompleteOneOffList.add("§7当前进度: 0/1");
+                }
+                itemMeta.setLore(aCompleteOneOffList);
                 break;
-            case "[巡查组]":
+            case "§6财大气粗":
                 break;
-            //粗字体金色
-            case "[虎牙主播]":
+            case "吉祥物":
                 break;
-            case "[空前绝后]":
-                break;
-            case "[财大气粗]":
-                break;
-            case "[头颅收集者]":
-                break;
-            //粗字体彩色
-            case "[吉祥物]":
-                break;
-            case "[绝代风华]":
+            case "绝代风华":
 
                 break;
-            case "[恒古尊耀]":
+            case "恒古尊耀":
                 break;
         }
 
         return itemMeta;
     }
 
-    /**
-     * 添加粗体效果
-     *
-     * @param s
-     * @param itemMeta
-     * @param substring
-     */
-    private static void appendBoldType(String s, ItemMeta itemMeta, String substring) {
-        StringBuilder builder = new StringBuilder();
-        builder.append(substring);
-        builder.append("§l").append(s.substring(2));
-        itemMeta.setDisplayName(builder.toString());
-    }
 
     /**
-     * 为仓库栏添加称号
+     * 创建称号簿视图
      *
-     * @param achievementList 称号列表
-     * @param player          玩家
-     * @param title           容器标题
+     * @param player
+     * @param title  容器标题
      * @return
      */
-    public void createAchievement(List<String> achievementList, Player player, String title) {
-        Achievement achievement;
-        SqlSessionFactory sqlSessionFactory = SqlSessionUtil.getSqlSessionFactory();
-        try (SqlSession session = sqlSessionFactory.openSession()) {
-            AchievementMapper achievementMapper = session.getMapper(AchievementMapper.class);
-            achievement = achievementMapper.selectById(player.getUniqueId().toString());
-        }
-        //去颜色取文字当标题
-        String menuTitle = title.substring(2);
-        if (menuTitle.contains("珍")) {
-            menuTitle = "珍藏";
-        }
-        Inventory inventory = Bukkit.createInventory(null, 27, menuTitle);
-        //物品栏每一栏9格
-        int firstRow = 0;
-        for (String s : achievementList) {
-            ItemStack itemStack = new ItemStack(Material.NAME_TAG);
+    public static void createAchievementView(Player player, String title) {
+        Inventory inventory = Bukkit.createInventory(null, 27, title);
+        //创建称号种类
+        achievementBookList.forEach(s -> {
+            ItemStack itemStack = new ItemStack(Material.BOOK);
             ItemMeta itemMeta = itemStack.getItemMeta();
             itemMeta.setDisplayName(s);
-            setAchievementLore(s, achievement, itemMeta, player);
-            String substring = s.substring(0, 2);
             itemStack.setItemMeta(itemMeta);
-            switch (substring) {
-                case "§a":
-                case "§9":
-                    inventory.setItem(firstRow, itemStack);
-                    firstRow++;
-                    break;
-                case "§d":
-                case "§5":
-                case "§c":
-                case "§6":
-                    appendBoldType(s, itemMeta, substring);
-                    inventory.setItem(firstRow, itemStack);
-                    firstRow++;
-                    break;
-                case "§0":
-                    StringBuilder builder = new StringBuilder();
-                    builder.append(s.substring(2));
-                    itemMeta.setDisplayName(builder.toString());
-                    inventory.setItem(firstRow, itemStack);
-                    firstRow++;
-                    break;
-            }
-        }
-
+            inventory.addItem(itemStack);
+        });
         player.openInventory(inventory);
     }
 
     /**
-     * 添加称号完成时的文本内容
+     * 设置称号Lore重复内容
      *
-     * @param list
-     * @param player
-     * @return
+     * @param list 需要设置的lore list
+     * @param s    设置的内容
      */
-    private static void addFinishText(List<String> list, Player player) {
-        String title = player.getOpenInventory().getTitle();
-        if (title.equals("称号簿")) {
-            //从称号簿进入时
-            list.add("");
-            list.add("");
-            list.add("  §a已获得,可前往主城NPC§d 称号使者 §a变更称号");
-        } else {
-            //从称号使者点击时
-            list.add("");
-            list.add("");
-            list.add("  §a点击称号即可佩带");
-        }
+    private static void setAchievementText(List<String> list, String s) {
+        list.add("");
+        list.add("§f获得条件：");
+        list.add(s);
+        list.add("");
+        list.add("§f目标进度: ");
     }
 
     /**
-     * 玩家点击事件
+     * 玩家点击菜单事件
      *
      * @param event
      */
     @EventHandler
-    public void onClick(InventoryClickEvent event) {
+    public void onMenuClick(InventoryClickEvent event) {
         player = (Player) event.getWhoClicked();
         ItemStack currentItem = event.getCurrentItem();
 
@@ -480,38 +466,24 @@ public class MenuClickListener implements Listener {
                         this.createAchievementView(player, "称号簿");
                         break;
                     case "§a常见":
-                        //绿色称号
-                        List<String> greenAchievementList = Arrays.asList("§a[萌新]", "§a[初学者]", "§a[渔夫]", "§a[矿工]", "§a[农夫]");
                         createAchievement(greenAchievementList, player, displayName);
                         break;
                     case "§9普通":
-                        //蓝色称号
-                        List<String> blueAchievementList = Arrays.asList("§9[学识者]", "§9[钻石大亨]", "§9[猎尸者]", "§9[探险家]", "§9[伐木工]", "§9[附魔师]"/*, "§9[巫师]"*/);
                         createAchievement(blueAchievementList, player, displayName);
                         break;
                     case "§5稀有":
-                        //粗紫色
-                        List<String> boldPurpleAchievementList = Arrays.asList("§5[元老]", "§5[头颅收集者]");
                         createAchievement(boldPurpleAchievementList, player, displayName);
                         break;
                     case "§d专属":
-                        //粗粉色
-                        List<String> boldPinkAchievementList = Arrays.asList("§d[虎牙主播]", "§d[B站主播]", "§d[倾国倾城]");
                         createAchievement(boldPinkAchievementList, player, displayName);
                         break;
                     case "§c超稀有":
-                        //粗红色
-                        List<String> boldRedAchievementList = Arrays.asList("§c[杀戮者]", "§c[巡查组]");
                         createAchievement(boldRedAchievementList, player, displayName);
                         break;
                     case "§6传说":
-                        //粗金色
-                        List<String> boldGoldenAchievementList = Arrays.asList("§6[财大气粗]", "§6[小财主]", "§6[空前绝后]");
                         createAchievement(boldGoldenAchievementList, player, displayName);
                         break;
                     case "§b珍§c藏":
-                        //粗彩色
-                        List<String> boldColoursAchievementList = Arrays.asList("§0§a[§c§l吉§e§l祥§d§l物§a]", "§0§a[§9§l绝§e§l代§d§l风§b§l华§a]", "§0§a[§4§l恒§1§l古§2§l尊§5§l耀§a]");
                         createAchievement(boldColoursAchievementList, player, displayName);
                         break;
                     case "传送菜单":
@@ -564,6 +536,99 @@ public class MenuClickListener implements Listener {
                 event.setCancelled(true);
             }
         });
+    }
+
+    /**
+     * 添加粗体效果
+     *
+     * @param s
+     * @param itemMeta
+     * @param substring
+     */
+    private static void appendBoldType(String s, ItemMeta itemMeta, String substring) {
+        StringBuilder builder = new StringBuilder();
+        builder.append(substring);
+        builder.append("§l").append(s.substring(2));
+        itemMeta.setDisplayName(builder.toString());
+    }
+
+    /**
+     * 为仓库栏添加称号
+     *
+     * @param achievementList 称号列表
+     * @param player          玩家
+     * @param title           容器标题
+     * @return
+     */
+    public void createAchievement(List<String> achievementList, Player player, String title) {
+        Achievement achievement;
+        SqlSessionFactory sqlSessionFactory = SqlSessionUtil.getSqlSessionFactory();
+        try (SqlSession session = sqlSessionFactory.openSession()) {
+            AchievementMapper achievementMapper = session.getMapper(AchievementMapper.class);
+            achievement = achievementMapper.selectById(player.getUniqueId().toString());
+        }
+        //去颜色取文字当标题
+        String menuTitle = title.substring(2);
+        if (menuTitle.contains("珍")) {
+            menuTitle = "珍藏";
+        }
+        Inventory inventory = Bukkit.createInventory(null, 27, menuTitle);
+        //物品栏每一栏9格
+        int firstRow = 0;
+        for (String s : achievementList) {
+            ItemStack itemStack = new ItemStack(Material.NAME_TAG);
+            ItemMeta itemMeta = itemStack.getItemMeta();
+            String substring = s.substring(0, 2);
+            itemMeta.setDisplayName(String.format(Const.FORMAT, s));
+            setAchievementLore(s, achievement, itemMeta, player);
+            itemStack.setItemMeta(itemMeta);
+            switch (substring) {
+                case "§a":
+                case "§9":
+                    inventory.setItem(firstRow, itemStack);
+                    firstRow++;
+                    break;
+                case "§d":
+                case "§5":
+                case "§c":
+                case "§6":
+                    appendBoldType(s, itemMeta, substring);
+                    inventory.setItem(firstRow, itemStack);
+                    firstRow++;
+                    break;
+                case "§0":
+                    StringBuilder builder = new StringBuilder();
+                    builder.append(s.substring(2));
+                    itemMeta.setDisplayName(builder.toString());
+                    inventory.setItem(firstRow, itemStack);
+                    firstRow++;
+                    break;
+            }
+        }
+
+        player.openInventory(inventory);
+    }
+
+    /**
+     * 添加称号完成时的文本内容
+     *
+     * @param list
+     * @param player
+     * @return
+     */
+    private static void addFinishText(List<String> list, Player player) {
+        String title = player.getOpenInventory().getTitle();
+        if (title.equals("称号簿")) {
+            //从称号簿进入时
+            list.add("");
+            list.add("");
+            list.add("  §a已获得,可前往主城NPC§d 称号使者 §a变更称号");
+        } else {
+            //从称号使者点击时
+            list.add("");
+            list.add("");
+            list.add("  §a点击称号即可佩带");
+        }
     }
 
     /**

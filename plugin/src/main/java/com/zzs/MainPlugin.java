@@ -32,7 +32,7 @@ public class MainPlugin extends JavaPlugin {
         }
         //获取监听器
         new MenuClickListener(this);
-        new NpcClickListener(this);
+        new AchievementClickListener(this);
         new PlayerChatListener(this);
         Bukkit.getPluginManager().registerEvents(new PlayerCommandPreprocessListener(), this);
         Bukkit.getPluginManager().registerEvents(new ServerLoadListener(this), this);

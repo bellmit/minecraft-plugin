@@ -31,10 +31,10 @@ public class PAPIParams extends PlaceholderExpansion {
             case "world":
                 worldName = "生存世界";
                 break;
-            case "world_the_end":
+            case "world_nether":
                 worldName = "地狱";
                 break;
-            case "world_nether":
+            case "world_the_end":
                 worldName = "末地";
                 break;
             default:

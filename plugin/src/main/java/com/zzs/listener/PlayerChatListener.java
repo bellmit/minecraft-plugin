@@ -43,9 +43,9 @@ public class PlayerChatListener implements Listener {
         if (!c.equals("/")) {
             try {
                 String worldName = "§a" + PAPIParams.initWorldName(world);
-                TextComponent worldComponent = new TextComponent(String.format(Const.FORMAT, worldName));
+                TextComponent worldComponent = new TextComponent(String.format(Const.FORMAT + " ", worldName));
 
-                String at_present_world = String.format(CommonUtil.getPropertiesParams("at_present_world"), world.getName());
+                String at_present_world = String.format(CommonUtil.getPropertiesParams("at_present_world"), worldName);
                 worldComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(at_present_world)));
                 worldComponent.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tpWorld " + world.getName()));
 

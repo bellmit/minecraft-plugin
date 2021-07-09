@@ -19,6 +19,118 @@ public class Achievement implements Serializable {
     private String uuid;
 
     private String userName;
+
+    /**
+     * 当前使用称号
+     */
+    public enum useAchievement {
+        /**
+         * 萌新
+         */
+        NEW_PEOPLE,
+        /**
+         * 初学者
+         */
+        BEGINNER,
+        /**
+         * 渔夫
+         */
+        FISHER,
+        /**
+         * 矿工
+         */
+        MINER,
+        /**
+         * 农夫
+         */
+        FARMER,
+        /**
+         * 学识者
+         */
+        KNOWLEDGE_PEOPLE,
+        /**
+         * 钻石大亨
+         */
+        DIAMOND_BIG_SHORT,
+        /**
+         * 猎尸者
+         */
+        HUNTING_CORPSE,
+        /**
+         * 探险家
+         */
+        EXPLORER,
+        /**
+         * 伐木工
+         */
+        TIMBERJACK,
+        /**
+         * 附魔师
+         */
+        ENCHANTER,
+        /**
+         * 巫师
+         */
+        SORCERER,
+        /**
+         * 屠夫
+         */
+        BUTCHER,
+        /**
+         * 倾国倾城
+         */
+        THE_EMPRESS_DOWAGER,
+        /**
+         * B站主播
+         */
+        BILI_ANCHOR,
+        /**
+         * 元老
+         */
+        OLD_HEAD,
+        /**
+         * 小财主
+         */
+        SMALL_RICH_MAN,
+        /**
+         * 杀戮者
+         */
+        PLAYER_KILLER,
+        /**
+         * 巡查组
+         */
+        PATROL_GROUP,
+        /**
+         * 虎牙主播
+         */
+        HU_YA_ANCHOR,
+        /**
+         * 空前绝后
+         */
+        A_COMPLETE_ONE_OFF,
+        /**
+         * 财大气粗
+         */
+        OSTENTATIOUS,
+        /**
+         * 头颅收集者
+         */
+        HEAD_COLLECTOR,
+        /**
+         * 吉祥物
+         */
+        MASCOT,
+        /**
+         * 风华绝代
+         */
+        TIMELESS_ICON,
+        /**
+         * 恒古尊耀
+         */
+        HENG_GU_ZUN_YAO
+
+    }
+
     /**
      * 【萌新】
      */

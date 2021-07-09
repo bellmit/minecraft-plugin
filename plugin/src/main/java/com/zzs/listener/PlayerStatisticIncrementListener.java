@@ -60,8 +60,8 @@ public class PlayerStatisticIncrementListener implements Listener {
 //            this.isAccomplishOldHead();
 //            //小财主
 //            this.isAccomplishSmallRichMan();
-//            //杀戮者
-//            this.isAccomplishPlayerKiller();
+            //杀戮者
+            this.isAccomplishPlayerKiller();
 //            //巡查组
 //            this.isAccomplishPatrolGroup();
 //            //虎牙主播
@@ -83,7 +83,21 @@ public class PlayerStatisticIncrementListener implements Listener {
     }
 
     /**
+     * 是否达成杀戮者称号
+     * 击杀   玩家*500
+     */
+    private void isAccomplishPlayerKiller() {
+        int playerKills = player.getStatistic(Statistic.PLAYER_KILLS);
+        if (playerKills == 500) {
+            playerKills++;
+            player.setStatistic(Statistic.PLAYER_KILLS, playerKills);
+            this.updateAchievementStatus("§c杀戮者");
+        }
+    }
+
+    /**
      * 是否达成屠夫称号
+     * 击杀   绵羊*50   牛*50    鸡*50
      */
     private void isAccomplishButcher() {
         int sheepKills = player.getStatistic(Statistic.KILL_ENTITY, EntityType.SHEEP);
@@ -100,16 +114,17 @@ public class PlayerStatisticIncrementListener implements Listener {
             }
             chickenKills++;
             player.setStatistic(Statistic.KILL_ENTITY, EntityType.CHICKEN, chickenKills);
-            this.updateAchievementStatus("屠夫");
+            this.updateAchievementStatus("§9屠夫");
         } else if (sheepKills > 50 && cowKills == 50 && chickenKills > 50) {
             cowKills++;
             player.setStatistic(Statistic.KILL_ENTITY, EntityType.COW, cowKills);
-            this.updateAchievementStatus("屠夫");
+            this.updateAchievementStatus("§9屠夫");
         } else if (sheepKills == 50 && cowKills > 50 && chickenKills > 50) {
             sheepKills++;
             player.setStatistic(Statistic.KILL_ENTITY, EntityType.SHEEP, sheepKills);
-            this.updateAchievementStatus("屠夫");
+            this.updateAchievementStatus("§9屠夫");
         }
+
     }
 
     /**
@@ -129,7 +144,7 @@ public class PlayerStatisticIncrementListener implements Listener {
         if (itemEnchantedCount == 1000) {
             itemEnchantedCount++;
             player.setStatistic(Statistic.ITEM_ENCHANTED, itemEnchantedCount);
-            this.updateAchievementStatus("附魔师");
+            this.updateAchievementStatus("§9附魔师");
         }
     }
 
@@ -155,13 +170,13 @@ public class PlayerStatisticIncrementListener implements Listener {
             }
             jungleLogCount++;
             player.setStatistic(Statistic.MINE_BLOCK, Material.JUNGLE_LOG, jungleLogCount);
-            this.updateAchievementStatus("伐木工");
+            this.updateAchievementStatus("§9伐木工");
         } else if (oakLogCount > 640 && birchLogCount == 640 && jungleLogCount > 640) {
             birchLogCount++;
-            this.updateAchievementStatus("伐木工");
+            this.updateAchievementStatus("§9伐木工");
         } else if (oakLogCount == 640 && birchLogCount > 640 && jungleLogCount > 640) {
             oakLogCount++;
-            this.updateAchievementStatus("伐木工");
+            this.updateAchievementStatus("§9伐木工");
         }
     }
 
@@ -177,7 +192,7 @@ public class PlayerStatisticIncrementListener implements Listener {
         if (walkDistance == 30000) {
             walkDistance++;
             player.setStatistic(Statistic.WALK_ONE_CM, walkDistance);
-            this.updateAchievementStatus("探险家");
+            this.updateAchievementStatus("§9探险家");
         }
     }
 
@@ -200,15 +215,15 @@ public class PlayerStatisticIncrementListener implements Listener {
             }
             zombifiedPigKills++;
             player.setStatistic(Statistic.KILL_ENTITY, EntityType.ZOMBIFIED_PIGLIN, zombifiedPigKills);
-            this.updateAchievementStatus("猎尸者");
+            this.updateAchievementStatus("§9猎尸者");
         } else if (zombieKills > 50 && skeletonKills == 50 && zombifiedPigKills > 30) {
             skeletonKills++;
             player.setStatistic(Statistic.KILL_ENTITY, EntityType.SKELETON, skeletonKills);
-            this.updateAchievementStatus("猎尸者");
+            this.updateAchievementStatus("§9猎尸者");
         } else if (zombieKills == 50 && skeletonKills > 50 && zombifiedPigKills > 30) {
             zombieKills++;
             player.setStatistic(Statistic.KILL_ENTITY, EntityType.ZOMBIE, zombieKills);
-            this.updateAchievementStatus("猎尸者");
+            this.updateAchievementStatus("§9猎尸者");
         }
     }
 
@@ -221,7 +236,7 @@ public class PlayerStatisticIncrementListener implements Listener {
         if (diamondOreCount == 640) {
             diamondOreCount++;
             player.setStatistic(Statistic.MINE_BLOCK, Material.DIAMOND_ORE, diamondOreCount);
-            this.updateAchievementStatus("钻石大亨");
+            this.updateAchievementStatus("§9钻石大亨");
         }
     }
 
@@ -233,7 +248,7 @@ public class PlayerStatisticIncrementListener implements Listener {
      */
     private void isAccomplishKnowledgePeople(int timeCount) {
         if (timeCount == 12096000) {
-            this.updateAchievementStatus("学识者");
+            this.updateAchievementStatus("§9学识者");
         }
     }
 
@@ -260,15 +275,15 @@ public class PlayerStatisticIncrementListener implements Listener {
             }
             pumpkinCount++;
             player.setStatistic(Statistic.MINE_BLOCK, Material.PUMPKIN, pumpkinCount);
-            this.updateAchievementStatus("农夫");
+            this.updateAchievementStatus("§a农夫");
         } else if (wheatCount > 500 && melonCount == 600 && pumpkinCount > 300) {
             melonCount++;
             player.setStatistic(Statistic.MINE_BLOCK, Material.MELON, melonCount);
-            this.updateAchievementStatus("农夫");
+            this.updateAchievementStatus("§a农夫");
         } else if (wheatCount == 500 && melonCount > 600 && pumpkinCount > 300) {
             wheatCount++;
             player.setStatistic(Statistic.MINE_BLOCK, Material.WHEAT, wheatCount);
-            this.updateAchievementStatus("农夫");
+            this.updateAchievementStatus("§a农夫");
         }
     }
 
@@ -288,11 +303,11 @@ public class PlayerStatisticIncrementListener implements Listener {
             }
             player.setStatistic(Statistic.MINE_BLOCK, Material.GOLD_ORE, goldOreCount);
             goldOreCount++;
-            this.updateAchievementStatus("矿工");
+            this.updateAchievementStatus("§a矿工");
         } else if (ironOreCount == 500 && goldOreCount > 300) {
             ironOreCount++;
             player.setStatistic(Statistic.MINE_BLOCK, Material.IRON_ORE, ironOreCount);
-            this.updateAchievementStatus("矿工");
+            this.updateAchievementStatus("§a矿工");
         }
     }
 
@@ -307,7 +322,7 @@ public class PlayerStatisticIncrementListener implements Listener {
             fishCount++;
             //更改变量防止重复运行该代码造成数据库连接过多
             player.setStatistic(Statistic.FISH_CAUGHT, fishCount);
-            this.updateAchievementStatus("渔夫");
+            this.updateAchievementStatus("§a渔夫");
         }
     }
 
@@ -319,7 +334,7 @@ public class PlayerStatisticIncrementListener implements Listener {
      */
     private void isAccomplishBeginner(int timeCount) {
         if (timeCount == 1728000) {
-            this.updateAchievementStatus("初学者");
+            this.updateAchievementStatus("§a初学者");
         }
     }
 
@@ -336,16 +351,16 @@ public class PlayerStatisticIncrementListener implements Listener {
             achievement.setUuid(player.getUniqueId().toString());
             switch (message) {
                 //绿色颜色
-                case "初学者":
+                case "§a初学者":
                     achievement.setIsBeginner(Boolean.TRUE);
                     break;
-                case "渔夫":
+                case "§a渔夫":
                     achievement.setIsFisher(Boolean.TRUE);
                     break;
-                case "矿工":
+                case "§a矿工":
                     achievement.setIsMiner(Boolean.TRUE);
                     break;
-                case "农夫":
+                case "§a农夫":
                     achievement.setIsFarmer(Boolean.TRUE);
                     break;
                 //蓝色颜色
@@ -419,7 +434,7 @@ public class PlayerStatisticIncrementListener implements Listener {
             }
             achievementMapper.updateById(achievement);
             session.commit();
-            player.sendMessage(Const.SYSTEM_PREFIX + "§f已获得称号  " + "§a" + message);
+            player.sendMessage(Const.SYSTEM_PREFIX + "§f已获得称号  " + message);
         }
     }
 }
